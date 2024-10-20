@@ -1,9 +1,10 @@
 package com.example.server.comment;
 
 import com.example.server.TestConstants;
-import com.example.server.comment.model.Comment;
-import com.example.server.item.ItemRepository;
-import com.example.server.user.UserRepository;
+import com.example.server.repository.entity.Comment;
+import com.example.server.repository.ItemRepository;
+import com.example.server.repository.CommentRepository;
+import com.example.server.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

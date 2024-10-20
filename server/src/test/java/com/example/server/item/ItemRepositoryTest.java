@@ -1,10 +1,11 @@
 package com.example.server.item;
 
 import com.example.server.TestConstants;
-import com.example.server.item.model.Item;
-import com.example.server.request.ItemRequestRepository;
-import com.example.server.request.model.ItemRequest;
-import com.example.server.user.UserRepository;
+import com.example.server.repository.ItemRepository;
+import com.example.server.repository.entity.Item;
+import com.example.server.repository.ItemRequestRepository;
+import com.example.server.repository.entity.ItemRequest;
+import com.example.server.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

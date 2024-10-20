@@ -1,8 +1,9 @@
 package com.example.server.booking.dto;
 
-import com.example.server.booking.model.BookingStatus;
-import com.example.server.item.dto.ItemDto;
-import com.example.server.user.dto.UserDto;
+import com.example.server.repository.entity.BookingStatus;
+import com.example.server.dto.BookingDto;
+import com.example.server.dto.ItemDto;
+import com.example.server.dto.UserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

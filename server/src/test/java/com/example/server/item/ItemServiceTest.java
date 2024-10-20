@@ -1,16 +1,18 @@
 package com.example.server.item;
 
 import com.example.server.TestConstants;
-import com.example.server.booking.BookingRepository;
-import com.example.server.booking.model.Booking;
-import com.example.server.booking.model.BookingStatus;
-import com.example.server.comment.CommentRepository;
-import com.example.server.comment.dto.CommentDto;
-import com.example.server.comment.model.Comment;
+import com.example.server.repository.ItemRepository;
+import com.example.server.repository.BookingRepository;
+import com.example.server.repository.entity.Booking;
+import com.example.server.repository.entity.BookingStatus;
+import com.example.server.repository.CommentRepository;
+import com.example.server.dto.CommentDto;
+import com.example.server.repository.entity.Comment;
 import com.example.server.exception.NotFoundException;
-import com.example.server.item.dto.ItemDtoWithBookings;
-import com.example.server.item.model.Item;
-import com.example.server.user.model.User;
+import com.example.server.dto.ItemDtoWithBookings;
+import com.example.server.repository.entity.Item;
+import com.example.server.service.ItemService;
+import com.example.server.repository.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

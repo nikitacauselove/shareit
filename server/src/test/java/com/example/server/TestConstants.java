@@ -1,10 +1,10 @@
 package com.example.server;
 
-import com.example.server.booking.model.Booking;
-import com.example.server.booking.model.BookingStatus;
-import com.example.server.item.model.Item;
-import com.example.server.request.model.ItemRequest;
-import com.example.server.user.model.User;
+import com.example.server.repository.entity.Booking;
+import com.example.server.repository.entity.BookingStatus;
+import com.example.server.repository.entity.Item;
+import com.example.server.repository.entity.ItemRequest;
+import com.example.server.repository.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

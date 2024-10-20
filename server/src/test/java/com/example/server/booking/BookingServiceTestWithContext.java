@@ -1,11 +1,13 @@
 package com.example.server.booking;
 
 import com.example.server.TestConstants;
-import com.example.server.booking.model.Booking;
-import com.example.server.booking.model.BookingState;
-import com.example.server.booking.model.BookingStatus;
-import com.example.server.item.ItemRepository;
-import com.example.server.user.UserRepository;
+import com.example.server.repository.entity.Booking;
+import com.example.server.repository.entity.BookingState;
+import com.example.server.repository.entity.BookingStatus;
+import com.example.server.repository.ItemRepository;
+import com.example.server.repository.BookingRepository;
+import com.example.server.repository.UserRepository;
+import com.example.server.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

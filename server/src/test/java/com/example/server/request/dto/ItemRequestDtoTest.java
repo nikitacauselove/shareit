@@ -1,6 +1,7 @@
 package com.example.server.request.dto;
 
 import com.example.server.TestConstants;
+import com.example.server.dto.ItemRequestDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
