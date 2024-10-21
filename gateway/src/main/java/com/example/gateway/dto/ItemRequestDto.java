@@ -1,6 +1,5 @@
-package com.example.gateway.request.dto;
+package com.example.gateway.dto;
 
-import com.example.gateway.item.dto.ItemDto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

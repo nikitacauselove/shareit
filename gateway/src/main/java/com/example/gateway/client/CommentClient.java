@@ -1,7 +1,6 @@
-package com.example.gateway.comment;
+package com.example.gateway.client;
 
-import com.example.gateway.client.BaseClient;
-import com.example.gateway.comment.dto.CommentDto;
+import com.example.gateway.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

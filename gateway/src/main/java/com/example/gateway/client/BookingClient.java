@@ -1,8 +1,7 @@
-package com.example.gateway.booking;
+package com.example.gateway.client;
 
-import com.example.gateway.booking.dto.BookingCreationDto;
-import com.example.gateway.booking.model.BookingState;
-import com.example.gateway.client.BaseClient;
+import com.example.gateway.dto.BookingCreationDto;
+import com.example.gateway.BookingState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

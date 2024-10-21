@@ -1,4 +1,4 @@
-package com.example.gateway.booking.model;
+package com.example.gateway;
 
 import com.example.gateway.exception.BadRequestException;
 

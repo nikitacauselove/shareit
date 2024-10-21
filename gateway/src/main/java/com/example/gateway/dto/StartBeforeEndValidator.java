@@ -1,4 +1,4 @@
-package com.example.gateway.booking.dto;
+package com.example.gateway.dto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -1,7 +1,8 @@
-package com.example.gateway.booking;
+package com.example.gateway.controller;
 
-import com.example.gateway.booking.dto.BookingCreationDto;
-import com.example.gateway.booking.model.BookingState;
+import com.example.gateway.dto.BookingCreationDto;
+import com.example.gateway.BookingState;
+import com.example.gateway.client.BookingClient;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import javax.validation.constraints.PositiveOrZero;
 
 import static com.example.gateway.exception.GlobalControllerExceptionHandler.FROM_ERROR_MESSAGE;
 import static com.example.gateway.exception.GlobalControllerExceptionHandler.SIZE_ERROR_MESSAGE;
-import static com.example.gateway.user.UserController.X_SHARER_USER_ID;
+import static com.example.gateway.controller.UserController.X_SHARER_USER_ID;
 
 @Controller
 @RequestMapping(path = "/bookings")

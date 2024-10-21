@@ -1,8 +1,9 @@
-package com.example.gateway.user;
+package com.example.gateway.controller;
 
-import com.example.gateway.user.dto.OnCreate;
-import com.example.gateway.user.dto.OnUpdate;
-import com.example.gateway.user.dto.UserDto;
+import com.example.gateway.client.UserClient;
+import com.example.gateway.dto.OnCreate;
+import com.example.gateway.dto.OnUpdate;
+import com.example.gateway.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

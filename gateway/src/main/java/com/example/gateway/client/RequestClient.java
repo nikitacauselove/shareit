@@ -1,7 +1,6 @@
-package com.example.gateway.request;
+package com.example.gateway.client;
 
-import com.example.gateway.client.BaseClient;
-import com.example.gateway.request.dto.ItemRequestDto;
+import com.example.gateway.dto.ItemRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

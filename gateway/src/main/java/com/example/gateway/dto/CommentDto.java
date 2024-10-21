@@ -1,4 +1,4 @@
-package com.example.gateway.comment.dto;
+package com.example.gateway.dto;
 
 import lombok.Data;
 

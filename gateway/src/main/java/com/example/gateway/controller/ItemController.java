@@ -1,6 +1,7 @@
-package com.example.gateway.item;
+package com.example.gateway.controller;
 
-import com.example.gateway.item.dto.ItemDto;
+import com.example.gateway.client.ItemClient;
+import com.example.gateway.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import java.util.Collections;
 
 import static com.example.gateway.exception.GlobalControllerExceptionHandler.FROM_ERROR_MESSAGE;
 import static com.example.gateway.exception.GlobalControllerExceptionHandler.SIZE_ERROR_MESSAGE;
-import static com.example.gateway.user.UserController.X_SHARER_USER_ID;
+import static com.example.gateway.controller.UserController.X_SHARER_USER_ID;
 
 @Controller
 @RequestMapping(path = "/items")
