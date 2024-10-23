@@ -1,58 +1,42 @@
 package com.example.gateway.controller;
 
-import com.example.gateway.dto.BookingCreationDto;
+import com.example.api.BookingApi;
+import com.example.api.dto.BookingCreationDto;
 import com.example.gateway.BookingState;
 import com.example.gateway.client.BookingClient;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
-
-import static com.example.gateway.exception.GlobalControllerExceptionHandler.FROM_ERROR_MESSAGE;
-import static com.example.gateway.exception.GlobalControllerExceptionHandler.SIZE_ERROR_MESSAGE;
-import static com.example.gateway.controller.UserController.X_SHARER_USER_ID;
 
 @Controller
-@RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
-@Validated
-public class BookingController {
+public class BookingController implements BookingApi {
+
     private final BookingClient bookingClient;
 
-    @PostMapping
-    public ResponseEntity<Object> create(@RequestBody @Valid BookingCreationDto bookingCreationDto, @RequestHeader(X_SHARER_USER_ID) long bookerId) {
+    @Override
+    public ResponseEntity<Object> create(BookingCreationDto bookingCreationDto, long bookerId) {
         return bookingClient.create(bookingCreationDto, bookerId);
     }
 
-    @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> approveOrReject(@PathVariable long bookingId, @RequestHeader(X_SHARER_USER_ID) long ownerId, @RequestParam boolean approved) {
+    @Override
+    public ResponseEntity<Object> approveOrReject(long bookingId, long ownerId, boolean approved) {
         return bookingClient.approveOrReject(bookingId, ownerId, approved);
     }
 
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<Object> findById(@PathVariable long bookingId, @RequestHeader(X_SHARER_USER_ID) long userId) {
+    @Override
+    public ResponseEntity<Object> findById(long bookingId, long userId) {
         return bookingClient.findById(bookingId, userId);
     }
 
-    @GetMapping
-    public ResponseEntity<Object> findAllByBookerId(@RequestHeader(X_SHARER_USER_ID) long bookerId,
-                                                    @RequestParam(defaultValue = "ALL") String state,
-                                                    @RequestParam(defaultValue = "0") @PositiveOrZero(message = FROM_ERROR_MESSAGE) int from,
-                                                    @RequestParam(defaultValue = "10") @Positive(message = SIZE_ERROR_MESSAGE) int size) {
+    @Override
+    public ResponseEntity<Object> findAllByBookerId(long bookerId, String state, int from, int size) {
         return bookingClient.findAllByBookerId(bookerId, BookingState.from(state), from, size);
     }
 
-    @GetMapping("/owner")
-    public ResponseEntity<Object> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) long ownerId,
-                                                   @RequestParam(defaultValue = "ALL") String state,
-                                                   @RequestParam(defaultValue = "0") @PositiveOrZero(message = FROM_ERROR_MESSAGE) int from,
-                                                   @RequestParam(defaultValue = "10") @Positive(message = SIZE_ERROR_MESSAGE) int size) {
+    @Override
+    public ResponseEntity<Object> findAllByOwnerId(long ownerId, String state, int from, int size) {
         return bookingClient.findAllByOwnerId(ownerId, BookingState.from(state), from, size);
     }
 }

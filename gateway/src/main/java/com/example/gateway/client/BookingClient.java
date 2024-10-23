@@ -1,6 +1,6 @@
 package com.example.gateway.client;
 
-import com.example.gateway.dto.BookingCreationDto;
+import com.example.api.dto.BookingCreationDto;
 import com.example.gateway.BookingState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
