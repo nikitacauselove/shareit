@@ -1,46 +1,40 @@
 package com.example.gateway.controller;
 
+import com.example.api.UserApi;
+import com.example.api.dto.UserDto;
 import com.example.gateway.client.UserClient;
-import com.example.gateway.dto.OnCreate;
-import com.example.gateway.dto.OnUpdate;
-import com.example.gateway.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping(path = "/users")
 @RequiredArgsConstructor
-@Validated
-public class UserController {
+public class UserController implements UserApi {
+
     private final UserClient userClient;
 
-    public static final String X_SHARER_USER_ID = "X-Sharer-User-Id";
-
-    @PostMapping
-    public ResponseEntity<Object> create(@RequestBody @Validated(OnCreate.class) UserDto userDto) {
+    @Override
+    public ResponseEntity<Object> create(UserDto userDto) {
         return userClient.create(userDto);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable long id, @RequestBody @Validated(OnUpdate.class) UserDto userDto) {
+    @Override
+    public ResponseEntity<Object> update(long id, UserDto userDto) {
         return userClient.update(id, userDto);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Object> findById(long id) {
         return userClient.findById(id);
     }
 
-    @GetMapping
+    @Override
     public ResponseEntity<Object> findAll() {
         return userClient.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Object> deleteById(long id) {
         return userClient.deleteById(id);
     }
 }

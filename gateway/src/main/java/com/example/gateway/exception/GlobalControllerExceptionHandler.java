@@ -1,7 +1,11 @@
 package com.example.gateway.exception;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,5 +46,15 @@ public class GlobalControllerExceptionHandler {
     public Map<String, String> onBadRequestException(BadRequestException exception) {
         log.warn("Сервер не понимает запрос или пытается его обработать, но не может выполнить из-за того, что какой-то его аспект неверен.", exception);
         return Map.of("error", exception.getMessage());
+    }
+
+    @ExceptionHandler(FeignException.class)
+    @SneakyThrows
+    public ResponseEntity<Map<String, String>> handleException(FeignException e) {
+        ObjectMapper mapper = new ObjectMapper();
+        String message = mapper.readTree(e.contentUTF8()).get("error").asText();
+
+        return new ResponseEntity<>(Map.of("error", message), HttpStatus.valueOf(e.status()));
+
     }
 }
