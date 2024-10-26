@@ -6,10 +6,12 @@ import com.example.gateway.client.ItemClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 
 @Controller
+@RequestMapping(path = ItemApi.PATH)
 @RequiredArgsConstructor
 public class ItemController implements ItemApi {
 

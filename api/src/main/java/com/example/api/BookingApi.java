@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
@@ -20,9 +19,10 @@ import static com.example.api.Constant.FROM_ERROR_MESSAGE;
 import static com.example.api.Constant.SIZE_ERROR_MESSAGE;
 import static com.example.api.Constant.X_SHARER_USER_ID;
 
-@RequestMapping(path = "/bookings")
 @Validated
 public interface BookingApi {
+
+    String PATH = "/bookings";
 
     @PostMapping
     ResponseEntity<Object> create(@RequestBody @Valid BookingCreationDto bookingCreationDto, @RequestHeader(X_SHARER_USER_ID) long bookerId);

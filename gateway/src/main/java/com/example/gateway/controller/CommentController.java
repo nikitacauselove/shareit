@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path = "/items")
+@RequestMapping(path = CommentApi.PATH)
 @RequiredArgsConstructor
 public class CommentController implements CommentApi {
 

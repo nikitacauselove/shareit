@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class StartBeforeEndValidator implements ConstraintValidator<StartBeforeEnd, BookingCreationDto> {
 
-    public static final String MESSAGE = "дата и время начала бронирования должна быть раньше, чем дата и время конца бронирования";
+    public static final String MESSAGE = "дата и время начала бронирования должна быть раньше, чем дата и время окончания бронирования";
 
     @Override
     public boolean isValid(BookingCreationDto bookingCreationDto, ConstraintValidatorContext constraintValidatorContext) {

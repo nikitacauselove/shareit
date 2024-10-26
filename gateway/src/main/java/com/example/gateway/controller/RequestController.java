@@ -6,8 +6,10 @@ import com.example.gateway.client.RequestClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping(path = RequestApi.PATH)
 @RequiredArgsConstructor
 public class RequestController implements RequestApi {
 

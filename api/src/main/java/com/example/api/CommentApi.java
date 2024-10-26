@@ -13,6 +13,8 @@ import static com.example.api.Constant.X_SHARER_USER_ID;
 
 public interface CommentApi {
 
+    String PATH = "/items";
+
     @PostMapping("/{itemId}/comment")
     ResponseEntity<Object> create(@PathVariable long itemId, @RequestBody @Valid CommentDto commentCreationDto, @RequestHeader(X_SHARER_USER_ID) long authorId);
 }
