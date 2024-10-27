@@ -1,9 +1,9 @@
 package com.example.api.constraint;
 
 import com.example.api.dto.BookingCreationDto;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;
 
 public class StartBeforeEndValidator implements ConstraintValidator<StartBeforeEnd, BookingCreationDto> {

@@ -1,6 +1,7 @@
 package com.example.api.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 
 public record CommentDto(Long id,

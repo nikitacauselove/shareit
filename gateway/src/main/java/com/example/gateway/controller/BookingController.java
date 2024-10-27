@@ -2,7 +2,6 @@ package com.example.gateway.controller;
 
 import com.example.api.BookingApi;
 import com.example.api.dto.BookingCreationDto;
-import com.example.gateway.BookingState;
 import com.example.gateway.client.BookingClient;
 import lombok.RequiredArgsConstructor;
 
@@ -34,11 +33,11 @@ public class BookingController implements BookingApi {
 
     @Override
     public ResponseEntity<Object> findAllByBookerId(long bookerId, String state, int from, int size) {
-        return bookingClient.findAllByBookerId(bookerId, BookingState.from(state), from, size);
+        return bookingClient.findAllByBookerId(bookerId, state, from, size);
     }
 
     @Override
     public ResponseEntity<Object> findAllByOwnerId(long ownerId, String state, int from, int size) {
-        return bookingClient.findAllByOwnerId(ownerId, BookingState.from(state), from, size);
+        return bookingClient.findAllByOwnerId(ownerId, state, from, size);
     }
 }

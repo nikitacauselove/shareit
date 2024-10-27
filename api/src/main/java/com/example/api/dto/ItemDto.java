@@ -1,7 +1,7 @@
 package com.example.api.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record ItemDto(Long id,
                       @NotBlank(message = "Название предмета не может быть пустым.") String name,

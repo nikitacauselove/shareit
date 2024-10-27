@@ -1,11 +1,11 @@
 package com.example.api.dto;
 
 import com.example.api.constraint.StartBeforeEnd;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @StartBeforeEnd
