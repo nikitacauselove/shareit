@@ -16,9 +16,9 @@
 
     <modules>
         <module>api</module>
+        <module>application</module>
         <module>gateway</module>
         <module>liquibase</module>
-        <module>server</module>
     </modules>
 
     <properties>
