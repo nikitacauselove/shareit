@@ -1,6 +1,4 @@
-server:
-  port: 8080
-shareit-server:
+application:
   url: http://localhost:9090
 spring:
   cloud:

@@ -20,8 +20,6 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
-    public static final String FROM_ERROR_MESSAGE = "Индекс первого элемента не может быть меньше нуля.";
-    public static final String SIZE_ERROR_MESSAGE = "Количество элементов для отображения не может быть меньше одного.";
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -55,6 +53,5 @@ public class GlobalControllerExceptionHandler {
         String message = mapper.readTree(e.contentUTF8()).get("error").asText();
 
         return new ResponseEntity<>(Map.of("error", message), HttpStatus.valueOf(e.status()));
-
     }
 }
