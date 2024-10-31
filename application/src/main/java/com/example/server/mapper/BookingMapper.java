@@ -1,8 +1,8 @@
 package com.example.server.mapper;
 
+import com.example.api.dto.BookingCreationDto;
 import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.BookingStatus;
-import com.example.server.dto.BookingCreationDto;
 import com.example.server.dto.BookingDto;
 import com.example.server.dto.ItemDto;
 import com.example.server.repository.entity.Item;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class BookingMapper {
     public Booking toBooking(BookingCreationDto bookingCreationDto, Item item, User booker) {
-        return new Booking(null, bookingCreationDto.getStart(), bookingCreationDto.getEnd(), item, booker, BookingStatus.WAITING);
+        return new Booking(null, bookingCreationDto.start(), bookingCreationDto.end(), item, booker, BookingStatus.WAITING);
     }
 
     public BookingDto toBookingDto(Booking booking) {

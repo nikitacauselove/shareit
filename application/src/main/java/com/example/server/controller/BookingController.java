@@ -1,7 +1,7 @@
 package com.example.server.controller;
 
+import com.example.api.dto.BookingCreationDto;
 import com.example.server.service.BookingService;
-import com.example.server.dto.BookingCreationDto;
 import com.example.server.dto.BookingDto;
 import com.example.server.mapper.BookingMapper;
 import com.example.server.repository.entity.Booking;
@@ -34,7 +34,7 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<BookingDto> create(@RequestBody BookingCreationDto bookingCreationDto, @RequestHeader(X_SHARER_USER_ID) long bookerId) {
         User booker = userService.findById(bookerId);
-        Item item = itemService.findById(bookingCreationDto.getItemId());
+        Item item = itemService.findById(bookingCreationDto.itemId());
         Booking booking = BookingMapper.toBooking(bookingCreationDto, item, booker);
 
         log.info("Добавление нового запроса на бронирование пользователем с идентификатором {}.", bookerId);
