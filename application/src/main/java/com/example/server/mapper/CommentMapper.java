@@ -1,7 +1,7 @@
 package com.example.server.mapper;
 
+import com.example.api.dto.CommentDto;
 import com.example.server.repository.entity.Comment;
-import com.example.server.dto.CommentDto;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.User;
 import lombok.experimental.UtilityClass;
@@ -15,7 +15,7 @@ public class CommentMapper {
     public Comment toComment(CommentDto commentDto, Item item, User author) {
         LocalDateTime now = LocalDateTime.now();
 
-        return new Comment(null, commentDto.getText(), item, author, now);
+        return new Comment(null, commentDto.text(), item, author, now);
     }
 
     public CommentDto toCommentDto(Comment comment) {

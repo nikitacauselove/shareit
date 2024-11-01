@@ -1,12 +1,12 @@
 package com.example.server.item;
 
+import com.example.api.dto.CommentDto;
 import com.example.server.TestConstants;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.BookingStatus;
 import com.example.server.repository.CommentRepository;
-import com.example.server.dto.CommentDto;
 import com.example.server.repository.entity.Comment;
 import com.example.server.exception.NotFoundException;
 import com.example.server.dto.ItemDtoWithBookings;

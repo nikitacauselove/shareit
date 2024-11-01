@@ -1,6 +1,6 @@
 package com.example.server.comment.dto;
 
-import com.example.server.dto.CommentDto;
+import com.example.api.dto.CommentDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
