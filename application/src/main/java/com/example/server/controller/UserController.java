@@ -1,7 +1,7 @@
 package com.example.server.controller;
 
+import com.example.api.dto.UserDto;
 import com.example.server.service.UserService;
-import com.example.server.dto.UserDto;
 import com.example.server.mapper.UserMapper;
 import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
