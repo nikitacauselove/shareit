@@ -1,9 +1,9 @@
 package com.example.server.booking.dto;
 
+import com.example.api.dto.ItemDto;
 import com.example.api.dto.UserDto;
 import com.example.server.repository.entity.BookingStatus;
 import com.example.server.dto.BookingDto;
-import com.example.server.dto.ItemDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
 package com.example.server.mapper;
 
 import com.example.api.dto.BookingCreationDto;
+import com.example.api.dto.ItemDto;
 import com.example.api.dto.UserDto;
 import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.BookingStatus;
 import com.example.server.dto.BookingDto;
-import com.example.server.dto.ItemDto;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.User;
 import lombok.experimental.UtilityClass;

@@ -1,6 +1,6 @@
 package com.example.server.mapper;
 
-import com.example.server.dto.ItemDto;
+import com.example.api.dto.ItemDto;
 import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.Comment;
@@ -15,15 +15,15 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class ItemMapper {
     public Item toItem(ItemDto itemDto, User owner, ItemRequest itemRequest) {
-        return new Item(null, itemDto.getName(), itemDto.getDescription(), itemDto.isAvailable(), owner, itemRequest);
+        return new Item(null, itemDto.name(), itemDto.description(), itemDto.available(), owner, itemRequest);
     }
 
     public Item toItem(Item item, ItemDto itemDto, User owner) {
         return new Item(
                 item.getId(),
-                itemDto.getName() != null ? itemDto.getName() : item.getName(),
-                itemDto.getDescription() != null ? itemDto.getDescription() : item.getDescription(),
-                itemDto.isAvailable() != null ? itemDto.isAvailable() : item.isAvailable(),
+                itemDto.name() != null ? itemDto.name() : item.getName(),
+                itemDto.description() != null ? itemDto.description() : item.getDescription(),
+                itemDto.available() != null ? itemDto.available() : item.isAvailable(),
                 owner,
                 item.getRequest()
         );

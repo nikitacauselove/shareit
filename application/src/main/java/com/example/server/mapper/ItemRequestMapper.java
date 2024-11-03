@@ -1,7 +1,7 @@
 package com.example.server.mapper;
 
-import com.example.server.dto.ItemDto;
-import com.example.server.dto.ItemRequestDto;
+import com.example.api.dto.ItemDto;
+import com.example.api.dto.ItemRequestDto;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.entity.User;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class ItemRequestMapper {
     public ItemRequest toItemRequest(ItemRequestDto itemRequestDto, User requester) {
-        return new ItemRequest(null, itemRequestDto.getDescription(), requester, LocalDateTime.now());
+        return new ItemRequest(null, itemRequestDto.description(), requester, LocalDateTime.now());
     }
 
     public ItemRequestDto toItemRequestDto(ItemRequest itemRequest, List<Item> items) {

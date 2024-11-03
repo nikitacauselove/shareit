@@ -1,11 +1,11 @@
 package com.example.server.service;
 
+import com.example.api.dto.ItemRequestDto;
 import com.example.server.FromSizePageRequest;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.ItemRequestRepository;
-import com.example.server.dto.ItemRequestDto;
 import com.example.server.mapper.ItemRequestMapper;
 import com.example.server.repository.entity.ItemRequest;
 import lombok.RequiredArgsConstructor;

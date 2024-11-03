@@ -1,7 +1,7 @@
 package com.example.server.controller;
 
+import com.example.api.dto.ItemDto;
 import com.example.server.service.ItemService;
-import com.example.server.dto.ItemDto;
 import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.mapper.ItemMapper;
 import com.example.server.repository.entity.Item;
@@ -33,7 +33,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemDto> create(@RequestBody ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) long ownerId) {
-        ItemRequest itemRequest = itemDto.getRequestId() == null ? null : itemRequestService.findById(itemDto.getRequestId());
+        ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestService.findById(itemDto.requestId());
         Item item = ItemMapper.toItem(itemDto, userService.findById(ownerId), itemRequest);
 
         log.info("Добавление новой вещи пользователем с идентификатором {}.", ownerId);

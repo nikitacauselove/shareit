@@ -1,5 +1,6 @@
 package com.example.server.dto;
 
+import com.example.api.dto.ItemDto;
 import com.example.api.dto.UserDto;
 import com.example.server.repository.entity.BookingStatus;
 import lombok.Data;

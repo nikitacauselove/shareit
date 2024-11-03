@@ -1,11 +1,11 @@
 package com.example.server.request;
 
+import com.example.api.dto.ItemDto;
+import com.example.api.dto.ItemRequestDto;
 import com.example.server.TestConstants;
 import com.example.server.repository.ItemRepository;
-import com.example.server.dto.ItemDto;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.ItemRequestRepository;
-import com.example.server.dto.ItemRequestDto;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.UserRepository;
 import com.example.server.service.ItemRequestService;

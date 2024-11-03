@@ -1,7 +1,7 @@
 package com.example.server.controller;
 
+import com.example.api.dto.ItemRequestDto;
 import com.example.server.service.ItemRequestService;
-import com.example.server.dto.ItemRequestDto;
 import com.example.server.mapper.ItemRequestMapper;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.service.UserService;
