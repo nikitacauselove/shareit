@@ -1,5 +1,6 @@
 package com.example.server.repository.entity;
 
+import com.example.api.dto.enums.BookingStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

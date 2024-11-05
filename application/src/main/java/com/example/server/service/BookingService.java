@@ -1,10 +1,10 @@
 package com.example.server.service;
 
+import com.example.api.BadRequestException;
+import com.example.api.dto.enums.BookingState;
+import com.example.api.dto.enums.BookingStatus;
 import com.example.server.FromSizePageRequest;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingState;
-import com.example.server.repository.entity.BookingStatus;
-import com.example.server.exception.BadRequestException;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;

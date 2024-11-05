@@ -1,9 +1,9 @@
 package com.example.server.comment;
 
+import com.example.api.BadRequestException;
 import com.example.server.TestConstants;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.entity.Comment;
-import com.example.server.exception.BadRequestException;
 import com.example.server.repository.CommentRepository;
 import com.example.server.service.CommentService;
 import org.junit.jupiter.api.Assertions;

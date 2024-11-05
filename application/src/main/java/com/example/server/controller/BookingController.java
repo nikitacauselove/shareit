@@ -1,11 +1,11 @@
 package com.example.server.controller;
 
 import com.example.api.dto.BookingCreationDto;
+import com.example.api.dto.enums.BookingState;
 import com.example.server.service.BookingService;
 import com.example.server.dto.BookingDto;
 import com.example.server.mapper.BookingMapper;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingState;
 import com.example.server.service.ItemService;
 import com.example.server.repository.entity.Item;
 import com.example.server.service.UserService;

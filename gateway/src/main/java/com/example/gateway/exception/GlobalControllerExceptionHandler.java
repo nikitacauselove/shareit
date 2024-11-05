@@ -1,5 +1,6 @@
 package com.example.gateway.exception;
 
+import com.example.api.BadRequestException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import jakarta.validation.ConstraintViolation;

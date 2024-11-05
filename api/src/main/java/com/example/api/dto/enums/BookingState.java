@@ -1,6 +1,6 @@
-package com.example.server.repository.entity;
+package com.example.api.dto.enums;
 
-import com.example.server.exception.BadRequestException;
+import com.example.api.BadRequestException;
 
 public enum BookingState {
     ALL, CURRENT, FUTURE, PAST, REJECTED, WAITING;

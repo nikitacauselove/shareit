@@ -1,4 +1,4 @@
-package com.example.server.repository.entity;
+package com.example.api.dto.enums;
 
 public enum BookingStatus {
     WAITING, APPROVED, REJECTED, CANCELED

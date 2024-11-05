@@ -1,9 +1,9 @@
 package com.example.server.booking;
 
+import com.example.api.dto.enums.BookingState;
+import com.example.api.dto.enums.BookingStatus;
 import com.example.server.TestConstants;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingState;
-import com.example.server.repository.entity.BookingStatus;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.UserRepository;

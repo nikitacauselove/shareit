@@ -1,7 +1,7 @@
 package com.example.server;
 
+import com.example.api.dto.enums.BookingStatus;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingStatus;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.entity.User;

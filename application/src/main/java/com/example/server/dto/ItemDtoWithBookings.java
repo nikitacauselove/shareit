@@ -1,8 +1,8 @@
 package com.example.server.dto;
 
 import com.example.api.dto.CommentDto;
+import com.example.api.dto.enums.BookingStatus;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

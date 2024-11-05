@@ -1,8 +1,8 @@
 package com.example.server.service;
 
+import com.example.api.BadRequestException;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.entity.Comment;
-import com.example.server.exception.BadRequestException;
 import com.example.server.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

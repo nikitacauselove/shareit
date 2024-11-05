@@ -1,7 +1,7 @@
 package com.example.server.repository;
 
+import com.example.api.dto.enums.BookingStatus;
 import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.BookingStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
