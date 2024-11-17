@@ -1,5 +1,6 @@
 package com.example.server.mapper;
 
+import com.example.api.dto.BookingShortDto;
 import com.example.api.dto.ItemDto;
 import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.repository.entity.Booking;
@@ -42,8 +43,8 @@ public class ItemMapper {
     }
 
     public ItemDtoWithBookings toItemDtoWithBookings(Item item, List<Booking> bookings, List<Comment> comments) {
-        ItemDtoWithBookings.BookingDto lastBooking = ItemDtoWithBookings.findLastBooking(bookings);
-        ItemDtoWithBookings.BookingDto nextBooking = ItemDtoWithBookings.findNextBooking(bookings);
+        BookingShortDto lastBooking = ItemDtoWithBookings.findLastBooking(bookings);
+        BookingShortDto nextBooking = ItemDtoWithBookings.findNextBooking(bookings);
 
         return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), lastBooking, nextBooking, CommentMapper.toCommentDto(comments));
     }

@@ -1,5 +1,6 @@
 package com.example.server.item;
 
+import com.example.api.dto.BookingShortDto;
 import com.example.api.dto.CommentDto;
 import com.example.api.dto.enums.BookingStatus;
 import com.example.server.TestConstants;
@@ -92,8 +93,8 @@ public class ItemServiceTest {
         Booking sixthBooking = new Booking(6L, TestConstants.START_DATE.minusSeconds(1), TestConstants.END_DATE.minusSeconds(1), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.APPROVED);
         Comment comment = new Comment(1L, "Add comment from user1", TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, TestConstants.CURRENT_TIME.plusSeconds(1));
         CommentDto commentDto = new CommentDto(1L, "Add comment from user1", "updateName", TestConstants.CURRENT_TIME.plusSeconds(1));
-        ItemDtoWithBookings.BookingDto fourthBookingDto = new ItemDtoWithBookings.BookingDto(4L, TestConstants.START_DATE.plusHours(1), TestConstants.END_DATE.plusHours(2), 3L);
-        ItemDtoWithBookings.BookingDto sixthBookingDto = new ItemDtoWithBookings.BookingDto(6L, TestConstants.START_DATE.minusSeconds(1), TestConstants.END_DATE.minusSeconds(1), 1L);
+        BookingShortDto fourthBookingDto = new BookingShortDto(4L, TestConstants.START_DATE.plusHours(1), TestConstants.END_DATE.plusHours(2), 3L);
+        BookingShortDto sixthBookingDto = new BookingShortDto(6L, TestConstants.START_DATE.minusSeconds(1), TestConstants.END_DATE.minusSeconds(1), 1L);
         ItemDtoWithBookings itemDtoWithBookings = new ItemDtoWithBookings(2L, "Отвертка", "Аккумуляторная отвертка", true, null, null, List.of(commentDto));
         ItemDtoWithBookings itemDtoWithBookingsAndCommentsWithBookings = new ItemDtoWithBookings(2L, "Отвертка", "Аккумуляторная отвертка", true, sixthBookingDto, fourthBookingDto, List.of(commentDto));
         Mockito.when(itemRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(secondItem));
