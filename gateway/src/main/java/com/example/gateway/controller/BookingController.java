@@ -2,14 +2,16 @@ package com.example.gateway.controller;
 
 import com.example.api.BookingApi;
 import com.example.api.dto.BookingCreationDto;
+import com.example.api.dto.BookingDto;
 import com.example.gateway.client.BookingClient;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping(path = BookingApi.PATH)
 @RequiredArgsConstructor
 public class BookingController implements BookingApi {
@@ -17,27 +19,27 @@ public class BookingController implements BookingApi {
     private final BookingClient bookingClient;
 
     @Override
-    public ResponseEntity<Object> create(BookingCreationDto bookingCreationDto, long bookerId) {
+    public BookingDto create(BookingCreationDto bookingCreationDto, Long bookerId) {
         return bookingClient.create(bookingCreationDto, bookerId);
     }
 
     @Override
-    public ResponseEntity<Object> approveOrReject(long bookingId, long ownerId, boolean approved) {
+    public BookingDto approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
         return bookingClient.approveOrReject(bookingId, ownerId, approved);
     }
 
     @Override
-    public ResponseEntity<Object> findById(long bookingId, long userId) {
+    public BookingDto findById(Long bookingId, Long userId) {
         return bookingClient.findById(bookingId, userId);
     }
 
     @Override
-    public ResponseEntity<Object> findAllByBookerId(long bookerId, String state, int from, int size) {
+    public List<BookingDto> findAllByBookerId(Long bookerId, String state, Integer from, Integer size) {
         return bookingClient.findAllByBookerId(bookerId, state, from, size);
     }
 
     @Override
-    public ResponseEntity<Object> findAllByOwnerId(long ownerId, String state, int from, int size) {
+    public List<BookingDto> findAllByOwnerId(Long ownerId, String state, Integer from, Integer size) {
         return bookingClient.findAllByOwnerId(ownerId, state, from, size);
     }
 }

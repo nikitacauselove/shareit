@@ -1,59 +1,58 @@
 package com.example.server.controller;
 
+import com.example.api.UserApi;
 import com.example.api.dto.UserDto;
 import com.example.server.service.UserService;
 import com.example.server.mapper.UserMapper;
 import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping(path = "/users")
-@RequiredArgsConstructor
 @Slf4j
-public class UserController {
+@RestController
+@RequestMapping(path = UserApi.PATH)
+@RequiredArgsConstructor
+public class UserController implements UserApi {
+
     private final UserService userService;
 
-    public static final String X_SHARER_USER_ID = "X-Sharer-User-Id";
-
-    @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
+    @Override
+    public UserDto create(UserDto userDto) {
         User user = UserMapper.toUser(userDto);
 
         log.info("Добавление нового пользователя.");
-        return ResponseEntity.ok(UserMapper.toUserDto(userService.create(user)));
+        return UserMapper.toUserDto(userService.create(user));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable long id, @RequestBody UserDto userDto) {
+    @Override
+    public UserDto update(Long id, UserDto userDto) {
         User user = UserMapper.toUser(userService.findById(id), userDto);
 
         log.info("Редактирование пользователя с идентификатором {}.", id);
-        return ResponseEntity.ok(UserMapper.toUserDto(userService.update(user)));
+        return UserMapper.toUserDto(userService.update(user));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable long id) {
+    @Override
+    public UserDto findById(Long id) {
         log.info("Просмотр информации о конкретном пользователе с идентификатором {}.", id);
-        return ResponseEntity.ok(UserMapper.toUserDto(userService.findById(id)));
+        return UserMapper.toUserDto(userService.findById(id));
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserDto>> findAll() {
+    @Override
+    public List<UserDto> findAll() {
         log.info("Просмотр списка всех пользователей.");
-        return ResponseEntity.ok(UserMapper.toUserDto(userService.findAll()));
+        return UserMapper.toUserDto(userService.findAll());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deleteById(@PathVariable long id) {
+    @Override
+    public Map<String, String> deleteById(Long id) {
         log.info("Удаление пользователя с идентификатором {}.", id);
         userService.deleteById(id);
-        return ResponseEntity.ok(Map.of("message", "Пользователь с указанным идентификатором был успешно удален."));
+        return Map.of("message", "Пользователь с указанным идентификатором был успешно удален.");
     }
 }

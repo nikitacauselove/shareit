@@ -2,6 +2,7 @@ package com.example.server.item;
 
 import com.example.api.dto.BookingShortDto;
 import com.example.api.dto.CommentDto;
+import com.example.api.dto.ItemDtoWithBookings;
 import com.example.api.dto.enums.BookingStatus;
 import com.example.server.TestConstants;
 import com.example.server.repository.ItemRepository;
@@ -10,7 +11,6 @@ import com.example.server.repository.entity.Booking;
 import com.example.server.repository.CommentRepository;
 import com.example.server.repository.entity.Comment;
 import com.example.server.exception.NotFoundException;
-import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.repository.entity.Item;
 import com.example.server.service.ItemService;
 import com.example.server.repository.entity.User;

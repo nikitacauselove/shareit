@@ -1,24 +1,14 @@
-package com.example.server.dto;
+package com.example.server;
 
 import com.example.api.dto.BookingShortDto;
-import com.example.api.dto.CommentDto;
 import com.example.api.dto.enums.BookingStatus;
 import com.example.server.repository.entity.Booking;
-import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
-@Data
-public class ItemDtoWithBookings {
-    private final Long id;
-    private final String name;
-    private final String description;
-    private final Boolean available;
-    private final BookingShortDto lastBooking;
-    private final BookingShortDto nextBooking;
-    private final List<CommentDto> comments;
+public class BookingUtils {
 
     private static final Comparator<Booking> BY_START_ASCENDING = Comparator.comparing(Booking::getStart);
     private static final Comparator<Booking> BY_START_DESCENDING = BY_START_ASCENDING.reversed();

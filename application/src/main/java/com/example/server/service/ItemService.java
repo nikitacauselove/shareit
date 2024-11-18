@@ -1,5 +1,6 @@
 package com.example.server.service;
 
+import com.example.api.dto.ItemDtoWithBookings;
 import com.example.server.FromSizePageRequest;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.BookingRepository;
@@ -7,7 +8,6 @@ import com.example.server.repository.entity.Booking;
 import com.example.server.repository.CommentRepository;
 import com.example.server.repository.entity.Comment;
 import com.example.server.exception.NotFoundException;
-import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.mapper.ItemMapper;
 import com.example.server.repository.entity.Item;
 import lombok.RequiredArgsConstructor;

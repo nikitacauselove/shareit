@@ -1,8 +1,9 @@
 package com.example.server.controller;
 
+import com.example.api.ItemApi;
 import com.example.api.dto.ItemDto;
+import com.example.api.dto.ItemDtoWithBookings;
 import com.example.server.service.ItemService;
-import com.example.server.dto.ItemDtoWithBookings;
 import com.example.server.mapper.ItemMapper;
 import com.example.server.repository.entity.Item;
 import com.example.server.service.ItemRequestService;
@@ -10,62 +11,57 @@ import com.example.server.repository.entity.ItemRequest;
 import com.example.server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.example.server.controller.UserController.X_SHARER_USER_ID;
-
-
-@Controller
-@RequestMapping(path = "/items")
-@RequiredArgsConstructor
 @Slf4j
-@Validated
-public class ItemController {
+@RestController
+@RequestMapping(path = ItemApi.PATH)
+@RequiredArgsConstructor
+public class ItemController implements ItemApi {
+
     private final ItemRequestService itemRequestService;
     private final ItemService itemService;
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<ItemDto> create(@RequestBody ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) long ownerId) {
+    @Override
+    public ItemDto create(ItemDto itemDto, Long ownerId) {
         ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestService.findById(itemDto.requestId());
         Item item = ItemMapper.toItem(itemDto, userService.findById(ownerId), itemRequest);
 
         log.info("Добавление новой вещи пользователем с идентификатором {}.", ownerId);
-        return ResponseEntity.ok(ItemMapper.toItemDto(itemService.create(item)));
+        return ItemMapper.toItemDto(itemService.create(item));
     }
 
-    @PatchMapping("/{itemId}")
-    public ResponseEntity<ItemDto> update(@PathVariable long itemId, @RequestBody ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) long ownerId) {
+    @Override
+    public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
         Item item = ItemMapper.toItem(itemService.findById(itemId), itemDto, userService.findById(ownerId));
 
         log.info("Редактирование вещи с идентификатором {} пользователем с идентификатором {}.", itemId, ownerId);
-        return ResponseEntity.ok(ItemMapper.toItemDto(itemService.update(item)));
+        return ItemMapper.toItemDto(itemService.update(item));
     }
 
-    @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDtoWithBookings> findById(@PathVariable long itemId, @RequestHeader(X_SHARER_USER_ID) long userId) {
+    @Override
+    public ItemDtoWithBookings findById(Long itemId, Long userId) {
         log.info("Просмотр информации о конкретной вещи с идентификатором {} пользователем с идентификатором {}.", itemId, userId);
-        return ResponseEntity.ok(itemService.findByIdWithBooking(itemId, userId));
+        return itemService.findByIdWithBooking(itemId, userId);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ItemDtoWithBookings>> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) long ownerId, @RequestParam int from, @RequestParam int size) {
+    @Override
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
         log.info("Просмотр пользователем с идентификатором {} списка всех его вещей с указанием названия и описания для каждой.", ownerId);
-        return ResponseEntity.ok(itemService.findAllByOwnerId(ownerId, from, size));
+        return itemService.findAllByOwnerId(ownerId, from, size);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<ItemDto>> search(@RequestParam String text, @RequestParam int from, @RequestParam int size) {
+    @Override
+    public List<ItemDto> search(String text, Integer from, Integer size) {
         log.info("Поиск вещи потенциальным арендатором. Пользователь передаёт в строке запроса текст: {}.", text);
         if (text.isBlank()) {
-            return ResponseEntity.ok(Collections.emptyList());
+            return Collections.emptyList();
         }
-        return ResponseEntity.ok(ItemMapper.toItemDto(itemService.search(text, from, size)));
+        return ItemMapper.toItemDto(itemService.search(text, from, size));
     }
 }

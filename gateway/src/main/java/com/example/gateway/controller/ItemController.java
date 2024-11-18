@@ -2,15 +2,16 @@ package com.example.gateway.controller;
 
 import com.example.api.ItemApi;
 import com.example.api.dto.ItemDto;
+import com.example.api.dto.ItemDtoWithBookings;
 import com.example.gateway.client.ItemClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path = ItemApi.PATH)
 @RequiredArgsConstructor
 public class ItemController implements ItemApi {
@@ -18,29 +19,29 @@ public class ItemController implements ItemApi {
     private final ItemClient itemClient;
 
     @Override
-    public ResponseEntity<Object> create(ItemDto itemDto, long ownerId) {
+    public ItemDto create(ItemDto itemDto, Long ownerId) {
         return itemClient.create(itemDto, ownerId);
     }
 
     @Override
-    public ResponseEntity<Object> update(long itemId, ItemDto itemDto, long ownerId) {
+    public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
         return itemClient.update(itemId, itemDto, ownerId);
     }
 
     @Override
-    public ResponseEntity<Object> findById(long itemId, long userId) {
+    public ItemDtoWithBookings findById(Long itemId, Long userId) {
         return itemClient.findById(itemId, userId);
     }
 
     @Override
-    public ResponseEntity<Object> findAllByOwnerId(long ownerId, int from, int size) {
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
         return itemClient.findAllByOwnerId(ownerId, from, size);
     }
 
     @Override
-    public ResponseEntity<Object> search(String text, int from, int size) {
+    public List<ItemDto> search(String text, Integer from, Integer size) {
         if (text.isBlank()) {
-            return ResponseEntity.ok(Collections.emptyList());
+            return Collections.emptyList();
         }
         return itemClient.search(text, from, size);
     }

@@ -3,7 +3,6 @@ package com.example.api;
 import com.example.api.dto.OnCreate;
 import com.example.api.dto.OnUpdate;
 import com.example.api.dto.UserDto;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,23 +11,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+import java.util.Map;
+
 @Validated
 public interface UserApi {
 
     String PATH = "/users";
 
     @PostMapping
-    ResponseEntity<Object> create(@RequestBody @Validated(OnCreate.class) UserDto userDto);
+    UserDto create(@RequestBody @Validated(OnCreate.class) UserDto userDto);
 
     @PatchMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable long id, @RequestBody @Validated(OnUpdate.class) UserDto userDto);
+    UserDto update(@PathVariable Long id, @RequestBody @Validated(OnUpdate.class) UserDto userDto);
 
     @GetMapping("/{id}")
-    ResponseEntity<Object> findById(@PathVariable long id);
+    UserDto findById(@PathVariable Long id);
 
     @GetMapping
-    ResponseEntity<Object> findAll();
+    List<UserDto> findAll();
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Object> deleteById(@PathVariable long id);
+    Map<String, String> deleteById(@PathVariable Long id);
 }

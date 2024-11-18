@@ -4,11 +4,12 @@ import com.example.api.RequestApi;
 import com.example.api.dto.ItemRequestDto;
 import com.example.gateway.client.RequestClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping(path = RequestApi.PATH)
 @RequiredArgsConstructor
 public class RequestController implements RequestApi {
@@ -16,22 +17,22 @@ public class RequestController implements RequestApi {
     private final RequestClient requestClient;
 
     @Override
-    public ResponseEntity<Object> create(ItemRequestDto itemRequestDto, long requesterId) {
+    public ItemRequestDto create(ItemRequestDto itemRequestDto, Long requesterId) {
         return requestClient.create(itemRequestDto, requesterId);
     }
 
     @Override
-    public ResponseEntity<Object> findById(long requestId, long requesterId) {
+    public ItemRequestDto findById(Long requestId, Long requesterId) {
         return requestClient.findById(requestId, requesterId);
     }
 
     @Override
-    public ResponseEntity<Object> findAllByRequesterId(long requesterId) {
+    public List<ItemRequestDto> findAllByRequesterId(Long requesterId) {
         return requestClient.findAllByRequesterId(requesterId);
     }
 
     @Override
-    public ResponseEntity<Object> findAllByRequesterIdNot(long requesterId, int from, int size) {
+    public List<ItemRequestDto> findAllByRequesterIdNot(Long requesterId, Integer from, Integer size) {
         return requestClient.findAllByRequesterIdNot(requesterId, from, size);
     }
 }

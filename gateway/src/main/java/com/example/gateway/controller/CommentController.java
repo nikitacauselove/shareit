@@ -4,11 +4,10 @@ import com.example.api.CommentApi;
 import com.example.api.dto.CommentDto;
 import com.example.gateway.client.CommentClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(path = CommentApi.PATH)
 @RequiredArgsConstructor
 public class CommentController implements CommentApi {
@@ -16,7 +15,7 @@ public class CommentController implements CommentApi {
     private final CommentClient commentClient;
 
     @Override
-    public ResponseEntity<Object> create(long itemId, CommentDto commentCreationDto, long authorId) {
+    public CommentDto create(Long itemId, CommentDto commentCreationDto, Long authorId) {
         return commentClient.create(itemId, commentCreationDto, authorId);
     }
 }

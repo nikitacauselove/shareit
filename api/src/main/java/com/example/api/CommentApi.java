@@ -2,7 +2,6 @@ package com.example.api;
 
 import com.example.api.dto.CommentDto;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,5 +14,5 @@ public interface CommentApi {
     String PATH = "/items";
 
     @PostMapping("/{itemId}/comment")
-    ResponseEntity<Object> create(@PathVariable long itemId, @RequestBody @Valid CommentDto commentCreationDto, @RequestHeader(X_SHARER_USER_ID) long authorId);
+    CommentDto create(@PathVariable Long itemId, @RequestBody @Valid CommentDto commentCreationDto, @RequestHeader(X_SHARER_USER_ID) Long authorId);
 }
