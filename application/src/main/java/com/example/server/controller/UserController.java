@@ -19,8 +19,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController implements UserApi {
 
-    private final UserService userService;
     private final UserMapper userMapper;
+    private final UserService userService;
 
     @Override
     public UserDto create(UserDto userDto) {
@@ -32,7 +32,7 @@ public class UserController implements UserApi {
 
     @Override
     public UserDto update(Long id, UserDto userDto) {
-        User user = userMapper.toUser(userService.findById(id), userDto);
+        User user = userMapper.updateUser(userDto, userService.findById(id));
 
         log.info("Редактирование пользователя с идентификатором {}.", id);
         return userMapper.toUserDto(userService.update(user));

@@ -2,33 +2,24 @@ package com.example.server.mapper;
 
 import com.example.api.dto.UserDto;
 import com.example.server.repository.entity.User;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component
-public class UserMapper {
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-    public User toUser(UserDto userDto) {
-        return new User(null, userDto.name(), userDto.email());
-    }
+    User toUser(UserDto userDto);
 
-    public User toUser(User user, UserDto userDto) {
-        return new User(
-                user.getId(),
-                userDto.name() != null ? userDto.name() : user.getName(),
-                userDto.email() != null ? userDto.email() : user.getEmail()
-        );
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User updateUser(UserDto userDto, @MappingTarget User user);
 
-    public UserDto toUserDto(User user) {
-        return new UserDto(user.getId(), user.getName(), user.getEmail());
-    }
+    UserDto toUserDto(User user);
 
-    public List<UserDto> toUserDto(List<User> users) {
-        return users.stream()
-                .map(this::toUserDto)
-                .collect(Collectors.toList());
-    }
+    List<UserDto> toUserDto(List<User> userList);
 }
