@@ -25,6 +25,7 @@ public class ItemService {
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;
+    private final ItemMapper itemMapper;
 
     @Transactional
     public Item create(Item item) {
@@ -47,9 +48,9 @@ public class ItemService {
         Item item = findById(itemId);
 
         if (item.hasSameOwner(userId)) {
-            return ItemMapper.toItemDtoWithBookings(item, bookingRepository.findAllByItemId(itemId), commentRepository.findAllByItemId(itemId));
+            return itemMapper.toItemDtoWithBookings(item, bookingRepository.findAllByItemId(itemId), commentRepository.findAllByItemId(itemId));
         }
-        return ItemMapper.toItemDtoWithBookings(item, commentRepository.findAllByItemId(itemId));
+        return itemMapper.toItemDtoWithBookings(item, commentRepository.findAllByItemId(itemId));
     }
 
     public List<ItemDtoWithBookings> findAllByOwnerId(long ownerId, int from, int size) {
@@ -57,7 +58,7 @@ public class ItemService {
         List<Booking> bookings = bookingRepository.findAllByOwnerId(ownerId, Pageable.unpaged());
         List<Comment> comments = commentRepository.findAllByOwnerId(ownerId);
 
-        return ItemMapper.toItemDtoWithBookings(items, bookings, comments);
+        return itemMapper.toItemDtoWithBookings(items, bookings, comments);
     }
 
     public List<Item> search(String text, int from, int size) {

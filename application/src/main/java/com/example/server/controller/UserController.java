@@ -20,33 +20,34 @@ import java.util.Map;
 public class UserController implements UserApi {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto create(UserDto userDto) {
-        User user = UserMapper.toUser(userDto);
+        User user = userMapper.toUser(userDto);
 
         log.info("Добавление нового пользователя.");
-        return UserMapper.toUserDto(userService.create(user));
+        return userMapper.toUserDto(userService.create(user));
     }
 
     @Override
     public UserDto update(Long id, UserDto userDto) {
-        User user = UserMapper.toUser(userService.findById(id), userDto);
+        User user = userMapper.toUser(userService.findById(id), userDto);
 
         log.info("Редактирование пользователя с идентификатором {}.", id);
-        return UserMapper.toUserDto(userService.update(user));
+        return userMapper.toUserDto(userService.update(user));
     }
 
     @Override
     public UserDto findById(Long id) {
         log.info("Просмотр информации о конкретном пользователе с идентификатором {}.", id);
-        return UserMapper.toUserDto(userService.findById(id));
+        return userMapper.toUserDto(userService.findById(id));
     }
 
     @Override
     public List<UserDto> findAll() {
         log.info("Просмотр списка всех пользователей.");
-        return UserMapper.toUserDto(userService.findAll());
+        return userMapper.toUserDto(userService.findAll());
     }
 
     @Override

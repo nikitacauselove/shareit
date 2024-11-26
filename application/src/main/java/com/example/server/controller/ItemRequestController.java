@@ -21,11 +21,12 @@ import java.util.List;
 public class ItemRequestController implements RequestApi {
 
     private final ItemRequestService itemRequestService;
+    private final ItemRequestMapper itemRequestMapper;
     private final UserService userService;
 
     @Override
     public ItemRequestDto create(ItemRequestDto itemRequestDto, Long requesterId) {
-        ItemRequest itemRequest = ItemRequestMapper.toItemRequest(itemRequestDto, userService.findById(requesterId));
+        ItemRequest itemRequest = itemRequestMapper.toItemRequest(itemRequestDto, userService.findById(requesterId));
 
         log.info("Добавление нового запроса вещи пользователем с идентификатором {}.", requesterId);
         return itemRequestService.create(itemRequest);

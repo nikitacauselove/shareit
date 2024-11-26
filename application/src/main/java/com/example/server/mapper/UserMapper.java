@@ -2,13 +2,14 @@ package com.example.server.mapper;
 
 import com.example.api.dto.UserDto;
 import com.example.server.repository.entity.User;
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@UtilityClass
+@Component
 public class UserMapper {
+
     public User toUser(UserDto userDto) {
         return new User(null, userDto.name(), userDto.email());
     }
@@ -27,7 +28,7 @@ public class UserMapper {
 
     public List<UserDto> toUserDto(List<User> users) {
         return users.stream()
-                .map(UserMapper::toUserDto)
+                .map(this::toUserDto)
                 .collect(Collectors.toList());
     }
 }

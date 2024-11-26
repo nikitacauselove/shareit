@@ -22,12 +22,13 @@ import java.util.List;
 public class ItemRequestService {
     private final ItemRepository itemRepository;
     private final ItemRequestRepository itemRequestRepository;
+    private final ItemRequestMapper itemRequestMapper;
 
     private static final Sort BY_CREATED_DESCENDING = Sort.by(Sort.Direction.DESC, "created");
 
     @Transactional
     public ItemRequestDto create(ItemRequest itemRequest) {
-        return ItemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest), Collections.emptyList());
+        return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest), Collections.emptyList());
     }
 
     public ItemRequest findById(long itemRequestId) {
@@ -37,20 +38,20 @@ public class ItemRequestService {
     public ItemRequestDto findByIdWithItems(long itemRequestId) {
         ItemRequest itemRequest = findById(itemRequestId);
 
-        return ItemRequestMapper.toItemRequestDto(itemRequest, itemRepository.findAllByRequestId(itemRequestId));
+        return itemRequestMapper.toItemRequestDto(itemRequest, itemRepository.findAllByRequestId(itemRequestId));
     }
 
     public List<ItemRequestDto> findAllByRequesterId(long requesterId) {
         List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterId(requesterId, BY_CREATED_DESCENDING);
         List<Item> items = itemRepository.findAllByRequestIdNotNull();
 
-        return ItemRequestMapper.toItemRequestDto(itemRequests, items);
+        return itemRequestMapper.toItemRequestDto(itemRequests, items);
     }
 
     public List<ItemRequestDto> findAllByRequesterIdNot(long requesterId, int from, int size) {
         List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterIdNot(requesterId, FromSizePageRequest.of(from, size, BY_CREATED_DESCENDING));
         List<Item> items = itemRepository.findAllByRequestIdNotNull();
 
-        return ItemRequestMapper.toItemRequestDto(itemRequests, items);
+        return itemRequestMapper.toItemRequestDto(itemRequests, items);
     }
 }

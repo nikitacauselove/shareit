@@ -4,13 +4,13 @@ import com.example.api.dto.CommentDto;
 import com.example.server.repository.entity.Comment;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.User;
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@UtilityClass
+@Component
 public class CommentMapper {
     public Comment toComment(CommentDto commentDto, Item item, User author) {
         LocalDateTime now = LocalDateTime.now();
@@ -24,7 +24,7 @@ public class CommentMapper {
 
     public List<CommentDto> toCommentDto(List<Comment> comments) {
         return comments.stream()
-                .map(CommentMapper::toCommentDto)
+                .map(this::toCommentDto)
                 .collect(Collectors.toList());
     }
 }

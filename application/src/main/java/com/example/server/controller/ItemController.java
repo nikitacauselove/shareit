@@ -25,23 +25,24 @@ public class ItemController implements ItemApi {
 
     private final ItemRequestService itemRequestService;
     private final ItemService itemService;
+    private final ItemMapper itemMapper;
     private final UserService userService;
 
     @Override
     public ItemDto create(ItemDto itemDto, Long ownerId) {
         ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestService.findById(itemDto.requestId());
-        Item item = ItemMapper.toItem(itemDto, userService.findById(ownerId), itemRequest);
+        Item item = itemMapper.toItem(itemDto, userService.findById(ownerId), itemRequest);
 
         log.info("Добавление новой вещи пользователем с идентификатором {}.", ownerId);
-        return ItemMapper.toItemDto(itemService.create(item));
+        return itemMapper.toItemDto(itemService.create(item));
     }
 
     @Override
     public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
-        Item item = ItemMapper.toItem(itemService.findById(itemId), itemDto, userService.findById(ownerId));
+        Item item = itemMapper.toItem(itemService.findById(itemId), itemDto, userService.findById(ownerId));
 
         log.info("Редактирование вещи с идентификатором {} пользователем с идентификатором {}.", itemId, ownerId);
-        return ItemMapper.toItemDto(itemService.update(item));
+        return itemMapper.toItemDto(itemService.update(item));
     }
 
     @Override
@@ -62,6 +63,6 @@ public class ItemController implements ItemApi {
         if (text.isBlank()) {
             return Collections.emptyList();
         }
-        return ItemMapper.toItemDto(itemService.search(text, from, size));
+        return itemMapper.toItemDto(itemService.search(text, from, size));
     }
 }

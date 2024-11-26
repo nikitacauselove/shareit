@@ -25,6 +25,7 @@ import java.util.List;
 public class BookingController implements BookingApi {
 
     private final BookingService bookingService;
+    private final BookingMapper bookingMapper;
     private final ItemService itemService;
     private final UserService userService;
 
@@ -32,22 +33,22 @@ public class BookingController implements BookingApi {
     public BookingDto create(BookingCreationDto bookingCreationDto, Long bookerId) {
         User booker = userService.findById(bookerId);
         Item item = itemService.findById(bookingCreationDto.itemId());
-        Booking booking = BookingMapper.toBooking(bookingCreationDto, item, booker);
+        Booking booking = bookingMapper.toBooking(bookingCreationDto, item, booker);
 
         log.info("Добавление нового запроса на бронирование пользователем с идентификатором {}.", bookerId);
-        return BookingMapper.toBookingDto(bookingService.create(booking));
+        return bookingMapper.toBookingDto(bookingService.create(booking));
     }
 
     @Override
     public BookingDto approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
         log.info("Подтверждение или отклонение запроса на бронирование с идентификатором {} пользователем с идентификатором {}.", bookingId, ownerId);
-        return BookingMapper.toBookingDto(bookingService.approveOrReject(bookingId, ownerId, approved));
+        return bookingMapper.toBookingDto(bookingService.approveOrReject(bookingId, ownerId, approved));
     }
 
     @Override
     public BookingDto findById(Long bookingId, Long userId) {
         log.info("Получение данных о конкретном бронировании (включая его статус) с идентификатором {} пользователем с идентификатором {}.", bookingId, userId);
-        return BookingMapper.toBookingDto(bookingService.findById(bookingId, userId));
+        return bookingMapper.toBookingDto(bookingService.findById(bookingId, userId));
     }
 
     @Override
@@ -55,7 +56,7 @@ public class BookingController implements BookingApi {
         User booker = userService.findById(bookerId);
 
         log.info("Получение списка всех бронирований текущего пользователя с идентификатором {}.", bookerId);
-        return BookingMapper.toBookingDto(bookingService.findAllByBookerId(booker.getId(), BookingState.from(state), from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(booker.getId(), BookingState.from(state), from, size));
     }
 
     @Override
@@ -63,6 +64,6 @@ public class BookingController implements BookingApi {
         User owner = userService.findById(ownerId);
 
         log.info("Получение списка бронирований для всех вещей текущего пользователя с идентификатором {}.", ownerId);
-        return BookingMapper.toBookingDto(bookingService.findAllByOwnerId(owner.getId(), BookingState.from(state), from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(owner.getId(), BookingState.from(state), from, size));
     }
 }

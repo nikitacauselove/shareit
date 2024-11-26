@@ -9,13 +9,18 @@ import com.example.server.repository.entity.Comment;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.entity.User;
-import lombok.experimental.UtilityClass;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@UtilityClass
+@Component
+@RequiredArgsConstructor
 public class ItemMapper {
+
+    private final CommentMapper commentMapper;
+
     public Item toItem(ItemDto itemDto, User owner, ItemRequest itemRequest) {
         return new Item(null, itemDto.name(), itemDto.description(), itemDto.available(), owner, itemRequest);
     }
@@ -39,7 +44,7 @@ public class ItemMapper {
 
     public List<ItemDto> toItemDto(List<Item> items) {
         return items.stream()
-                .map(ItemMapper::toItemDto)
+                .map(this::toItemDto)
                 .collect(Collectors.toList());
     }
 
@@ -47,11 +52,11 @@ public class ItemMapper {
         BookingShortDto lastBooking = BookingUtils.findLastBooking(bookings);
         BookingShortDto nextBooking = BookingUtils.findNextBooking(bookings);
 
-        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), lastBooking, nextBooking, CommentMapper.toCommentDto(comments));
+        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), lastBooking, nextBooking, commentMapper.toCommentDto(comments));
     }
 
     public ItemDtoWithBookings toItemDtoWithBookings(Item item, List<Comment> comments) {
-        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), null, null, CommentMapper.toCommentDto(comments));
+        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), null, null, commentMapper.toCommentDto(comments));
     }
 
     public List<ItemDtoWithBookings> toItemDtoWithBookings(List<Item> items, List<Booking> bookings, List<Comment> comments) {
@@ -60,7 +65,7 @@ public class ItemMapper {
                     List<Booking> listOfBookings = bookings.stream().filter(booking -> booking.hasSameItem(item)).collect(Collectors.toList());
                     List<Comment> listOfComments = comments.stream().filter(comment -> comment.hasSameItem(item)).collect(Collectors.toList());
 
-                    return ItemMapper.toItemDtoWithBookings(item, listOfBookings, listOfComments);
+                    return this.toItemDtoWithBookings(item, listOfBookings, listOfComments);
                 })
                 .collect(Collectors.toList());
     }

@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController implements CommentApi {
 
     private final CommentService commentService;
+    private final CommentMapper commentMapper;
     private final ItemService itemService;
     private final UserService userService;
 
     @Override
     public CommentDto create(Long itemId, CommentDto commentCreationDto, Long authorId) {
-        Comment comment = CommentMapper.toComment(commentCreationDto, itemService.findById(itemId), userService.findById(authorId));
+        Comment comment = commentMapper.toComment(commentCreationDto, itemService.findById(itemId), userService.findById(authorId));
 
         log.info("Добавление нового отзыва на вещь с идентификатором {} пользователем с идентификатором {}.", itemId, authorId);
-        return CommentMapper.toCommentDto(commentService.create(comment));
+        return commentMapper.toCommentDto(commentService.create(comment));
     }
 }
