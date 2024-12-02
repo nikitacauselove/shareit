@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping(path = BookingApi.PATH)
 @RequiredArgsConstructor
+@Slf4j
 public class BookingController implements BookingApi {
 
     private final BookingService bookingService;

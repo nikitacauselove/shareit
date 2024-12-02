@@ -70,7 +70,7 @@ public class UserServiceTestWithContext {
         User user = new User(1L, "user", "user@user.com");
         userRepository.save(user);
 
-        userService.deleteById(1);
+        userService.deleteById(1L);
         Assertions.assertThrows(NotFoundException.class, () -> userService.findById(user.getId()));
     }
 }

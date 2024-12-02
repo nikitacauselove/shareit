@@ -1,8 +1,8 @@
 package com.example.gateway.controller;
 
-import com.example.api.RequestApi;
+import com.example.api.ItemRequestApi;
 import com.example.api.dto.ItemRequestDto;
-import com.example.gateway.client.RequestClient;
+import com.example.gateway.client.ItemRequestClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = RequestApi.PATH)
+@RequestMapping(path = ItemRequestApi.PATH)
 @RequiredArgsConstructor
-public class RequestController implements RequestApi {
+public class ItemRequestController implements ItemRequestApi {
 
-    private final RequestClient requestClient;
+    private final ItemRequestClient requestClient;
 
     @Override
     public ItemRequestDto create(ItemRequestDto itemRequestDto, Long requesterId) {

@@ -18,37 +18,38 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
 public class ItemRequestService {
+
+    private static final Sort BY_CREATED_DESCENDING = Sort.by(Sort.Direction.DESC, "created");
+
     private final ItemRepository itemRepository;
     private final ItemRequestRepository itemRequestRepository;
     private final ItemRequestMapper itemRequestMapper;
-
-    private static final Sort BY_CREATED_DESCENDING = Sort.by(Sort.Direction.DESC, "created");
 
     @Transactional
     public ItemRequestDto create(ItemRequest itemRequest) {
         return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest), Collections.emptyList());
     }
 
-    public ItemRequest findById(long itemRequestId) {
-        return itemRequestRepository.findById(itemRequestId).orElseThrow(() -> new NotFoundException("Запрос на добавление вещи с указанным идентификатором не найден."));
+    public ItemRequest findById(Long itemRequestId) {
+        return itemRequestRepository.findById(itemRequestId)
+                .orElseThrow(() -> new NotFoundException("Запрос на добавление вещи с указанным идентификатором не найден."));
     }
 
-    public ItemRequestDto findByIdWithItems(long itemRequestId) {
+    public ItemRequestDto findByIdWithItems(Long itemRequestId) {
         ItemRequest itemRequest = findById(itemRequestId);
 
         return itemRequestMapper.toItemRequestDto(itemRequest, itemRepository.findAllByRequestId(itemRequestId));
     }
 
-    public List<ItemRequestDto> findAllByRequesterId(long requesterId) {
+    public List<ItemRequestDto> findAllByRequesterId(Long requesterId) {
         List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterId(requesterId, BY_CREATED_DESCENDING);
         List<Item> items = itemRepository.findAllByRequestIdNotNull();
 
         return itemRequestMapper.toItemRequestDto(itemRequests, items);
     }
 
-    public List<ItemRequestDto> findAllByRequesterIdNot(long requesterId, int from, int size) {
+    public List<ItemRequestDto> findAllByRequesterIdNot(Long requesterId, Integer from, Integer size) {
         List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterIdNot(requesterId, FromSizePageRequest.of(from, size, BY_CREATED_DESCENDING));
         List<Item> items = itemRepository.findAllByRequestIdNotNull();
 

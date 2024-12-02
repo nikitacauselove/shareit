@@ -7,15 +7,14 @@ import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class UserService {
+
     private final UserRepository userRepository;
 
     public User create(User user) {
@@ -35,17 +34,16 @@ public class UserService {
         throw new ConflictException("Пользователь с указанным адресом электронной почты уже существует.");
     }
 
-    @Transactional(readOnly = true)
-    public User findById(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));
     }
 
-    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 }

@@ -55,7 +55,7 @@ public class ItemRequestServiceTestWithContext {
         ItemRequest itemRequest = new ItemRequest(1L, "Хотел бы воспользоваться щёткой для обуви", TestConstants.FIRST_USER, TestConstants.CURRENT_TIME);
         itemRequestService.create(itemRequest);
 
-        Assertions.assertEquals(itemRequest, itemRequestService.findById(1));
+        Assertions.assertEquals(itemRequest, itemRequestService.findById(1L));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ItemRequestServiceTestWithContext {
         itemRequestRepository.save(itemRequest);
         itemRepository.save(item);
 
-        Assertions.assertEquals(itemRequestDto, itemRequestService.findByIdWithItems(1));
+        Assertions.assertEquals(itemRequestDto, itemRequestService.findByIdWithItems(1L));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ItemRequestServiceTestWithContext {
         itemRequestRepository.save(itemRequest);
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterId(1));
+        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterId(1L));
     }
 
     @Test
@@ -91,6 +91,6 @@ public class ItemRequestServiceTestWithContext {
         itemRequestRepository.save(itemRequest);
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterIdNot(2, 0, 10));
+        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterIdNot(2L, 0, 10));
     }
 }

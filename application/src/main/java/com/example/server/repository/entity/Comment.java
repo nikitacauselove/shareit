@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    @CreationTimestamp
     private LocalDateTime created;
 
     public boolean hasSameItem(Item item) {

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping(path = UserApi.PATH)
 @RequiredArgsConstructor
+@Slf4j
 public class UserController implements UserApi {
 
     private final UserMapper userMapper;

@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping(path = ItemApi.PATH)
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController implements ItemApi {
 
     private final ItemRequestService itemRequestService;

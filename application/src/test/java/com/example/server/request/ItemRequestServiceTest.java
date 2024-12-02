@@ -48,12 +48,12 @@ public class ItemRequestServiceTest {
         ItemRequest itemRequest = new ItemRequest(1L, "Хотел бы воспользоваться щёткой для обуви", TestConstants.FIRST_USER, TestConstants.CURRENT_TIME);
         Mockito.when(itemRequestRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(itemRequest));
 
-        Assertions.assertEquals(itemRequest, itemRequestService.findById(1));
+        Assertions.assertEquals(itemRequest, itemRequestService.findById(1L));
     }
 
     @Test
     public void findByIdUnknown() {
-        Assertions.assertThrows(NotFoundException.class, () -> itemRequestService.findById(99));
+        Assertions.assertThrows(NotFoundException.class, () -> itemRequestService.findById(99L));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ItemRequestServiceTest {
         Mockito.when(itemRequestRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(itemRequest));
         Mockito.when(itemRepository.findAllByRequestId(Mockito.anyLong())).thenReturn(List.of(item));
 
-        Assertions.assertEquals(itemRequestDto, itemRequestService.findByIdWithItems(1));
+        Assertions.assertEquals(itemRequestDto, itemRequestService.findByIdWithItems(1L));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ItemRequestServiceTest {
         Mockito.when(itemRequestRepository.findAllByRequesterId(Mockito.anyLong(), Mockito.any(Sort.class))).thenReturn(List.of(itemRequest));
         Mockito.when(itemRepository.findAllByRequestIdNotNull()).thenReturn(List.of(item));
 
-        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterId(1));
+        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterId(1L));
     }
 
     @Test
@@ -89,6 +89,6 @@ public class ItemRequestServiceTest {
         Mockito.when(itemRequestRepository.findAllByRequesterIdNot(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(List.of(itemRequest));
         Mockito.when(itemRepository.findAllByRequestIdNotNull()).thenReturn(List.of(item));
 
-        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterIdNot(2, 0, 10));
+        Assertions.assertEquals(List.of(itemRequestDto), itemRequestService.findAllByRequesterIdNot(2L, 0, 10));
     }
 }

@@ -1,6 +1,6 @@
 package com.example.server.controller;
 
-import com.example.api.RequestApi;
+import com.example.api.ItemRequestApi;
 import com.example.api.dto.ItemRequestDto;
 import com.example.server.service.ItemRequestService;
 import com.example.server.mapper.ItemRequestMapper;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
-@RequestMapping(path = RequestApi.PATH)
+@RequestMapping(path = ItemRequestApi.PATH)
 @RequiredArgsConstructor
-public class ItemRequestController implements RequestApi {
+@Slf4j
+public class ItemRequestController implements ItemRequestApi {
 
     private final ItemRequestService itemRequestService;
     private final ItemRequestMapper itemRequestMapper;

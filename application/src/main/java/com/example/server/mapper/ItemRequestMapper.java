@@ -1,40 +1,26 @@
 package com.example.server.mapper;
 
-import com.example.api.dto.ItemDto;
 import com.example.api.dto.ItemRequestDto;
+import com.example.server.mapper.decorator.ItemRequestMapperDecorator;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.entity.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Context;
+import org.mapstruct.DecoratedWith;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
-public class ItemRequestMapper {
+@DecoratedWith(ItemRequestMapperDecorator.class)
+@Mapper(componentModel = "spring", uses = ItemMapper.class)
+public interface ItemRequestMapper {
 
-    private final ItemMapper itemMapper;
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "created", ignore = true)
+    ItemRequest toItemRequest(ItemRequestDto itemRequestDto, User requester);
 
-    public ItemRequest toItemRequest(ItemRequestDto itemRequestDto, User requester) {
-        return new ItemRequest(null, itemRequestDto.description(), requester, LocalDateTime.now());
-    }
+    ItemRequestDto toItemRequestDto(ItemRequest itemRequest, List<Item> items);
 
-    public ItemRequestDto toItemRequestDto(ItemRequest itemRequest, List<Item> items) {
-        List<ItemDto> listOfItemDto = itemMapper.toItemDto(items);
-
-        return new ItemRequestDto(itemRequest.getId(), itemRequest.getDescription(), itemRequest.getRequester().getId(), itemRequest.getCreated(), listOfItemDto);
-    }
-
-    public List<ItemRequestDto> toItemRequestDto(List<ItemRequest> itemRequests, List<Item> items) {
-        return itemRequests.stream()
-                .map(itemRequest -> {
-                    List<Item> listOfItems = items.stream().filter(item -> itemRequest.equals(item.getRequest())).collect(Collectors.toList());
-
-                    return this.toItemRequestDto(itemRequest, listOfItems);
-                })
-                .collect(Collectors.toList());
-    }
+    List<ItemRequestDto> toItemRequestDto(List<ItemRequest> itemRequests, @Context List<Item> items);
 }

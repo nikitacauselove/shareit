@@ -19,7 +19,7 @@ import static com.example.api.Constant.SIZE_ERROR_MESSAGE;
 import static com.example.api.Constant.X_SHARER_USER_ID;
 
 @Validated
-public interface RequestApi {
+public interface ItemRequestApi {
 
     String PATH = "/requests";
 

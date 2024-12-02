@@ -82,7 +82,7 @@ public class UserServiceTest {
     public void findByIdUnknown() {
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findById(100));
+        Assertions.assertThrows(NotFoundException.class, () -> userService.findById(100L));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class UserServiceTest {
 
     @Test
     public void deleteById() {
-        userService.deleteById(1);
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findById(1));
+        userService.deleteById(1L);
+        Assertions.assertThrows(NotFoundException.class, () -> userService.findById(1L));
     }
 }

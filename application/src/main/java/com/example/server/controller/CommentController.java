@@ -12,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping(path = CommentApi.PATH)
 @RequiredArgsConstructor
+@Slf4j
 public class CommentController implements CommentApi {
 
     private final CommentService commentService;
