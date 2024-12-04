@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -40,9 +39,6 @@ public class ItemController implements ItemApi {
 
     @Override
     public List<ItemDto> search(String text, Integer from, Integer size) {
-        if (text.isBlank()) {
-            return Collections.emptyList();
-        }
         return itemClient.search(text, from, size);
     }
 }
