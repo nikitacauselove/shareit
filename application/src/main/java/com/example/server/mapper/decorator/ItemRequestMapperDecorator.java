@@ -6,7 +6,9 @@ import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class ItemRequestMapperDecorator implements ItemRequestMapper {
@@ -20,14 +22,11 @@ public abstract class ItemRequestMapperDecorator implements ItemRequestMapper {
 
     @Override
     public List<ItemRequestDto> toItemRequestDto(List<ItemRequest> itemRequests, List<Item> items) {
-        return itemRequests.stream()
-                .map(itemRequest -> {
-                    List<Item> listOfItems = items.stream()
-                            .filter(item -> itemRequest.equals(item.getRequest()))
-                            .collect(Collectors.toList());
+        Map<Long, List<Item>> map = items.stream()
+                .collect(Collectors.groupingBy(item -> item.getRequest().getId()));
 
-                    return this.toItemRequestDto(itemRequest, listOfItems);
-                })
+        return itemRequests.stream()
+                .map(itemRequest -> toItemRequestDto(itemRequest, map.getOrDefault(itemRequest.getId(), Collections.emptyList())))
                 .collect(Collectors.toList());
     }
 }
