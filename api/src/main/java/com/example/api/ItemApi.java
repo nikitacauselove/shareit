@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-import static com.example.api.Constant.FROM_ERROR_MESSAGE;
-import static com.example.api.Constant.SIZE_ERROR_MESSAGE;
-import static com.example.api.Constant.X_SHARER_USER_ID;
+import static com.example.api.UserApi.X_SHARER_USER_ID;
 
 @Validated
 public interface ItemApi {
 
-    String PATH = "/items";
+    String PATH = "v1/items";
 
     @PostMapping
     ItemDto create(@RequestBody @Valid ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) Long ownerId);
@@ -36,11 +34,11 @@ public interface ItemApi {
 
     @GetMapping
     List<ItemDtoWithBookings> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long ownerId,
-                                               @RequestParam(defaultValue = "0") @PositiveOrZero(message = FROM_ERROR_MESSAGE) Integer from,
-                                               @RequestParam(defaultValue = "10") @Positive(message = SIZE_ERROR_MESSAGE) Integer size);
+                                               @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                               @RequestParam(defaultValue = "10") @Positive Integer size);
 
     @GetMapping("/search")
     List<ItemDto> search(@RequestParam String text,
-                         @RequestParam(defaultValue = "0") @PositiveOrZero(message = FROM_ERROR_MESSAGE) Integer from,
-                         @RequestParam(defaultValue = "10") @Positive(message = SIZE_ERROR_MESSAGE) Integer size);
+                         @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                         @RequestParam(defaultValue = "10") @Positive Integer size);
 }

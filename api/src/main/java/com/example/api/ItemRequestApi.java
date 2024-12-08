@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-import static com.example.api.Constant.FROM_ERROR_MESSAGE;
-import static com.example.api.Constant.SIZE_ERROR_MESSAGE;
-import static com.example.api.Constant.X_SHARER_USER_ID;
+import static com.example.api.UserApi.X_SHARER_USER_ID;
 
 @Validated
 public interface ItemRequestApi {
 
-    String PATH = "/requests";
+    String PATH = "v1/requests";
 
     @PostMapping
     ItemRequestDto create(@RequestBody @Valid ItemRequestDto itemRequestDto, @RequestHeader(X_SHARER_USER_ID) Long requesterId);
@@ -34,6 +32,6 @@ public interface ItemRequestApi {
 
     @GetMapping("/all")
     List<ItemRequestDto> findAllByRequesterIdNot(@RequestHeader(X_SHARER_USER_ID) Long requesterId,
-                                                 @RequestParam(defaultValue = "0") @PositiveOrZero(message = FROM_ERROR_MESSAGE) Integer from,
-                                                 @RequestParam(defaultValue = "10") @Positive(message = SIZE_ERROR_MESSAGE) Integer size);
+                                                 @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                                 @RequestParam(defaultValue = "10") @Positive Integer size);
 }

@@ -17,7 +17,9 @@ import java.util.Map;
 @Validated
 public interface UserApi {
 
-    String PATH = "/users";
+    String PATH = "v1/users";
+
+    String X_SHARER_USER_ID = "X-Sharer-User-Id";
 
     @PostMapping
     UserDto create(@RequestBody @Validated(OnCreate.class) UserDto userDto);
