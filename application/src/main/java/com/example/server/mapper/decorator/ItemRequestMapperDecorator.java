@@ -4,6 +4,7 @@ import com.example.api.dto.ItemRequestDto;
 import com.example.server.mapper.ItemRequestMapper;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.ItemRequest;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
@@ -11,14 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Setter(onMethod_ = @Autowired)
 public abstract class ItemRequestMapperDecorator implements ItemRequestMapper {
 
     private ItemRequestMapper delegate;
-
-    @Autowired
-    public void setDelegate(ItemRequestMapper delegate) {
-        this.delegate = delegate;
-    }
 
     @Override
     public List<ItemRequestDto> toItemRequestDto(List<ItemRequest> itemRequests, List<Item> items) {
