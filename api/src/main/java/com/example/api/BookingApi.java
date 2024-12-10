@@ -2,6 +2,7 @@ package com.example.api;
 
 import com.example.api.dto.BookingCreationDto;
 import com.example.api.dto.BookingDto;
+import com.example.api.dto.enums.BookingState;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -34,13 +35,13 @@ public interface BookingApi {
 
     @GetMapping
     List<BookingDto> findAllByBookerId(@RequestHeader(X_SHARER_USER_ID) Long bookerId,
-                                       @RequestParam(defaultValue = "ALL") String state,
+                                       @RequestParam(defaultValue = "ALL") BookingState state,
                                        @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                        @RequestParam(defaultValue = "10") @Positive Integer size);
 
     @GetMapping("/owner")
     List<BookingDto> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long ownerId,
-                                      @RequestParam(defaultValue = "ALL") String state,
+                                      @RequestParam(defaultValue = "ALL") BookingState state,
                                       @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                       @RequestParam(defaultValue = "10") @Positive Integer size);
 }

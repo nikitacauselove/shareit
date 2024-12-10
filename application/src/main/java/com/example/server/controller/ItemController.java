@@ -39,7 +39,7 @@ public class ItemController implements ItemApi {
 
     @Override
     public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
-        Item item = itemMapper.toItem(itemService.findById(itemId), itemDto, userService.findById(ownerId));
+        Item item = itemMapper.updateItem(itemDto, userService.findById(ownerId), itemService.findById(itemId));
 
         log.info("Редактирование вещи с идентификатором {} пользователем с идентификатором {}.", itemId, ownerId);
         return itemMapper.toItemDto(itemService.update(item));

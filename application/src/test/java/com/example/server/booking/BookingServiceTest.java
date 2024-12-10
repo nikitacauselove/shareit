@@ -1,9 +1,9 @@
 package com.example.server.booking;
 
-import com.example.api.BadRequestException;
 import com.example.api.dto.enums.BookingState;
 import com.example.api.dto.enums.BookingStatus;
 import com.example.server.TestConstants;
+import com.example.server.exception.BadRequestException;
 import com.example.server.repository.entity.Booking;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.entity.Item;

@@ -8,5 +8,5 @@ public record ItemDtoWithBookings(Long id,
                                   Boolean available,
                                   BookingShortDto lastBooking,
                                   BookingShortDto nextBooking,
-                                  List<CommentDto>comments) {
+                                  List<CommentDto> comments) {
 }

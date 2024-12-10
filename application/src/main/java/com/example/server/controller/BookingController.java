@@ -52,18 +52,18 @@ public class BookingController implements BookingApi {
     }
 
     @Override
-    public List<BookingDto> findAllByBookerId(Long bookerId, String state, Integer from, Integer size) {
+    public List<BookingDto> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
         User booker = userService.findById(bookerId);
 
         log.info("Получение списка всех бронирований текущего пользователя с идентификатором {}.", bookerId);
-        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(booker.getId(), BookingState.from(state), from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(booker.getId(), state, from, size));
     }
 
     @Override
-    public List<BookingDto> findAllByOwnerId(Long ownerId, String state, Integer from, Integer size) {
+    public List<BookingDto> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
         User owner = userService.findById(ownerId);
 
         log.info("Получение списка бронирований для всех вещей текущего пользователя с идентификатором {}.", ownerId);
-        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(owner.getId(), BookingState.from(state), from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(owner.getId(), state, from, size));
     }
 }

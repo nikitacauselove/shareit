@@ -12,6 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    @Mapping(target = "id", ignore = true)
     User toUser(UserDto userDto);
 
     @Mapping(target = "id", ignore = true)
