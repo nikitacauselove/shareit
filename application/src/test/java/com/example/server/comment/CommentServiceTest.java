@@ -5,7 +5,7 @@ import com.example.server.exception.BadRequestException;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.entity.Comment;
 import com.example.server.repository.CommentRepository;
-import com.example.server.service.CommentService;
+import com.example.server.service.impl.CommentServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
     @InjectMocks
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     @Mock
     private BookingRepository bookingRepository;

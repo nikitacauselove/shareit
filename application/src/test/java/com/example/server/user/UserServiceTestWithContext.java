@@ -3,7 +3,7 @@ package com.example.server.user;
 import com.example.server.exception.ConflictException;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.UserRepository;
-import com.example.server.service.UserService;
+import com.example.server.service.impl.UserServiceImpl;
 import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest
 public class UserServiceTestWithContext {
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final UserRepository userRepository;
 
     @Test

@@ -7,7 +7,7 @@ import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.Comment;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.UserRepository;
-import com.example.server.service.CommentService;
+import com.example.server.service.impl.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest
 public class CommentServiceTestWithContext {
-    private final CommentService commentService;
+    private final CommentServiceImpl commentService;
     private final BookingRepository bookingRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;

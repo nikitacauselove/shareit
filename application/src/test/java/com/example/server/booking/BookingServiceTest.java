@@ -8,7 +8,7 @@ import com.example.server.repository.entity.Booking;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.BookingRepository;
-import com.example.server.service.BookingService;
+import com.example.server.service.impl.BookingServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class BookingServiceTest {
     @InjectMocks
-    private BookingService bookingService;
+    private BookingServiceImpl bookingService;
 
     @Mock
     private BookingRepository bookingRepository;

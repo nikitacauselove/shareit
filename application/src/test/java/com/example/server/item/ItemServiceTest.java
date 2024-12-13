@@ -12,7 +12,7 @@ import com.example.server.repository.CommentRepository;
 import com.example.server.repository.entity.Comment;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.entity.Item;
-import com.example.server.service.ItemService;
+import com.example.server.service.impl.ItemServiceImpl;
 import com.example.server.repository.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class ItemServiceTest {
     @InjectMocks
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
 
     @Mock
     private BookingRepository bookingRepository;

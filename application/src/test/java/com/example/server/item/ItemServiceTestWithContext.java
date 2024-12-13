@@ -12,7 +12,7 @@ import com.example.server.repository.CommentRepository;
 import com.example.server.repository.entity.Comment;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.UserRepository;
-import com.example.server.service.ItemService;
+import com.example.server.service.impl.ItemServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest
 public class ItemServiceTestWithContext {
-    private final ItemService itemService;
+    private final ItemServiceImpl itemService;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;

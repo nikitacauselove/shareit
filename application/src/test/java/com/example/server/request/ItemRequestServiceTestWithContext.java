@@ -8,7 +8,7 @@ import com.example.server.repository.entity.Item;
 import com.example.server.repository.ItemRequestRepository;
 import com.example.server.repository.entity.ItemRequest;
 import com.example.server.repository.UserRepository;
-import com.example.server.service.ItemRequestService;
+import com.example.server.service.impl.ItemRequestServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SpringBootTest
 public class ItemRequestServiceTestWithContext {
-    private final ItemRequestService itemRequestService;
+    private final ItemRequestServiceImpl itemRequestService;
     private final ItemRepository itemRepository;
     private final ItemRequestRepository itemRequestRepository;
     private final UserRepository userRepository;

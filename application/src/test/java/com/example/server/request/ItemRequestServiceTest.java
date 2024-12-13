@@ -8,7 +8,7 @@ import com.example.server.repository.ItemRepository;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.ItemRequestRepository;
 import com.example.server.repository.entity.ItemRequest;
-import com.example.server.service.ItemRequestService;
+import com.example.server.service.impl.ItemRequestServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class ItemRequestServiceTest {
     @InjectMocks
-    private ItemRequestService itemRequestService;
+    private ItemRequestServiceImpl itemRequestService;
 
     @Mock
     private ItemRepository itemRepository;

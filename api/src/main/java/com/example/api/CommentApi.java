@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import static com.example.api.UserApi.X_SHARER_USER_ID;
 
-@Tag(name = "Отзывы", description = "Взаимодействие с отзывами пользователей")
+@Tag(name = "Отзывы", description = "Взаимодействие с отзывами")
 public interface CommentApi {
 
     String PATH = "v1/items";

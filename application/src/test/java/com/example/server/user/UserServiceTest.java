@@ -3,7 +3,7 @@ package com.example.server.user;
 import com.example.server.exception.ConflictException;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.UserRepository;
-import com.example.server.service.UserService;
+import com.example.server.service.impl.UserServiceImpl;
 import com.example.server.repository.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Mock
     private UserRepository userRepository;
