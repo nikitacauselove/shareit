@@ -1,6 +1,6 @@
 package com.example.server.mapper;
 
-import com.example.api.dto.BookingCreationDto;
+import com.example.api.dto.BookingCreateDto;
 import com.example.api.dto.BookingDto;
 import com.example.server.repository.entity.Booking;
 import com.example.server.repository.entity.Item;
@@ -15,7 +15,7 @@ public interface BookingMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "status", constant = "WAITING")
-    Booking toBooking(BookingCreationDto bookingCreationDto, Item item, User booker);
+    Booking toBooking(BookingCreateDto bookingCreateDto, Item item, User booker);
 
     BookingDto toBookingDto(Booking booking);
 

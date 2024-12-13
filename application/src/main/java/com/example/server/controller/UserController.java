@@ -6,7 +6,6 @@ import com.example.server.service.UserService;
 import com.example.server.mapper.UserMapper;
 import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = UserApi.PATH)
 @RequiredArgsConstructor
-@Slf4j
 public class UserController implements UserApi {
 
     private final UserMapper userMapper;
@@ -26,7 +24,6 @@ public class UserController implements UserApi {
     public UserDto create(UserDto userDto) {
         User user = userMapper.toUser(userDto);
 
-        log.info("Добавление нового пользователя.");
         return userMapper.toUserDto(userService.create(user));
     }
 
@@ -34,25 +31,21 @@ public class UserController implements UserApi {
     public UserDto update(Long id, UserDto userDto) {
         User user = userMapper.updateUser(userDto, userService.findById(id));
 
-        log.info("Редактирование пользователя с идентификатором {}.", id);
         return userMapper.toUserDto(userService.update(user));
     }
 
     @Override
     public UserDto findById(Long id) {
-        log.info("Просмотр информации о конкретном пользователе с идентификатором {}.", id);
         return userMapper.toUserDto(userService.findById(id));
     }
 
     @Override
     public List<UserDto> findAll() {
-        log.info("Просмотр списка всех пользователей.");
         return userMapper.toUserDto(userService.findAll());
     }
 
     @Override
     public Map<String, String> deleteById(Long id) {
-        log.info("Удаление пользователя с идентификатором {}.", id);
         userService.deleteById(id);
         return Map.of("message", "Пользователь с указанным идентификатором был успешно удален.");
     }

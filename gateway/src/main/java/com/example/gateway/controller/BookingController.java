@@ -1,7 +1,7 @@
 package com.example.gateway.controller;
 
 import com.example.api.BookingApi;
-import com.example.api.dto.BookingCreationDto;
+import com.example.api.dto.BookingCreateDto;
 import com.example.api.dto.BookingDto;
 import com.example.api.dto.enums.BookingState;
 import com.example.gateway.client.BookingClient;
@@ -20,8 +20,8 @@ public class BookingController implements BookingApi {
     private final BookingClient bookingClient;
 
     @Override
-    public BookingDto create(BookingCreationDto bookingCreationDto, Long bookerId) {
-        return bookingClient.create(bookingCreationDto, bookerId);
+    public BookingDto create(BookingCreateDto bookingCreateDto, Long bookerId) {
+        return bookingClient.create(bookingCreateDto, bookerId);
     }
 
     @Override
