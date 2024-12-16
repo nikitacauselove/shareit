@@ -40,6 +40,6 @@ public class CommentRepositoryTest {
         Comment comment = new Comment(1L, "Add comment from user1", TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, TestConstants.CURRENT_TIME);
         commentRepository.save(comment);
 
-        Assertions.assertEquals(List.of(comment), commentRepository.findAllByItemId(2));
+        Assertions.assertEquals(List.of(comment), commentRepository.findAllByItemId(2L));
     }
 }

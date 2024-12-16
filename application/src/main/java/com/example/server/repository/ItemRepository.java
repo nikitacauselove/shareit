@@ -5,16 +5,41 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Репозиторий для взаимодействия с предметами.
+ */
+@Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findAllByOwnerId(long ownerId, Pageable pageable);
 
-    @Query("select item from Item as item where item.available = true and (lower(item.name) like %:text% or lower(item.description) like %:text%)")
+    /**
+     * Получение владельцем списка всех его предметов.
+     * @param ownerId идентификатор пользователя
+     */
+    List<Item> findAllByOwnerId(Long ownerId, Pageable pageable);
+
+    /**
+     * Поиск предметов.
+     * @param text текст для поиска
+     */
+    @Query(SEARCH)
     List<Item> search(@Param("text") String text, Pageable pageable);
 
-    List<Item> findAllByRequestId(long requestId);
+    /**
+     * Получение владельцем списка всех его предметов.
+     * @param requestId идентификатор пользователя
+     */
+    List<Item> findAllByRequestId(Long requestId);
 
     List<Item> findAllByRequestIdNotNull();
+
+    String SEARCH = """
+            SELECT item
+            FROM Item AS item
+            WHERE item.available = true
+            AND (item.name iLIKE %:text% OR item.description iLIKE %:text%)
+            """;
 }

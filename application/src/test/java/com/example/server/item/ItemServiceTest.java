@@ -74,14 +74,14 @@ public class ItemServiceTest {
         Item item = new Item(1L, "Аккумуляторная дрель", "Аккумуляторная дрель + аккумулятор", true, TestConstants.FIRST_USER, null);
         Mockito.when(itemRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(item));
 
-        Assertions.assertEquals(item, itemService.findById(1));
+        Assertions.assertEquals(item, itemService.findById(1L));
     }
 
     @Test
     public void findByIdUnknown() {
         Mockito.when(itemRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> itemService.findById(100));
+        Assertions.assertThrows(NotFoundException.class, () -> itemService.findById(100L));
     }
 
     @Test
@@ -101,8 +101,8 @@ public class ItemServiceTest {
         Mockito.when(bookingRepository.findAllByItemId(Mockito.anyLong())).thenReturn(List.of(booking, secondBooking, fourthBooking, sixthBooking));
         Mockito.when(commentRepository.findAllByItemId(Mockito.anyLong())).thenReturn(List.of(comment));
 
-        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2, 2));
-        Assertions.assertEquals(itemDtoWithBookings, itemService.findByIdWithBooking(2, 1));
+        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2L, 2L));
+        Assertions.assertEquals(itemDtoWithBookings, itemService.findByIdWithBooking(2L, 1L));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ItemServiceTest {
         Mockito.when(itemRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(secondItem));
         Mockito.when(bookingRepository.findAllByItemId(Mockito.anyLong())).thenReturn(List.of(fourthBooking, sixthBooking));
 
-        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2, 2));
+        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2L, 2L));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ItemServiceTest {
         Mockito.when(bookingRepository.findAllByOwnerId(Mockito.anyLong(), Mockito.any(Pageable.class))).thenReturn(Collections.emptyList());
         Mockito.when(commentRepository.findAllByOwnerId(Mockito.anyLong())).thenReturn(Collections.emptyList());
 
-        Assertions.assertEquals(List.of(itemDtoWithBookings), itemService.findAllByOwnerId(1, 0, 10));
+        Assertions.assertEquals(List.of(itemDtoWithBookings), itemService.findAllByOwnerId(1L, 0, 10));
     }
 
     @Test

@@ -63,7 +63,7 @@ public class ItemServiceTestWithContext {
         Item item = new Item(1L, "Дрель", "Простая дрель", true, TestConstants.FIRST_USER, null);
         itemRepository.save(item);
 
-        Assertions.assertEquals(item, itemService.findById(1));
+        Assertions.assertEquals(item, itemService.findById(1L));
     }
 
     @Test
@@ -94,8 +94,8 @@ public class ItemServiceTestWithContext {
         bookingRepository.save(sixthBooking);
         commentRepository.save(comment);
 
-        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2, 2));
-        Assertions.assertEquals(itemDtoWithBookings, itemService.findByIdWithBooking(2, 1));
+        Assertions.assertEquals(itemDtoWithBookingsAndCommentsWithBookings, itemService.findByIdWithBooking(2L, 2L));
+        Assertions.assertEquals(itemDtoWithBookings, itemService.findByIdWithBooking(2L, 1L));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ItemServiceTestWithContext {
         ItemDtoWithBookings itemDtoWithBookings = new ItemDtoWithBookings(1L, "Аккумуляторная дрель", "Аккумуляторная дрель + аккумулятор", true, null, null, Collections.emptyList());
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(itemDtoWithBookings), itemService.findAllByOwnerId(1, 0, 10));
+        Assertions.assertEquals(List.of(itemDtoWithBookings), itemService.findAllByOwnerId(1L, 0, 10));
     }
 
     @Test

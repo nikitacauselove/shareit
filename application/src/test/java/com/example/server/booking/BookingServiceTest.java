@@ -60,7 +60,7 @@ public class BookingServiceTest {
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
         Mockito.when(bookingRepository.save(Mockito.any(Booking.class))).thenReturn(approvedBooking);
 
-        Assertions.assertEquals(approvedBooking, bookingService.approveOrReject(1, 2, true));
+        Assertions.assertEquals(approvedBooking, bookingService.approveOrReject(1L, 2L, true));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BookingServiceTest {
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
         Mockito.when(bookingRepository.save(Mockito.any(Booking.class))).thenReturn(rejectedBooking);
 
-        Assertions.assertEquals(rejectedBooking, bookingService.approveOrReject(1, 2, false));
+        Assertions.assertEquals(rejectedBooking, bookingService.approveOrReject(1L, 2L, false));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BookingServiceTest {
         Booking booking = new Booking(2L, TestConstants.START_DATE.plusDays(1), TestConstants.END_DATE.plusDays(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.APPROVED);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
 
-        Assertions.assertThrows(BadRequestException.class, () -> bookingService.approveOrReject(2, 2, true));
+        Assertions.assertThrows(BadRequestException.class, () -> bookingService.approveOrReject(2L, 2L, true));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BookingServiceTest {
         Booking booking = new Booking(2L, TestConstants.START_DATE.plusDays(1), TestConstants.END_DATE.plusDays(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.REJECTED);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
 
-        Assertions.assertThrows(BadRequestException.class, () -> bookingService.approveOrReject(2, 2, true));
+        Assertions.assertThrows(BadRequestException.class, () -> bookingService.approveOrReject(2L, 2L, true));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class BookingServiceTest {
         Booking booking = new Booking(2L, TestConstants.START_DATE.plusDays(1), TestConstants.END_DATE.plusDays(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.WAITING);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
 
-        Assertions.assertThrows(NotFoundException.class, () -> bookingService.approveOrReject(2, 5, true));
+        Assertions.assertThrows(NotFoundException.class, () -> bookingService.approveOrReject(2L, 5L, true));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class BookingServiceTest {
         Booking booking = new Booking(2L, TestConstants.START_DATE.plusDays(1), TestConstants.END_DATE.plusDays(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.WAITING);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
 
-        Assertions.assertThrows(NotFoundException.class, () -> bookingService.approveOrReject(2, 1, true));
+        Assertions.assertThrows(NotFoundException.class, () -> bookingService.approveOrReject(2L, 1L, true));
     }
 
     @Test
@@ -110,14 +110,14 @@ public class BookingServiceTest {
         Booking secondBooking = new Booking(2L, TestConstants.START_DATE.plusDays(1), TestConstants.END_DATE.plusDays(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.WAITING);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(secondBooking));
 
-        Assertions.assertEquals(secondBooking, bookingService.findById(2, 1));
+        Assertions.assertEquals(secondBooking, bookingService.findById(2L, 1L));
     }
 
     @Test
     public void findByIdUnknown() {
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> bookingService.findById(1, 5));
+        Assertions.assertThrows(NotFoundException.class, () -> bookingService.findById(1L, 5L));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class BookingServiceTest {
         Booking booking = new Booking(1L, TestConstants.START_DATE, TestConstants.END_DATE, TestConstants.FIRST_ITEM, TestConstants.SECOND_USER, BookingStatus.WAITING);
         Mockito.when(bookingRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(booking));
 
-        Assertions.assertThrows(NotFoundException.class, () -> bookingService.findById(1, 5));
+        Assertions.assertThrows(NotFoundException.class, () -> bookingService.findById(1L, 5L));
     }
 
     @Test
@@ -141,12 +141,12 @@ public class BookingServiceTest {
         Mockito.when(bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(Mockito.anyLong(), Mockito.any(LocalDateTime.class), Mockito.any(LocalDateTime.class), Mockito.any(Pageable.class))).thenReturn(List.of(fifthBooking, eightBooking));
         Mockito.when(bookingRepository.findAllByBookerIdAndEndBefore(Mockito.anyLong(), Mockito.any(LocalDateTime.class), Mockito.any(Pageable.class))).thenReturn(List.of(booking, sixthBooking));
 
-        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByBookerId(1, BookingState.ALL, 0, 10));
-        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByBookerId(1, BookingState.FUTURE, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1, BookingState.WAITING, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1, BookingState.REJECTED, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingService.findAllByBookerId(1, BookingState.CURRENT, 0, 10));
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByBookerId(1, BookingState.PAST, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByBookerId(1L, BookingState.ALL, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByBookerId(1L, BookingState.FUTURE, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1L, BookingState.WAITING, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1L, BookingState.REJECTED, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingService.findAllByBookerId(1L, BookingState.CURRENT, 0, 10));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByBookerId(1L, BookingState.PAST, 0, 10));
     }
 
     @Test
@@ -163,11 +163,11 @@ public class BookingServiceTest {
         Mockito.when(bookingRepository.findAllByOwnerIdAndEndBefore(Mockito.anyLong(), Mockito.any(LocalDateTime.class), Mockito.any(Pageable.class))).thenReturn(List.of(booking, sixthBooking));
 
 
-        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByOwnerId(2, BookingState.ALL, 0, 10));
-        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByOwnerId(2, BookingState.FUTURE, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.WAITING, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.REJECTED, 0, 10));
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.CURRENT, 0, 10));
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByOwnerId(2, BookingState.PAST, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByOwnerId(2L, BookingState.ALL, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByOwnerId(2L, BookingState.FUTURE, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.WAITING, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.REJECTED, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.CURRENT, 0, 10));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByOwnerId(2L, BookingState.PAST, 0, 10));
     }
 }

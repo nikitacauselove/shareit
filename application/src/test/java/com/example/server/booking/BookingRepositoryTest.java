@@ -61,7 +61,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(seventhBooking);
         bookingRepository.save(eightBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(1, LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(1L, LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(0, 10)));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(fifthBooking);
         bookingRepository.save(sixthBooking);
 
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingRepository.findAllByBookerIdAndEndBefore(1, LocalDateTime.now(), PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingRepository.findAllByBookerIdAndEndBefore(1L, LocalDateTime.now(), PageRequest.of(0, 10)));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(fourthBooking);
         bookingRepository.save(fifthBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByBookerIdAndStatus(1, BookingStatus.WAITING, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByBookerIdAndStatus(1L, BookingStatus.WAITING, PageRequest.of(0, 10)));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(List.of(booking, secondBooking), bookingRepository.findAllByBookerId(1, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(booking, secondBooking), bookingRepository.findAllByBookerId(1L, PageRequest.of(0, 10)));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(fourthBooking);
         bookingRepository.save(fifthBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(2, LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(2L, LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(0, 10)));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(List.of(secondBooking), bookingRepository.findAllByOwnerIdAndStartAfter(2, LocalDateTime.now(), PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(secondBooking), bookingRepository.findAllByOwnerIdAndStartAfter(2L, LocalDateTime.now(), PageRequest.of(0, 10)));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(fifthBooking);
         bookingRepository.save(sixthBooking);
 
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingRepository.findAllByOwnerIdAndEndBefore(2, LocalDateTime.now(), PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingRepository.findAllByOwnerIdAndEndBefore(2L, LocalDateTime.now(), PageRequest.of(0, 10)));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(fourthBooking);
         bookingRepository.save(fifthBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByOwnerIdAndStatus(2, BookingStatus.WAITING, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(fifthBooking), bookingRepository.findAllByOwnerIdAndStatus(2L, BookingStatus.WAITING, PageRequest.of(0, 10)));
     }
 
     @Test
@@ -175,7 +175,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(List.of(booking, secondBooking), bookingRepository.findAllByOwnerId(2, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(booking, secondBooking), bookingRepository.findAllByOwnerId(2L, PageRequest.of(0, 10)));
     }
 
     @Test
@@ -189,7 +189,7 @@ public class BookingRepositoryTest {
         bookingRepository.save(thirdBooking);
         bookingRepository.save(fourthBooking);
 
-        Assertions.assertEquals(List.of(booking, secondBooking, fourthBooking), bookingRepository.findAllByItemId(2));
+        Assertions.assertEquals(List.of(booking, secondBooking, fourthBooking), bookingRepository.findAllByItemId(2L));
     }
 
     @Test
@@ -197,6 +197,6 @@ public class BookingRepositoryTest {
         Booking booking = new Booking(1L, TestConstants.START_DATE.minusSeconds(1), TestConstants.END_DATE.minusSeconds(2), TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.APPROVED);
         bookingRepository.save(booking);
 
-        Assertions.assertTrue(bookingRepository.existsByBookerIdAndItemIdAndEndBefore(1, 2, LocalDateTime.now()));
+        Assertions.assertTrue(bookingRepository.existsByBookerIdAndItemIdAndEndBefore(1L, 2L, LocalDateTime.now()));
     }
 }

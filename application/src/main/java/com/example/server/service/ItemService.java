@@ -11,11 +11,11 @@ public interface ItemService {
 
     Item update(Item item);
 
-    Item findById(long itemId);
+    Item findById(Long itemId);
 
-    ItemDtoWithBookings findByIdWithBooking(long itemId, long userId);
+    ItemDtoWithBookings findByIdWithBooking(Long itemId, Long userId);
 
-    List<ItemDtoWithBookings> findAllByOwnerId(long ownerId, int from, int size);
+    List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size);
 
-    List<Item> search(String text, int from, int size);
+    List<Item> search(String text, Integer from, Integer size);
 }

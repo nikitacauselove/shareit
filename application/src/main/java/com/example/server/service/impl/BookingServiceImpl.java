@@ -37,7 +37,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public Booking approveOrReject(long bookingId, long ownerId, boolean approved) {
+    public Booking approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
         Booking booking = findById(bookingId, ownerId);
 
         if (booking.isApprovedOrRejected()) {
@@ -50,7 +50,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findById(long bookingId, long userId) {
+    public Booking findById(Long bookingId, Long userId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос на бронирование для пользователя с указанным идентификатором не найден."));
 
         if (booking.hasSameBooker(userId) || booking.hasSameOwner(userId)) {
@@ -60,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findAllByBookerId(long bookerId, BookingState state, int from, int size) {
+    public List<Booking> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
@@ -81,7 +81,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findAllByOwnerId(long ownerId, BookingState state, int from, int size) {
+    public List<Booking> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 

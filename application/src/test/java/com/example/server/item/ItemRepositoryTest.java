@@ -41,7 +41,7 @@ public class ItemRepositoryTest {
         Item item = new Item(1L, "Аккумуляторная дрель", "Аккумуляторная дрель + аккумулятор", true, TestConstants.FIRST_USER, null);
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(item), itemRepository.findAllByOwnerId(1, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(item), itemRepository.findAllByOwnerId(1L, PageRequest.of(0, 10)));
     }
 
     @Test
@@ -69,6 +69,6 @@ public class ItemRepositoryTest {
         itemRepository.save(fourthItem);
         itemRepository.save(fifthItem);
 
-        Assertions.assertEquals(List.of(fifthItem), itemRepository.findAllByRequestId(1));
+        Assertions.assertEquals(List.of(fifthItem), itemRepository.findAllByRequestId(1L));
     }
 }

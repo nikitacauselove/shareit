@@ -52,7 +52,7 @@ public class BookingServiceTestWithContext {
         Booking booking = new Booking(1L, TestConstants.START_DATE, TestConstants.END_DATE, TestConstants.SECOND_ITEM, TestConstants.FIRST_USER, BookingStatus.WAITING);
         bookingRepository.save(booking);
 
-        Assertions.assertEquals(BookingStatus.APPROVED, bookingService.approveOrReject(1, 2, true).getStatus());
+        Assertions.assertEquals(BookingStatus.APPROVED, bookingService.approveOrReject(1L, 2L, true).getStatus());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BookingServiceTestWithContext {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(secondBooking, bookingService.findById(2, 1));
+        Assertions.assertEquals(secondBooking, bookingService.findById(2L, 1L));
     }
 
     @Test
@@ -79,33 +79,33 @@ public class BookingServiceTestWithContext {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByBookerId(1, BookingState.ALL, 0, 10));
-        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByBookerId(1, BookingState.FUTURE, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByBookerId(1L, BookingState.ALL, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByBookerId(1L, BookingState.FUTURE, 0, 10));
 
         bookingRepository.save(thirdBooking);
         bookingRepository.save(fourthBooking);
         bookingRepository.save(fifthBooking);
 
-        bookingService.approveOrReject(2, 2, true);
+        bookingService.approveOrReject(2L, 2L, true);
         secondBooking.setStatus(BookingStatus.APPROVED);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1, BookingState.WAITING, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1L, BookingState.WAITING, 0, 10));
 
         bookingRepository.save(sixthBooking);
 
-        bookingService.approveOrReject(5, 2, false);
+        bookingService.approveOrReject(5L, 2L, false);
         fifthBooking.setStatus(BookingStatus.REJECTED);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1, BookingState.REJECTED, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByBookerId(1L, BookingState.REJECTED, 0, 10));
 
-        bookingService.approveOrReject(6, 2, true);
+        bookingService.approveOrReject(6L, 2L, true);
         sixthBooking.setStatus(BookingStatus.APPROVED);
 
         bookingRepository.save(seventhBooking);
         bookingRepository.save(eightBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingService.findAllByBookerId(1, BookingState.CURRENT, 0, 10));
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByBookerId(1, BookingState.PAST, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking, eightBooking), bookingService.findAllByBookerId(1L, BookingState.CURRENT, 0, 10));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByBookerId(1L, BookingState.PAST, 0, 10));
     }
 
     @Test
@@ -122,32 +122,32 @@ public class BookingServiceTestWithContext {
         bookingRepository.save(booking);
         bookingRepository.save(secondBooking);
 
-        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByOwnerId(2, BookingState.ALL, 0, 10));
-        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByOwnerId(2, BookingState.FUTURE, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking, booking), bookingService.findAllByOwnerId(2L, BookingState.ALL, 0, 10));
+        Assertions.assertEquals(List.of(secondBooking), bookingService.findAllByOwnerId(2L, BookingState.FUTURE, 0, 10));
 
         bookingRepository.save(thirdBooking);
         bookingRepository.save(fourthBooking);
         bookingRepository.save(fifthBooking);
 
-        bookingService.approveOrReject(2, 2, true);
+        bookingService.approveOrReject(2L, 2L, true);
         secondBooking.setStatus(BookingStatus.APPROVED);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.WAITING, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.WAITING, 0, 10));
 
         bookingRepository.save(sixthBooking);
 
-        bookingService.approveOrReject(5, 2, false);
+        bookingService.approveOrReject(5L, 2L, false);
         fifthBooking.setStatus(BookingStatus.REJECTED);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.REJECTED, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.REJECTED, 0, 10));
 
-        bookingService.approveOrReject(6, 2, true);
+        bookingService.approveOrReject(6L, 2L, true);
         sixthBooking.setStatus(BookingStatus.APPROVED);
 
         bookingRepository.save(seventhBooking);
         bookingRepository.save(eightBooking);
 
-        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2, BookingState.CURRENT, 0, 10));
-        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByOwnerId(2, BookingState.PAST, 0, 10));
+        Assertions.assertEquals(List.of(fifthBooking), bookingService.findAllByOwnerId(2L, BookingState.CURRENT, 0, 10));
+        Assertions.assertEquals(List.of(booking, sixthBooking), bookingService.findAllByOwnerId(2L, BookingState.PAST, 0, 10));
     }
 }

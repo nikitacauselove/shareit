@@ -44,12 +44,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item findById(long itemId) {
+    public Item findById(Long itemId) {
         return itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден."));
     }
 
     @Override
-    public ItemDtoWithBookings findByIdWithBooking(long itemId, long userId) {
+    public ItemDtoWithBookings findByIdWithBooking(Long itemId, Long userId) {
         Item item = findById(itemId);
 
         if (item.hasSameOwner(userId)) {
@@ -59,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDtoWithBookings> findAllByOwnerId(long ownerId, int from, int size) {
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
         List<Item> items = itemRepository.findAllByOwnerId(ownerId, FromSizePageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "id")));
         List<Booking> bookings = bookingRepository.findAllByOwnerId(ownerId, Pageable.unpaged());
         List<Comment> comments = commentRepository.findAllByOwnerId(ownerId);
@@ -68,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> search(String text, int from, int size) {
+    public List<Item> search(String text, Integer from, Integer size) {
         return itemRepository.search(text.toLowerCase(), FromSizePageRequest.of(from, size));
     }
 }

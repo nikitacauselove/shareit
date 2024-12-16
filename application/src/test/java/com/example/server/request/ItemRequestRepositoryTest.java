@@ -49,7 +49,7 @@ public class ItemRequestRepositoryTest {
         itemRequestRepository.save(itemRequest);
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(itemRequest), itemRequestRepository.findAllByRequesterId(1, Sort.by(Sort.Direction.DESC, "created")));
+        Assertions.assertEquals(List.of(itemRequest), itemRequestRepository.findAllByRequesterId(1L, Sort.by(Sort.Direction.DESC, "created")));
     }
 
     @Test
@@ -59,6 +59,6 @@ public class ItemRequestRepositoryTest {
         itemRequestRepository.save(itemRequest);
         itemRepository.save(item);
 
-        Assertions.assertEquals(List.of(itemRequest), itemRequestRepository.findAllByRequesterIdNot(2, PageRequest.of(0, 10)));
+        Assertions.assertEquals(List.of(itemRequest), itemRequestRepository.findAllByRequesterIdNot(2L, PageRequest.of(0, 10)));
     }
 }
