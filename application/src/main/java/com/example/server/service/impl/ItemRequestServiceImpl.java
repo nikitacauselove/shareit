@@ -1,7 +1,7 @@
 package com.example.server.service.impl;
 
 import com.example.api.dto.ItemRequestDto;
-import com.example.server.FromSizePageRequest;
+import com.example.server.repository.FromSizePageRequest;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.entity.Item;
@@ -28,7 +28,6 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     private final ItemRequestMapper itemRequestMapper;
 
     @Override
-    @Transactional
     public ItemRequestDto create(ItemRequest itemRequest) {
         return itemRequestMapper.toItemRequestDto(itemRequestRepository.save(itemRequest), Collections.emptyList());
     }

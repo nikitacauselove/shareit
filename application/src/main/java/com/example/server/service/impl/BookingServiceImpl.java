@@ -1,12 +1,18 @@
 package com.example.server.service.impl;
 
+import com.example.api.dto.BookingCreateDto;
 import com.example.api.dto.enums.BookingState;
 import com.example.api.dto.enums.BookingStatus;
-import com.example.server.FromSizePageRequest;
+import com.example.server.mapper.BookingMapper;
+import com.example.server.repository.FromSizePageRequest;
 import com.example.server.exception.BadRequestException;
+import com.example.server.repository.ItemRepository;
+import com.example.server.repository.UserRepository;
 import com.example.server.repository.entity.Booking;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.BookingRepository;
+import com.example.server.repository.entity.Item;
+import com.example.server.repository.entity.User;
 import com.example.server.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +27,22 @@ import java.util.List;
 @Service
 public class BookingServiceImpl implements BookingService {
 
+    private final BookingMapper bookingMapper;
     private final BookingRepository bookingRepository;
+    private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
 
     private static final Sort BY_START_DESCENDING = Sort.by(Sort.Direction.DESC, "start");
 
     @Override
-    public Booking create(Booking booking) {
+    @Transactional
+    public Booking create(BookingCreateDto bookingCreateDto, Long bookerId) {
+        User booker = userRepository.findById(bookerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));
+        Item item = itemRepository.findById(bookingCreateDto.itemId())
+                .orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден."));
+        Booking booking = bookingMapper.toBooking(bookingCreateDto, item, booker);
+
         if (!booking.getItem().isAvailable()) {
             throw new BadRequestException("Предмет с указанным идентификатором не доступен для бронирования.");
         } else if (booking.hasSameBooker(booking.getItem().getOwner().getId())) {
@@ -61,43 +77,35 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
+        User booker = userRepository.findById(bookerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));;
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
-        switch (state) {
-            case CURRENT:
-                return bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, now, now, pageable);
-            case FUTURE:
-                return bookingRepository.findAllByBookerIdAndStartAfter(bookerId, now, pageable);
-            case PAST:
-                return bookingRepository.findAllByBookerIdAndEndBefore(bookerId, now, pageable);
-            case REJECTED:
-                return bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.REJECTED, pageable);
-            case WAITING:
-                return bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.WAITING, pageable);
-            default:
-                return bookingRepository.findAllByBookerId(bookerId, pageable);
-        }
+        return switch (state) {
+            case CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, now, now, pageable);
+            case FUTURE -> bookingRepository.findAllByBookerIdAndStartAfter(bookerId, now, pageable);
+            case PAST -> bookingRepository.findAllByBookerIdAndEndBefore(bookerId, now, pageable);
+            case REJECTED -> bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.REJECTED, pageable);
+            case WAITING -> bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.WAITING, pageable);
+            default -> bookingRepository.findAllByBookerId(bookerId, pageable);
+        };
     }
 
     @Override
     public List<Booking> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));;
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
-        switch (state) {
-            case CURRENT:
-                return bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, now, now, pageable);
-            case FUTURE:
-                return bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, now, pageable);
-            case PAST:
-                return bookingRepository.findAllByOwnerIdAndEndBefore(ownerId, now, pageable);
-            case REJECTED:
-                return bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.REJECTED, pageable);
-            case WAITING:
-                return bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.WAITING, pageable);
-            default:
-                return bookingRepository.findAllByOwnerId(ownerId, pageable);
-        }
+        return switch (state) {
+            case CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, now, now, pageable);
+            case FUTURE -> bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, now, pageable);
+            case PAST -> bookingRepository.findAllByOwnerIdAndEndBefore(ownerId, now, pageable);
+            case REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.REJECTED, pageable);
+            case WAITING -> bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.WAITING, pageable);
+            default -> bookingRepository.findAllByOwnerId(ownerId, pageable);
+        };
     }
 }

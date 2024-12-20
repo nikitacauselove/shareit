@@ -5,12 +5,7 @@ import com.example.api.dto.BookingCreateDto;
 import com.example.api.dto.BookingDto;
 import com.example.api.dto.enums.BookingState;
 import com.example.server.service.BookingService;
-import com.example.server.service.ItemService;
-import com.example.server.service.UserService;
 import com.example.server.mapper.BookingMapper;
-import com.example.server.repository.entity.Booking;
-import com.example.server.repository.entity.Item;
-import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +17,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController implements BookingApi {
 
-    private final BookingService bookingService;
     private final BookingMapper bookingMapper;
-    private final ItemService itemService;
-    private final UserService userService;
+    private final BookingService bookingService;
 
     @Override
     public BookingDto create(BookingCreateDto bookingCreateDto, Long bookerId) {
-        User booker = userService.findById(bookerId);
-        Item item = itemService.findById(bookingCreateDto.itemId());
-        Booking booking = bookingMapper.toBooking(bookingCreateDto, item, booker);
-
-        return bookingMapper.toBookingDto(bookingService.create(booking));
+        return bookingMapper.toBookingDto(bookingService.create(bookingCreateDto, bookerId));
     }
 
     @Override
@@ -48,15 +37,11 @@ public class BookingController implements BookingApi {
 
     @Override
     public List<BookingDto> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
-        User booker = userService.findById(bookerId);
-
-        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(booker.getId(), state, from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(bookerId, state, from, size));
     }
 
     @Override
     public List<BookingDto> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
-        User owner = userService.findById(ownerId);
-
-        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(owner.getId(), state, from, size));
+        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(ownerId, state, from, size));
     }
 }

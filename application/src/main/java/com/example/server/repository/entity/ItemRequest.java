@@ -7,23 +7,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@Data
 @Entity
+@EqualsAndHashCode(of = "id")
+@Getter
 @NoArgsConstructor
+@Setter
+@SequenceGenerator(name = "requests_id_seq", allocationSize = 1)
 @Table(name = "requests")
 public class ItemRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "requests_id_seq")
     private Long id;
 
     @Column(name = "description")

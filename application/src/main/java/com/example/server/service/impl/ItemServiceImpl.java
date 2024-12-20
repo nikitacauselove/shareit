@@ -1,7 +1,7 @@
 package com.example.server.service.impl;
 
 import com.example.api.dto.ItemDtoWithBookings;
-import com.example.server.FromSizePageRequest;
+import com.example.server.repository.FromSizePageRequest;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.BookingRepository;
 import com.example.server.repository.entity.Booking;
