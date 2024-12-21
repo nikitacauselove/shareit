@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "Запрос на создание бронирования")
+@Schema(description = "Информация о запросе на бронирование")
 @StartBeforeEnd
 public record BookingCreateDto(@Schema(description = "Идентификатор предмета") Long itemId,
                                @Schema(description = "Дата и время начала бронирования") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @FutureOrPresent @NotNull LocalDateTime start,

@@ -67,21 +67,23 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking findById(Long bookingId, Long userId) {
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Запрос на бронирование для пользователя с указанным идентификатором не найден."));
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new NotFoundException("Запрос на бронирование с указанным идентификатором не найден"));
 
-        if (booking.hasSameBooker(userId) || booking.hasSameOwner(userId)) {
-            return booking;
+        if (!booking.hasSameBooker(userId) && !booking.hasSameOwner(userId)) {
+            throw new NotFoundException("Получение информации о запросе на бронирование может быть осуществлено либо автором бронирования, либо владельцем предмета, который пользователь бронирует");
         }
-        throw new NotFoundException("Получение данных о конкретном бронировании может быть выполнено либо автором бронирования, либо владельцем вещи, к которой относится бронирование.");
+        return booking;
     }
 
     @Override
     public List<Booking> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
-        User booker = userRepository.findById(bookerId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));;
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
+        if (!userRepository.existsById(bookerId)) {
+            throw new NotFoundException("Пользователь с указанным идентификатором не найден");
+        }
         return switch (state) {
             case CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, now, now, pageable);
             case FUTURE -> bookingRepository.findAllByBookerIdAndStartAfter(bookerId, now, pageable);
@@ -94,11 +96,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
-        User owner = userRepository.findById(ownerId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));;
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
+        if (!userRepository.existsById(ownerId)) {
+            throw new NotFoundException("Пользователь с указанным идентификатором не найден");
+        }
         return switch (state) {
             case CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, now, now, pageable);
             case FUTURE -> bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, now, pageable);

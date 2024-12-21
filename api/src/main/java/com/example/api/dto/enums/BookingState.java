@@ -1,7 +1,7 @@
 package com.example.api.dto.enums;
 
 /**
- * Критерий поиска бронирования.
+ * Критерий поиска запросов на бронирование.
  */
 public enum BookingState {
 
