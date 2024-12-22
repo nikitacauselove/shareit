@@ -17,12 +17,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")
+@FieldNameConstants
 @Getter
 @NoArgsConstructor
 @Setter
@@ -52,19 +54,7 @@ public class Booking {
     @Column(name = "status")
     private BookingStatus status;
 
-    public boolean hasSameBooker(long bookerId) {
-        return getBooker().hasSameId(bookerId);
-    }
-
     public boolean hasSameItem(Item item) {
         return getItem().getId().equals(item.getId());
-    }
-
-    public boolean hasSameOwner(long ownerId) {
-        return getItem().getOwner().hasSameId(ownerId);
-    }
-
-    public boolean isApprovedOrRejected() {
-        return getStatus().equals(BookingStatus.APPROVED) || getStatus().equals(BookingStatus.REJECTED);
     }
 }

@@ -15,7 +15,7 @@ public class CommentController implements CommentApi {
     private final CommentClient commentClient;
 
     @Override
-    public CommentDto create(Long itemId, CommentDto commentDto, Long authorId) {
-        return commentClient.create(itemId, commentDto, authorId);
+    public CommentDto create(Long itemId, CommentDto commentDto, Long userId) {
+        return commentClient.create(itemId, commentDto, userId);
     }
 }

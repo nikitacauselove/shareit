@@ -1,5 +1,6 @@
 package com.example.server.service;
 
+import com.example.api.dto.ItemDto;
 import com.example.api.dto.ItemDtoWithBookings;
 import com.example.server.repository.entity.Item;
 
@@ -7,9 +8,9 @@ import java.util.List;
 
 public interface ItemService {
 
-    Item create(Item item);
+    Item create(ItemDto itemDto, Long userId);
 
-    Item update(Item item);
+    Item update(Long itemId, ItemDto itemDto, Long ownerId);
 
     Item findById(Long itemId);
 

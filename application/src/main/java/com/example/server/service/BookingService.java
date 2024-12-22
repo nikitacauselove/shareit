@@ -14,17 +14,17 @@ public interface BookingService {
     /**
      * Добавление нового запроса на бронирование.
      * @param bookingCreateDto информация о запросе на бронирование
-     * @param bookerId идентификатор пользователя
+     * @param userId идентификатор пользователя
      */
-    Booking create(BookingCreateDto bookingCreateDto, Long bookerId);
+    Booking create(BookingCreateDto bookingCreateDto, Long userId);
 
     /**
      * Подтверждение или отклонение запроса на бронирование.
      * @param bookingId идентификатор запроса на бронирование
-     * @param ownerId идентификатор пользователя
-     * @param approved
+     * @param userId идентификатор пользователя
+     * @param approved подтверждение или отклонение запроса на бронирование
      */
-    Booking approveOrReject(Long bookingId, Long ownerId, Boolean approved);
+    Booking approveOrReject(Long bookingId, Long userId, Boolean approved);
 
     /**
      * Получение информации о запросе на бронирование.
@@ -35,15 +35,15 @@ public interface BookingService {
 
     /**
      * Получение списка всех запросов на бронирование пользователя.
-     * @param bookerId идентификатор пользователя
+     * @param userId идентификатор пользователя
      * @param state критерий поиска запросов на бронирование
      */
-    List<Booking> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size);
+    List<Booking> findAllByBookerId(Long userId, BookingState state, Integer from, Integer size);
 
     /**
      * Получение списка всех запросов на бронирование для всех предметов пользователя.
-     * @param ownerId идентификатор пользователя
+     * @param userId идентификатор пользователя
      * @param state критерий поиска запросов на бронирование
      */
-    List<Booking> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size);
+    List<Booking> findAllByOwnerId(Long userId, BookingState state, Integer from, Integer size);
 }

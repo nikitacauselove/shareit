@@ -18,5 +18,5 @@ public interface CommentApi {
 
     @PostMapping("/{itemId}/comment")
     @Operation(description = "Добавление нового отзыва")
-    CommentDto create(@PathVariable Long itemId, @RequestBody @Valid CommentDto commentDto, @RequestHeader(X_SHARER_USER_ID) Long authorId);
+    CommentDto create(@PathVariable Long itemId, @RequestBody @Valid CommentDto commentDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 }

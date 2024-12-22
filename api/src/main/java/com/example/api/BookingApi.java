@@ -4,6 +4,7 @@ import com.example.api.dto.BookingCreateDto;
 import com.example.api.dto.BookingDto;
 import com.example.api.dto.enums.BookingState;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -29,11 +30,13 @@ public interface BookingApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса на бронирование")
-    BookingDto create(@RequestBody @Valid BookingCreateDto bookingCreateDto, @RequestHeader(X_SHARER_USER_ID) Long bookerId);
+    BookingDto create(@RequestBody @Valid BookingCreateDto bookingCreateDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
     @PatchMapping("/{bookingId}")
     @Operation(description = "Подтверждение или отклонение запроса на бронирование")
-    BookingDto approveOrReject(@PathVariable Long bookingId, @RequestHeader(X_SHARER_USER_ID) Long ownerId, @RequestParam Boolean approved);
+    BookingDto approveOrReject(@PathVariable Long bookingId,
+                               @RequestHeader(X_SHARER_USER_ID) Long userId,
+                               @Parameter(description = "Подтверждение или отклонение запроса на бронирование") @RequestParam Boolean approved);
 
     @GetMapping("/{bookingId}")
     @Operation(description = "Получение информации о запросе на бронирование")
@@ -41,15 +44,15 @@ public interface BookingApi {
 
     @GetMapping
     @Operation(description = "Получение списка всех запросов на бронирование пользователя")
-    List<BookingDto> findAllByBookerId(@RequestHeader(X_SHARER_USER_ID) Long bookerId,
-                                       @RequestParam(defaultValue = "ALL") BookingState state,
+    List<BookingDto> findAllByBookerId(@RequestHeader(X_SHARER_USER_ID) Long userId,
+                                       @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") BookingState state,
                                        @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                        @RequestParam(defaultValue = "10") @Positive Integer size);
 
     @GetMapping("/owner")
     @Operation(description = "Получение списка всех запросов на бронирование для всех предметов пользователя")
-    List<BookingDto> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long ownerId,
-                                      @RequestParam(defaultValue = "ALL") BookingState state,
+    List<BookingDto> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long userId,
+                                      @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") BookingState state,
                                       @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                       @RequestParam(defaultValue = "10") @Positive Integer size);
 }

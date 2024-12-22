@@ -3,12 +3,8 @@ package com.example.server.controller;
 import com.example.api.ItemApi;
 import com.example.api.dto.ItemDto;
 import com.example.api.dto.ItemDtoWithBookings;
-import com.example.server.service.ItemRequestService;
 import com.example.server.service.ItemService;
-import com.example.server.service.UserService;
 import com.example.server.mapper.ItemMapper;
-import com.example.server.repository.entity.Item;
-import com.example.server.repository.entity.ItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,24 +17,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController implements ItemApi {
 
-    private final ItemRequestService itemRequestService;
-    private final ItemService itemService;
     private final ItemMapper itemMapper;
-    private final UserService userService;
+    private final ItemService itemService;
 
     @Override
-    public ItemDto create(ItemDto itemDto, Long ownerId) {
-        ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestService.findById(itemDto.requestId());
-        Item item = itemMapper.toItem(itemDto, userService.findById(ownerId), itemRequest);
-
-        return itemMapper.toItemDto(itemService.create(item));
+    public ItemDto create(ItemDto itemDto, Long userId) {
+        return itemMapper.toItemDto(itemService.create(itemDto, userId));
     }
 
     @Override
     public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
-        Item item = itemMapper.updateItem(itemDto, userService.findById(ownerId), itemService.findById(itemId));
-
-        return itemMapper.toItemDto(itemService.update(item));
+        return itemMapper.toItemDto(itemService.update(itemId, itemDto, ownerId));
     }
 
     @Override

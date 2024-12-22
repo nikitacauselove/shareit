@@ -3,10 +3,7 @@ package com.example.server.controller;
 import com.example.api.CommentApi;
 import com.example.api.dto.CommentDto;
 import com.example.server.service.CommentService;
-import com.example.server.service.ItemService;
-import com.example.server.service.UserService;
 import com.example.server.mapper.CommentMapper;
-import com.example.server.repository.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,15 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CommentController implements CommentApi {
 
-    private final CommentService commentService;
     private final CommentMapper commentMapper;
-    private final ItemService itemService;
-    private final UserService userService;
+    private final CommentService commentService;
 
     @Override
-    public CommentDto create(Long itemId, CommentDto commentDto, Long authorId) {
-        Comment comment = commentMapper.toComment(commentDto, itemService.findById(itemId), userService.findById(authorId));
-
-        return commentMapper.toCommentDto(commentService.create(comment));
+    public CommentDto create(Long itemId, CommentDto commentDto, Long userId) {
+        return commentMapper.toCommentDto(commentService.create(itemId, commentDto, userId));
     }
 }

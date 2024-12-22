@@ -21,7 +21,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByItemId(Long itemId);
 
     /**
-     * Получение автором списка всех его отзывов.
+     * Получение владельцем списка всех отзывов на его предметы.
      * @param ownerId идентификатор пользователя
      */
     @Query(FIND_ALL_BY_OWNER_ID)

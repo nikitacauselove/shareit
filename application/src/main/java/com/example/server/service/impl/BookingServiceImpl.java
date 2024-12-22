@@ -27,39 +27,43 @@ import java.util.List;
 @Service
 public class BookingServiceImpl implements BookingService {
 
+    private static final Sort BY_START_DESCENDING = Sort.by(Sort.Direction.DESC, Booking.Fields.start);
+    private static final List<BookingStatus> FINAL_STATUSES = List.of(BookingStatus.APPROVED, BookingStatus.REJECTED);
+
     private final BookingMapper bookingMapper;
     private final BookingRepository bookingRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
-    private static final Sort BY_START_DESCENDING = Sort.by(Sort.Direction.DESC, "start");
-
     @Override
     @Transactional
-    public Booking create(BookingCreateDto bookingCreateDto, Long bookerId) {
-        User booker = userRepository.findById(bookerId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден."));
+    public Booking create(BookingCreateDto bookingCreateDto, Long userId) {
         Item item = itemRepository.findById(bookingCreateDto.itemId())
-                .orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден."));
-        Booking booking = bookingMapper.toBooking(bookingCreateDto, item, booker);
+                .orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден"));
+        Long ownerId = item.getOwner().getId();
+        User booker = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
 
-        if (!booking.getItem().isAvailable()) {
-            throw new BadRequestException("Предмет с указанным идентификатором не доступен для бронирования.");
-        } else if (booking.hasSameBooker(booking.getItem().getOwner().getId())) {
-            throw new NotFoundException("Запрос на бронирование не может быть создан владельцем вещи.");
+        if (!item.isAvailable()) {
+            throw new BadRequestException("Предмет с указанным идентификатором не доступен для бронирования");
         }
-        return bookingRepository.save(booking);
+        if (ownerId.equals(userId)) {
+            throw new NotFoundException("Запрос на бронирование не может быть создан владельцем предмета");
+        }
+        return bookingRepository.save(bookingMapper.toBooking(bookingCreateDto, item, booker));
     }
 
     @Override
     @Transactional
-    public Booking approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
-        Booking booking = findById(bookingId, ownerId);
+    public Booking approveOrReject(Long bookingId, Long userId, Boolean approved) {
+        Booking booking = findById(bookingId, userId);
+        Long ownerId = booking.getItem().getOwner().getId();
 
-        if (booking.isApprovedOrRejected()) {
-            throw new BadRequestException("Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно.");
-        } else if (!booking.hasSameOwner(ownerId)) {
-            throw new NotFoundException("Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем вещи.");
+        if (FINAL_STATUSES.contains(booking.getStatus())) {
+            throw new BadRequestException("Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно");
+        }
+        if (!ownerId.equals(userId)) {
+            throw new NotFoundException("Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем вещи");
         }
         booking.setStatus(approved ? BookingStatus.APPROVED : BookingStatus.REJECTED);
         return bookingRepository.save(booking);
@@ -69,46 +73,47 @@ public class BookingServiceImpl implements BookingService {
     public Booking findById(Long bookingId, Long userId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Запрос на бронирование с указанным идентификатором не найден"));
+        List<Long> bookerAndOwnerIds = List.of(booking.getBooker().getId(), booking.getItem().getOwner().getId());
 
-        if (!booking.hasSameBooker(userId) && !booking.hasSameOwner(userId)) {
+        if (!bookerAndOwnerIds.contains(userId)) {
             throw new NotFoundException("Получение информации о запросе на бронирование может быть осуществлено либо автором бронирования, либо владельцем предмета, который пользователь бронирует");
         }
         return booking;
     }
 
     @Override
-    public List<Booking> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
+    public List<Booking> findAllByBookerId(Long userId, BookingState state, Integer from, Integer size) {
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
-        if (!userRepository.existsById(bookerId)) {
+        if (!userRepository.existsById(userId)) {
             throw new NotFoundException("Пользователь с указанным идентификатором не найден");
         }
         return switch (state) {
-            case CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, now, now, pageable);
-            case FUTURE -> bookingRepository.findAllByBookerIdAndStartAfter(bookerId, now, pageable);
-            case PAST -> bookingRepository.findAllByBookerIdAndEndBefore(bookerId, now, pageable);
-            case REJECTED -> bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.REJECTED, pageable);
-            case WAITING -> bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.WAITING, pageable);
-            default -> bookingRepository.findAllByBookerId(bookerId, pageable);
+            case CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(userId, now, now, pageable);
+            case FUTURE -> bookingRepository.findAllByBookerIdAndStartAfter(userId, now, pageable);
+            case PAST -> bookingRepository.findAllByBookerIdAndEndBefore(userId, now, pageable);
+            case REJECTED -> bookingRepository.findAllByBookerIdAndStatus(userId, BookingStatus.REJECTED, pageable);
+            case WAITING -> bookingRepository.findAllByBookerIdAndStatus(userId, BookingStatus.WAITING, pageable);
+            default -> bookingRepository.findAllByBookerId(userId, pageable);
         };
     }
 
     @Override
-    public List<Booking> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
+    public List<Booking> findAllByOwnerId(Long userId, BookingState state, Integer from, Integer size) {
         LocalDateTime now = LocalDateTime.now();
         Pageable pageable = FromSizePageRequest.of(from, size, BY_START_DESCENDING);
 
-        if (!userRepository.existsById(ownerId)) {
+        if (!userRepository.existsById(userId)) {
             throw new NotFoundException("Пользователь с указанным идентификатором не найден");
         }
         return switch (state) {
-            case CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, now, now, pageable);
-            case FUTURE -> bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, now, pageable);
-            case PAST -> bookingRepository.findAllByOwnerIdAndEndBefore(ownerId, now, pageable);
-            case REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.REJECTED, pageable);
-            case WAITING -> bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.WAITING, pageable);
-            default -> bookingRepository.findAllByOwnerId(ownerId, pageable);
+            case CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(userId, now, now, pageable);
+            case FUTURE -> bookingRepository.findAllByOwnerIdAndStartAfter(userId, now, pageable);
+            case PAST -> bookingRepository.findAllByOwnerIdAndEndBefore(userId, now, pageable);
+            case REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.REJECTED, pageable);
+            case WAITING -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.WAITING, pageable);
+            default -> bookingRepository.findAllByOwnerId(userId, pageable);
         };
     }
 }
