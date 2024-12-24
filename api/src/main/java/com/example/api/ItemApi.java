@@ -28,19 +28,19 @@ public interface ItemApi {
 
     @PostMapping
     @Operation(description = "Добавление нового предмета")
-    ItemDto create(@RequestBody @Valid ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) Long ownerId);
+    ItemDto create(@RequestBody @Valid ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
-    @PatchMapping("/{itemId}")
+    @PatchMapping("/{id}")
     @Operation(description = "Обновление информации о предмете")
-    ItemDto update(@PathVariable Long itemId, @RequestBody ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) Long ownerId);
+    ItemDto update(@PathVariable Long id, @RequestBody ItemDto itemDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
-    @GetMapping("/{itemId}")
+    @GetMapping("/{id}")
     @Operation(description = "Получение информации о предмете")
-    ItemDtoWithBookings findById(@PathVariable Long itemId, @RequestHeader(X_SHARER_USER_ID) Long userId);
+    ItemDtoWithBookings findById(@PathVariable Long id, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
     @GetMapping
     @Operation(description = "Получение владельцем списка всех его предметов")
-    List<ItemDtoWithBookings> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long ownerId,
+    List<ItemDtoWithBookings> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long userId,
                                                @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                                @RequestParam(defaultValue = "10") @Positive Integer size);
 

@@ -32,25 +32,25 @@ public interface BookingApi {
     @Operation(description = "Добавление нового запроса на бронирование")
     BookingDto create(@RequestBody @Valid BookingCreateDto bookingCreateDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
-    @PatchMapping("/{bookingId}")
+    @PatchMapping("/{id}")
     @Operation(description = "Подтверждение или отклонение запроса на бронирование")
-    BookingDto approveOrReject(@PathVariable Long bookingId,
+    BookingDto approveOrReject(@PathVariable Long id,
                                @RequestHeader(X_SHARER_USER_ID) Long userId,
                                @Parameter(description = "Подтверждение или отклонение запроса на бронирование") @RequestParam Boolean approved);
 
-    @GetMapping("/{bookingId}")
+    @GetMapping("/{id}")
     @Operation(description = "Получение информации о запросе на бронирование")
-    BookingDto findById(@PathVariable Long bookingId, @RequestHeader(X_SHARER_USER_ID) Long userId);
+    BookingDto findById(@PathVariable Long id, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
     @GetMapping
-    @Operation(description = "Получение списка всех запросов на бронирование пользователя")
+    @Operation(description = "Получение пользователем списка всех его запросов на бронирование")
     List<BookingDto> findAllByBookerId(@RequestHeader(X_SHARER_USER_ID) Long userId,
                                        @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") BookingState state,
                                        @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                        @RequestParam(defaultValue = "10") @Positive Integer size);
 
     @GetMapping("/owner")
-    @Operation(description = "Получение списка всех запросов на бронирование для всех предметов пользователя")
+    @Operation(description = "Получение владельцем списка всех запросов на бронирование для всех его предметов")
     List<BookingDto> findAllByOwnerId(@RequestHeader(X_SHARER_USER_ID) Long userId,
                                       @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") BookingState state,
                                       @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,

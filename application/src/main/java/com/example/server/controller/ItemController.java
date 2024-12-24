@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,25 +25,22 @@ public class ItemController implements ItemApi {
     }
 
     @Override
-    public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
-        return itemMapper.toItemDto(itemService.update(itemId, itemDto, ownerId));
+    public ItemDto update(Long id, ItemDto itemDto, Long userId) {
+        return itemMapper.toItemDto(itemService.update(id, itemDto, userId));
     }
 
     @Override
-    public ItemDtoWithBookings findById(Long itemId, Long userId) {
-        return itemService.findByIdWithBooking(itemId, userId);
+    public ItemDtoWithBookings findById(Long id, Long userId) {
+        return itemService.findByIdWithBooking(id, userId);
     }
 
     @Override
-    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
-        return itemService.findAllByOwnerId(ownerId, from, size);
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long userId, Integer from, Integer size) {
+        return itemService.findAllByOwnerId(userId, from, size);
     }
 
     @Override
     public List<ItemDto> search(String text, Integer from, Integer size) {
-        if (text.isBlank()) {
-            return Collections.emptyList();
-        }
         return itemMapper.toItemDto(itemService.search(text, from, size));
     }
 }

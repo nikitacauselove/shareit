@@ -6,17 +6,43 @@ import com.example.server.repository.entity.Item;
 
 import java.util.List;
 
+/**
+ * Сервис для взаимодействия с предметами.
+ */
 public interface ItemService {
 
+    /**
+     * Добавление нового предмета.
+     * @param itemDto информация о предмете
+     * @param userId идентификатор пользователя
+     */
     Item create(ItemDto itemDto, Long userId);
 
-    Item update(Long itemId, ItemDto itemDto, Long ownerId);
+    /**
+     * Обновление информации о предмете.
+     * @param id идентификатор предмета
+     * @param itemDto информация о предмете
+     * @param userId идентификатор пользователя
+     */
+    Item update(Long id, ItemDto itemDto, Long userId);
 
-    Item findById(Long itemId);
+    /**
+     * Получение информации о предмете.
+     * @param id идентификатор предмета
+     */
+    Item findById(Long id);
 
-    ItemDtoWithBookings findByIdWithBooking(Long itemId, Long userId);
+    ItemDtoWithBookings findByIdWithBooking(Long id, Long userId);
 
-    List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size);
+    /**
+     * Получение владельцем списка всех его предметов.
+     * @param userId идентификатор пользователя
+     */
+    List<ItemDtoWithBookings> findAllByOwnerId(Long userId, Integer from, Integer size);
 
+    /**
+     * Поиск предметов.
+     * @param text текст для поиска
+     */
     List<Item> search(String text, Integer from, Integer size);
 }

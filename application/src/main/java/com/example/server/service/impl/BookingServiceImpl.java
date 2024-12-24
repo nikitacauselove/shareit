@@ -55,8 +55,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public Booking approveOrReject(Long bookingId, Long userId, Boolean approved) {
-        Booking booking = findById(bookingId, userId);
+    public Booking approveOrReject(Long id, Long userId, Boolean approved) {
+        Booking booking = findById(id, userId);
         Long ownerId = booking.getItem().getOwner().getId();
 
         if (FINAL_STATUSES.contains(booking.getStatus())) {
@@ -70,8 +70,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findById(Long bookingId, Long userId) {
-        Booking booking = bookingRepository.findById(bookingId)
+    public Booking findById(Long id, Long userId) {
+        Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Запрос на бронирование с указанным идентификатором не найден"));
         List<Long> bookerAndOwnerIds = List.of(booking.getBooker().getId(), booking.getItem().getOwner().getId());
 

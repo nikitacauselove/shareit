@@ -17,22 +17,22 @@ public class ItemRequestController implements ItemRequestApi {
     private final ItemRequestClient requestClient;
 
     @Override
-    public ItemRequestDto create(ItemRequestDto itemRequestDto, Long requesterId) {
-        return requestClient.create(itemRequestDto, requesterId);
+    public ItemRequestDto create(ItemRequestDto itemRequestDto, Long userId) {
+        return requestClient.create(itemRequestDto, userId);
     }
 
     @Override
-    public ItemRequestDto findById(Long requestId, Long requesterId) {
-        return requestClient.findById(requestId, requesterId);
+    public ItemRequestDto findById(Long id, Long userId) {
+        return requestClient.findById(id, userId);
     }
 
     @Override
-    public List<ItemRequestDto> findAllByRequesterId(Long requesterId) {
-        return requestClient.findAllByRequesterId(requesterId);
+    public List<ItemRequestDto> findAllByRequesterId(Long userId) {
+        return requestClient.findAllByRequesterId(userId);
     }
 
     @Override
-    public List<ItemRequestDto> findAllByRequesterIdNot(Long requesterId, Integer from, Integer size) {
-        return requestClient.findAllByRequesterIdNot(requesterId, from, size);
+    public List<ItemRequestDto> findAllByRequesterIdNot(Long userId, Integer from, Integer size) {
+        return requestClient.findAllByRequesterIdNot(userId, from, size);
     }
 }

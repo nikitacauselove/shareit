@@ -26,19 +26,19 @@ public interface ItemRequestApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса")
-    ItemRequestDto create(@RequestBody @Valid ItemRequestDto itemRequestDto, @RequestHeader(X_SHARER_USER_ID) Long requesterId);
+    ItemRequestDto create(@RequestBody @Valid ItemRequestDto itemRequestDto, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
-    @GetMapping("/{requestId}")
+    @GetMapping("/{id}")
     @Operation(description = "Получение информации о запросе")
-    ItemRequestDto findById(@PathVariable Long requestId, @RequestHeader(X_SHARER_USER_ID) Long requesterId);
+    ItemRequestDto findById(@PathVariable Long id, @RequestHeader(X_SHARER_USER_ID) Long userId);
 
     @GetMapping
     @Operation(description = "Получение списка всех запросов, добавленных пользователем")
-    List<ItemRequestDto> findAllByRequesterId(@RequestHeader(X_SHARER_USER_ID) Long requesterId);
+    List<ItemRequestDto> findAllByRequesterId(@RequestHeader(X_SHARER_USER_ID) Long userId);
 
     @GetMapping("/all")
-    @Operation(description = "Получение списка всех запросов, добавленных другими пользователем")
-    List<ItemRequestDto> findAllByRequesterIdNot(@RequestHeader(X_SHARER_USER_ID) Long requesterId,
+    @Operation(description = "Получение списка всех запросов, добавленных другими пользователями")
+    List<ItemRequestDto> findAllByRequesterIdNot(@RequestHeader(X_SHARER_USER_ID) Long userId,
                                                  @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                                  @RequestParam(defaultValue = "10") @Positive Integer size);
 }

@@ -20,27 +20,27 @@ public class BookingController implements BookingApi {
     private final BookingClient bookingClient;
 
     @Override
-    public BookingDto create(BookingCreateDto bookingCreateDto, Long bookerId) {
-        return bookingClient.create(bookingCreateDto, bookerId);
+    public BookingDto create(BookingCreateDto bookingCreateDto, Long userId) {
+        return bookingClient.create(bookingCreateDto, userId);
     }
 
     @Override
-    public BookingDto approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
-        return bookingClient.approveOrReject(bookingId, ownerId, approved);
+    public BookingDto approveOrReject(Long id, Long userId, Boolean approved) {
+        return bookingClient.approveOrReject(id, userId, approved);
     }
 
     @Override
-    public BookingDto findById(Long bookingId, Long userId) {
-        return bookingClient.findById(bookingId, userId);
+    public BookingDto findById(Long id, Long userId) {
+        return bookingClient.findById(id, userId);
     }
 
     @Override
-    public List<BookingDto> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
-        return bookingClient.findAllByBookerId(bookerId, state, from, size);
+    public List<BookingDto> findAllByBookerId(Long userId, BookingState state, Integer from, Integer size) {
+        return bookingClient.findAllByBookerId(userId, state, from, size);
     }
 
     @Override
-    public List<BookingDto> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
-        return bookingClient.findAllByOwnerId(ownerId, state, from, size);
+    public List<BookingDto> findAllByOwnerId(Long userId, BookingState state, Integer from, Integer size) {
+        return bookingClient.findAllByOwnerId(userId, state, from, size);
     }
 }

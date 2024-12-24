@@ -21,27 +21,27 @@ public class BookingController implements BookingApi {
     private final BookingService bookingService;
 
     @Override
-    public BookingDto create(BookingCreateDto bookingCreateDto, Long bookerId) {
-        return bookingMapper.toBookingDto(bookingService.create(bookingCreateDto, bookerId));
+    public BookingDto create(BookingCreateDto bookingCreateDto, Long userId) {
+        return bookingMapper.toBookingDto(bookingService.create(bookingCreateDto, userId));
     }
 
     @Override
-    public BookingDto approveOrReject(Long bookingId, Long ownerId, Boolean approved) {
-        return bookingMapper.toBookingDto(bookingService.approveOrReject(bookingId, ownerId, approved));
+    public BookingDto approveOrReject(Long id, Long userId, Boolean approved) {
+        return bookingMapper.toBookingDto(bookingService.approveOrReject(id, userId, approved));
     }
 
     @Override
-    public BookingDto findById(Long bookingId, Long userId) {
-        return bookingMapper.toBookingDto(bookingService.findById(bookingId, userId));
+    public BookingDto findById(Long id, Long userId) {
+        return bookingMapper.toBookingDto(bookingService.findById(id, userId));
     }
 
     @Override
-    public List<BookingDto> findAllByBookerId(Long bookerId, BookingState state, Integer from, Integer size) {
-        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(bookerId, state, from, size));
+    public List<BookingDto> findAllByBookerId(Long userId, BookingState state, Integer from, Integer size) {
+        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(userId, state, from, size));
     }
 
     @Override
-    public List<BookingDto> findAllByOwnerId(Long ownerId, BookingState state, Integer from, Integer size) {
-        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(ownerId, state, from, size));
+    public List<BookingDto> findAllByOwnerId(Long userId, BookingState state, Integer from, Integer size) {
+        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(userId, state, from, size));
     }
 }

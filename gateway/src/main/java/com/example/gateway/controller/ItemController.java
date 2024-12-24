@@ -18,23 +18,23 @@ public class ItemController implements ItemApi {
     private final ItemClient itemClient;
 
     @Override
-    public ItemDto create(ItemDto itemDto, Long ownerId) {
-        return itemClient.create(itemDto, ownerId);
+    public ItemDto create(ItemDto itemDto, Long userId) {
+        return itemClient.create(itemDto, userId);
     }
 
     @Override
-    public ItemDto update(Long itemId, ItemDto itemDto, Long ownerId) {
-        return itemClient.update(itemId, itemDto, ownerId);
+    public ItemDto update(Long id, ItemDto itemDto, Long userId) {
+        return itemClient.update(id, itemDto, userId);
     }
 
     @Override
-    public ItemDtoWithBookings findById(Long itemId, Long userId) {
-        return itemClient.findById(itemId, userId);
+    public ItemDtoWithBookings findById(Long id, Long userId) {
+        return itemClient.findById(id, userId);
     }
 
     @Override
-    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
-        return itemClient.findAllByOwnerId(ownerId, from, size);
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long userId, Integer from, Integer size) {
+        return itemClient.findAllByOwnerId(userId, from, size);
     }
 
     @Override

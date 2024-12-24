@@ -14,10 +14,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")
+@FieldNameConstants
 @Getter
 @NoArgsConstructor
 @Setter
@@ -45,14 +47,6 @@ public class Item {
     @JoinColumn(name = "request_id")
     @ManyToOne
     private ItemRequest request;
-
-    public boolean hasSameOwner(Item item) {
-        return getOwner().hasSameId(item.getOwner());
-    }
-
-    public boolean hasSameOwner(long ownerId) {
-        return getOwner().hasSameId(ownerId);
-    }
 
     public boolean isAvailable() {
         return this.available;

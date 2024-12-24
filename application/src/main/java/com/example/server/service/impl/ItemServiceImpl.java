@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,54 +39,57 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public Item create(ItemDto itemDto, Long userId) {
-        ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestRepository.findById(itemDto.requestId())
-                .orElseThrow(() -> new NotFoundException("Запрос на добавление предмета с указанным идентификатором не найден"));
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
+        ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestRepository.findById(itemDto.requestId())
+                .orElseThrow(() -> new NotFoundException("Запрос на добавление предмета с указанным идентификатором не найден"));
 
         return itemRepository.save(itemMapper.toItem(itemDto, owner, itemRequest));
     }
 
     @Override
     @Transactional
-    public Item update(Long itemId, ItemDto itemDto, Long ownerId) {
-        Item item = itemRepository.findById(itemId)
+    public Item update(Long id, ItemDto itemDto, Long userId) {
+        Item item = findById(id);
+        Long ownerId = item.getOwner().getId();
+
+        if (!ownerId.equals(userId)) {
+            throw new NotFoundException("Обновлять информацию о предмете может только его владелец");
+        }
+        return itemRepository.save(itemMapper.updateItem(itemDto, item));
+    }
+
+    @Override
+    public Item findById(Long id) {
+        return itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден"));
-        User owner = userRepository.findById(ownerId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
+    }
 
-        if (findById(item.getId()).hasSameOwner(item)) {
-            return itemRepository.save(itemMapper.updateItem(itemDto, owner, item));
+    @Override
+    public ItemDtoWithBookings findByIdWithBooking(Long id, Long userId) {
+        Item item = findById(id);
+        Long ownerId = item.getOwner().getId();
+
+        if (ownerId.equals(userId)) {
+            return itemMapper.toItemDtoWithBookings(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id));
         }
-        throw new NotFoundException("Редактировать вещь может только её владелец.");
+        return itemMapper.toItemDtoWithBookings(item, commentRepository.findAllByItemId(id));
     }
 
     @Override
-    public Item findById(Long itemId) {
-        return itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден."));
-    }
-
-    @Override
-    public ItemDtoWithBookings findByIdWithBooking(Long itemId, Long userId) {
-        Item item = findById(itemId);
-
-        if (item.hasSameOwner(userId)) {
-            return itemMapper.toItemDtoWithBookings(item, bookingRepository.findAllByItemId(itemId), commentRepository.findAllByItemId(itemId));
-        }
-        return itemMapper.toItemDtoWithBookings(item, commentRepository.findAllByItemId(itemId));
-    }
-
-    @Override
-    public List<ItemDtoWithBookings> findAllByOwnerId(Long ownerId, Integer from, Integer size) {
-        List<Item> items = itemRepository.findAllByOwnerId(ownerId, FromSizePageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "id")));
-        List<Booking> bookings = bookingRepository.findAllByOwnerId(ownerId, Pageable.unpaged());
-        List<Comment> comments = commentRepository.findAllByOwnerId(ownerId);
+    public List<ItemDtoWithBookings> findAllByOwnerId(Long userId, Integer from, Integer size) {
+        List<Item> items = itemRepository.findAllByOwnerId(userId, FromSizePageRequest.of(from, size, Sort.by(Sort.Direction.ASC, Item.Fields.id)));
+        List<Booking> bookings = bookingRepository.findAllByOwnerId(userId, Pageable.unpaged());
+        List<Comment> comments = commentRepository.findAllByOwnerId(userId);
 
         return itemMapper.toItemDtoWithBookings(items, bookings, comments);
     }
 
     @Override
     public List<Item> search(String text, Integer from, Integer size) {
+        if (text.isBlank()) {
+            return Collections.emptyList();
+        }
         return itemRepository.search(text.toLowerCase(), FromSizePageRequest.of(from, size));
     }
 }

@@ -29,9 +29,7 @@ public class UserController implements UserApi {
 
     @Override
     public UserDto update(Long id, UserDto userDto) {
-        User user = userMapper.updateUser(userDto, userService.findById(id));
-
-        return userMapper.toUserDto(userService.update(user));
+        return userMapper.toUserDto(userService.update(id, userDto));
     }
 
     @Override

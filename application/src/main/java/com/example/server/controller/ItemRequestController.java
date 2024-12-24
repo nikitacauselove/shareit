@@ -3,10 +3,6 @@ package com.example.server.controller;
 import com.example.api.ItemRequestApi;
 import com.example.api.dto.ItemRequestDto;
 import com.example.server.service.ItemRequestService;
-import com.example.server.service.UserService;
-import com.example.server.mapper.ItemRequestMapper;
-import com.example.server.repository.entity.ItemRequest;
-import com.example.server.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,34 +15,24 @@ import java.util.List;
 public class ItemRequestController implements ItemRequestApi {
 
     private final ItemRequestService itemRequestService;
-    private final ItemRequestMapper itemRequestMapper;
-    private final UserService userService;
 
     @Override
-    public ItemRequestDto create(ItemRequestDto itemRequestDto, Long requesterId) {
-        ItemRequest itemRequest = itemRequestMapper.toItemRequest(itemRequestDto, userService.findById(requesterId));
-
-        return itemRequestService.create(itemRequest);
+    public ItemRequestDto create(ItemRequestDto itemRequestDto, Long userId) {
+        return itemRequestService.create(itemRequestDto, userId);
     }
 
     @Override
-    public ItemRequestDto findById(Long requestId, Long requesterId) {
-        User requester = userService.findById(requesterId);
-
-        return itemRequestService.findByIdWithItems(requestId);
+    public ItemRequestDto findById(Long id, Long userId) {
+        return itemRequestService.findByIdWithItems(id, userId);
     }
 
     @Override
-    public List<ItemRequestDto> findAllByRequesterId(Long requesterId) {
-        User requester = userService.findById(requesterId);
-
-        return itemRequestService.findAllByRequesterId(requester.getId());
+    public List<ItemRequestDto> findAllByRequesterId(Long userId) {
+        return itemRequestService.findAllByRequesterId(userId);
     }
 
     @Override
-    public List<ItemRequestDto> findAllByRequesterIdNot(Long requesterId, Integer from, Integer size) {
-        User requester = userService.findById(requesterId);
-
-        return itemRequestService.findAllByRequesterIdNot(requester.getId(), from, size);
+    public List<ItemRequestDto> findAllByRequesterIdNot(Long userId, Integer from, Integer size) {
+        return itemRequestService.findAllByRequesterIdNot(userId, from, size);
     }
 }

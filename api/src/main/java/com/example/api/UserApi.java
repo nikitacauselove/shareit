@@ -21,7 +21,6 @@ import java.util.Map;
 public interface UserApi {
 
     String PATH = "v1/users";
-
     String X_SHARER_USER_ID = "X-Sharer-User-Id";
 
     @PostMapping

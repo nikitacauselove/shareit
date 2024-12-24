@@ -32,7 +32,7 @@ public interface ItemMapper {
     @Mapping(target = "name", source = "itemDto.name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "description", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "available", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Item updateItem(ItemDto itemDto, User owner, @MappingTarget Item item);
+    Item updateItem(ItemDto itemDto, @MappingTarget Item item);
 
     @Mapping(target = "requestId", source = "item.request.id", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ItemDto toItemDto(Item item);

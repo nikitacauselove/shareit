@@ -20,21 +20,21 @@ public interface BookingService {
 
     /**
      * Подтверждение или отклонение запроса на бронирование.
-     * @param bookingId идентификатор запроса на бронирование
+     * @param id идентификатор запроса на бронирование
      * @param userId идентификатор пользователя
      * @param approved подтверждение или отклонение запроса на бронирование
      */
-    Booking approveOrReject(Long bookingId, Long userId, Boolean approved);
+    Booking approveOrReject(Long id, Long userId, Boolean approved);
 
     /**
      * Получение информации о запросе на бронирование.
-     * @param bookingId идентификатор запроса на бронирование
+     * @param id идентификатор запроса на бронирование
      * @param userId идентификатор пользователя
      */
-    Booking findById(Long bookingId, Long userId);
+    Booking findById(Long id, Long userId);
 
     /**
-     * Получение списка всех запросов на бронирование пользователя.
+     * Получение пользователем списка всех его запросов на бронирование.
      * @param userId идентификатор пользователя
      * @param state критерий поиска запросов на бронирование
      */
