@@ -47,8 +47,4 @@ public class Item {
     @JoinColumn(name = "request_id")
     @ManyToOne
     private ItemRequest request;
-
-    public boolean isAvailable() {
-        return this.available;
-    }
 }

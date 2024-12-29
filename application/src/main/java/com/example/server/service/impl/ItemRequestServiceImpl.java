@@ -5,7 +5,6 @@ import com.example.server.repository.FromSizePageRequest;
 import com.example.server.exception.NotFoundException;
 import com.example.server.repository.ItemRepository;
 import com.example.server.repository.UserRepository;
-import com.example.server.repository.entity.Item;
 import com.example.server.repository.ItemRequestRepository;
 import com.example.server.mapper.ItemRequestMapper;
 import com.example.server.repository.entity.ItemRequest;
@@ -54,21 +53,17 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     @Override
     public List<ItemRequestDto> findAllByRequesterId(Long requesterId) {
-        User requester = userRepository.findById(requesterId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
-        List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterId(requesterId, BY_CREATED_DESCENDING);
-        List<Item> items = itemRepository.findAllByRequestIdNotNull();
-
-        return itemRequestMapper.toItemRequestDto(itemRequests, items);
+        if (!userRepository.existsById(requesterId)) {
+            throw new NotFoundException("Пользователь с указанным идентификатором не найден");
+        }
+        return itemRequestMapper.toItemRequestDto(itemRequestRepository.findAllByRequesterId(requesterId, BY_CREATED_DESCENDING), itemRepository.findAllByRequestIdNotNull());
     }
 
     @Override
     public List<ItemRequestDto> findAllByRequesterIdNot(Long requesterId, Integer from, Integer size) {
-        User requester = userRepository.findById(requesterId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
-        List<ItemRequest> itemRequests = itemRequestRepository.findAllByRequesterIdNot(requesterId, FromSizePageRequest.of(from, size, BY_CREATED_DESCENDING));
-        List<Item> items = itemRepository.findAllByRequestIdNotNull();
-
-        return itemRequestMapper.toItemRequestDto(itemRequests, items);
+        if (!userRepository.existsById(requesterId)) {
+            throw new NotFoundException("Пользователь с указанным идентификатором не найден");
+        }
+        return itemRequestMapper.toItemRequestDto(itemRequestRepository.findAllByRequesterIdNot(requesterId, FromSizePageRequest.of(from, size, BY_CREATED_DESCENDING)), itemRepository.findAllByRequestIdNotNull());
     }
 }

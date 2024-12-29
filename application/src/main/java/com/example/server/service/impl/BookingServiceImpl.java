@@ -44,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
         User booker = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
 
-        if (!item.isAvailable()) {
+        if (!item.getAvailable()) {
             throw new BadRequestException("Предмет с указанным идентификатором не доступен для бронирования");
         }
         if (ownerId.equals(userId)) {

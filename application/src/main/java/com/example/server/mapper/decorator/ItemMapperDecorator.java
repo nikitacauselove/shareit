@@ -29,7 +29,7 @@ public abstract class ItemMapperDecorator implements ItemMapper {
         BookingShortDto lastBooking = findLastBooking(bookings);
         BookingShortDto nextBooking = findNextBooking(bookings);
 
-        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.isAvailable(), lastBooking, nextBooking, commentMapper.toCommentDto(comments));
+        return new ItemDtoWithBookings(item.getId(), item.getName(), item.getDescription(), item.getAvailable(), lastBooking, nextBooking, commentMapper.toCommentDto(comments));
     }
 
     public List<ItemDtoWithBookings> toItemDtoWithBookings(List<Item> items, List<Booking> bookings, List<Comment> comments) {

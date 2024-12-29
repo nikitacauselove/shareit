@@ -32,12 +32,4 @@ public class User {
 
     @Column(name = "email")
     private String email;
-
-    public boolean hasSameId(Long userId) {
-        return getId().equals(userId);
-    }
-
-    public boolean hasSameId(User user) {
-        return hasSameId(user.getId());
-    }
 }
