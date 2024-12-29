@@ -46,11 +46,10 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     @Override
     public ItemRequestDto findByIdWithItems(Long requestId, Long requesterId) {
-        User requester = userRepository.findById(requesterId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
-        ItemRequest itemRequest = findById(requestId);
-
-        return itemRequestMapper.toItemRequestDto(itemRequest, itemRepository.findAllByRequestId(requestId));
+        if (!userRepository.existsById(requesterId)) {
+            throw new NotFoundException("Пользователь с указанным идентификатором не найден");
+        }
+        return itemRequestMapper.toItemRequestDto(findById(requestId), itemRepository.findAllByRequestId(requestId));
     }
 
     @Override
