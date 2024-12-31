@@ -39,8 +39,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("select booking from Booking as booking join fetch booking.item as item join fetch item.owner as user where user.id = :ownerId and booking.status = :status")
     List<Booking> findAllByOwnerIdAndStatus(@Param("ownerId") Long ownerId, @Param("status") BookingStatus status, Pageable pageable);
 
-    @Query("select booking from Booking as booking join fetch booking.item as item join fetch item.owner as user where user.id = :ownerId")
-    List<Booking> findAllByOwnerId(@Param("ownerId") Long ownerId, Pageable pageable);
+    List<Booking> findAllByItem_Owner_Id(@Param("ownerId") Long ownerId, Pageable pageable);
 
     List<Booking> findAllByItemId(Long itemId);
 

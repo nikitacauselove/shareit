@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDtoWithBookings> findAllByOwnerId(Long userId, Integer from, Integer size) {
         List<Item> items = itemRepository.findAllByOwnerId(userId, FromSizePageRequest.of(from, size, Sort.by(Sort.Direction.ASC, Item.Fields.id)));
-        List<Booking> bookings = bookingRepository.findAllByOwnerId(userId, Pageable.unpaged());
+        List<Booking> bookings = bookingRepository.findAllByItem_Owner_Id(userId, Pageable.unpaged());
         List<Comment> comments = commentRepository.findAllByOwnerId(userId);
 
         return itemMapper.toItemDtoWithBookings(items, bookings, comments);

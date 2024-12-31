@@ -113,7 +113,7 @@ public class BookingServiceImpl implements BookingService {
             case PAST -> bookingRepository.findAllByOwnerIdAndEndBefore(userId, now, pageable);
             case REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.REJECTED, pageable);
             case WAITING -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.WAITING, pageable);
-            default -> bookingRepository.findAllByOwnerId(userId, pageable);
+            default -> bookingRepository.findAllByItem_Owner_Id(userId, pageable);
         };
     }
 }
