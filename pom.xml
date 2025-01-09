@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <java.version>17</java.version>
-        <kotlin.version>1.9.25</kotlin.version>
+        <kotlin.version>2.1.0</kotlin.version>
 
         <feign-okhttp.version>13.5</feign-okhttp.version>
         <mapstruct.version>1.6.2</mapstruct.version>
