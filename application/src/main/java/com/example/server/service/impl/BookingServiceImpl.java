@@ -38,7 +38,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public Booking create(BookingCreateDto bookingCreateDto, Long userId) {
-        Item item = itemRepository.findById(bookingCreateDto.itemId())
+        Item item = itemRepository.findById(bookingCreateDto.getItemId())
                 .orElseThrow(() -> new NotFoundException("Предмет с указанным идентификатором не найден"));
         Long ownerId = item.getOwner().getId();
         User booker = userRepository.findById(userId)

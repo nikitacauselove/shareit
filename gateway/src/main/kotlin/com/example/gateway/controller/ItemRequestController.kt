@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = [ItemRequestApi.PATH])
 class ItemRequestController(
-    private val requestClient: ItemRequestClient
+    val requestClient: ItemRequestClient
 ) : ItemRequestApi {
 
-    override fun create(itemRequestDto: ItemRequestDto, userId: Long): ItemRequestDto {
+    override fun create(itemRequestDto: ItemRequestDto?, userId: Long?): ItemRequestDto? {
         return requestClient.create(itemRequestDto, userId)
     }
 
-    override fun findById(id: Long, userId: Long): ItemRequestDto {
+    override fun findById(id: Long?, userId: Long?): ItemRequestDto? {
         return requestClient.findById(id, userId)
     }
 
-    override fun findAllByRequesterId(userId: Long): List<ItemRequestDto> {
+    override fun findAllByRequesterId(userId: Long?): List<ItemRequestDto?>? {
         return requestClient.findAllByRequesterId(userId)
     }
 
-    override fun findAllByRequesterIdNot(userId: Long, from: Int, size: Int): List<ItemRequestDto> {
+    override fun findAllByRequesterIdNot(userId: Long?, from: Int?, size: Int?): List<ItemRequestDto?>? {
         return requestClient.findAllByRequesterIdNot(userId, from, size)
     }
 }

@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(Long id, UserDto userDto) {
-        if (userRepository.existsByIdNotAndEmail(id, userDto.email())) {
+        if (userRepository.existsByIdNotAndEmail(id, userDto.getEmail())) {
             throw new ConflictException("Пользователь с указанным адресом электронной почты уже существует");
         }
         return userRepository.save(userMapper.updateUser(userDto, findById(id)));

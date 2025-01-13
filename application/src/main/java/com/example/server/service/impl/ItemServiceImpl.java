@@ -41,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
     public Item create(ItemDto itemDto, Long userId) {
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с указанным идентификатором не найден"));
-        ItemRequest itemRequest = itemDto.requestId() == null ? null : itemRequestRepository.findById(itemDto.requestId())
+        ItemRequest itemRequest = itemDto.getRequestId() == null ? null : itemRequestRepository.findById(itemDto.getRequestId())
                 .orElseThrow(() -> new NotFoundException("Запрос на добавление предмета с указанным идентификатором не найден"));
 
         return itemRepository.save(itemMapper.toItem(itemDto, owner, itemRequest));

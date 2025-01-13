@@ -20,6 +20,6 @@ class GlobalControllerExceptionHandler {
     }
 
     companion object {
-        private val objectMapper = ObjectMapper()
+        val objectMapper: ObjectMapper = ObjectMapper()
     }
 }

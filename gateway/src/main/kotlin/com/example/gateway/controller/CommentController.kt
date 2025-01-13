@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = [CommentApi.PATH])
 class CommentController(
-    private val commentClient: CommentClient
+    val commentClient: CommentClient
 ) : CommentApi {
 
-    override fun create(itemId: Long, commentDto: CommentDto, userId: Long): CommentDto {
+    override fun create(itemId: Long?, commentDto: CommentDto?, userId: Long?): CommentDto? {
         return commentClient.create(itemId, commentDto, userId)
     }
 }
