@@ -4,21 +4,69 @@ import com.example.api.dto.CommentDto;
 import com.example.server.repository.entity.Comment;
 import com.example.server.repository.entity.Item;
 import com.example.server.repository.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface CommentMapper {
+@Component
+public class CommentMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "text", source = "commentDto.text")
-    @Mapping(target = "created", ignore = true)
-    Comment toComment(CommentDto commentDto, Item item, User author);
+    public Comment toComment(CommentDto commentDto, Item item, User author) {
+        if ( commentDto == null && item == null && author == null ) {
+            return null;
+        }
 
-    @Mapping(target = "authorName", source = "comment.author.name")
-    CommentDto toCommentDto(Comment comment);
+        Comment comment = new Comment();
 
-    List<CommentDto> toCommentDto(List<Comment> comments);
+        if ( commentDto != null ) {
+            comment.setText( commentDto.getText() );
+        }
+        comment.setItem( item );
+        comment.setAuthor( author );
+
+        return comment;
+    }
+
+    public CommentDto toCommentDto(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+
+        String authorName = null;
+        Long id = null;
+        String text = null;
+        LocalDateTime created = null;
+
+        authorName = commentAuthorName( comment );
+        id = comment.getId();
+        text = comment.getText();
+        created = comment.getCreated();
+
+        CommentDto commentDto = new CommentDto( id, text, authorName, created );
+
+        return commentDto;
+    }
+
+    public List<CommentDto> toCommentDto(List<Comment> comments) {
+        if ( comments == null ) {
+            return null;
+        }
+
+        List<CommentDto> list = new ArrayList<CommentDto>( comments.size() );
+        for ( Comment comment : comments ) {
+            list.add( toCommentDto( comment ) );
+        }
+
+        return list;
+    }
+
+    private String commentAuthorName(Comment comment) {
+        User author = comment.getAuthor();
+        if ( author == null ) {
+            return null;
+        }
+        return author.getName();
+    }
 }
