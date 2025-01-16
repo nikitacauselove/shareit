@@ -8,20 +8,19 @@ import org.springframework.stereotype.Component
 class UserMapper {
 
     fun toUser(userDto: UserDto): User {
-        val user = User()
-
-        user.name = userDto.name
-        user.email = userDto.email
-
-        return user
+        return User(
+            id = null,
+            name = userDto.name!!,
+            email = userDto.email!!
+        )
     }
 
     fun updateUser(userDto: UserDto, user: User): User {
         if (userDto.name != null) {
-            user.name = userDto.name
+            user.name = userDto.name!!
         }
         if (userDto.email != null) {
-            user.email = userDto.email
+            user.email = userDto.email!!
         }
 
         return user

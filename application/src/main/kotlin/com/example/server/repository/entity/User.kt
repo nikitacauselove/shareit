@@ -11,15 +11,15 @@ import jakarta.persistence.Table
 @Entity
 @SequenceGenerator(name = "users_id_seq", allocationSize = 1)
 @Table(name = "users")
-class User {
+class User (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
-    var id: Long? = null
+    var id: Long?,
 
     @Column(name = "name")
-    var name: String? = null
+    var name: String,
 
     @Column(name = "email")
-    var email: String? = null
-}
+    var email: String
+)

@@ -17,27 +17,27 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "bookings_id_seq", allocationSize = 1)
 @Table(name = "bookings")
-class Booking {
+class Booking (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_seq")
-    var id: Long? = null
+    var id: Long?,
 
     @Column(name = "start_date")
-    var start: LocalDateTime? = null
+    var start: LocalDateTime,
 
     @Column(name = "end_date")
-    var end: LocalDateTime? = null
+    var end: LocalDateTime,
 
     @JoinColumn(name = "item_id")
     @ManyToOne
-    var item: Item? = null
+    var item: Item,
 
     @JoinColumn(name = "booker_id")
     @ManyToOne
-    var booker: User? = null
+    var booker: User,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    var status: BookingStatus? = null
-}
+    var status: BookingStatus
+)

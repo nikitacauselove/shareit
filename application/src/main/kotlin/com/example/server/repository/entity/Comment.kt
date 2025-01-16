@@ -15,24 +15,24 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "comments_id_seq", allocationSize = 1)
 @Table(name = "comments")
-class Comment {
+class Comment (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")
-    var id: Long? = null
+    var id: Long?,
 
     @Column(name = "text")
-    var text: String? = null
+    var text: String,
 
     @JoinColumn(name = "item_id")
     @ManyToOne
-    var item: Item? = null
+    var item: Item,
 
     @JoinColumn(name = "author_id")
     @ManyToOne
-    var author: User? = null
+    var author: User,
 
     @Column(name = "created")
     @CreationTimestamp
-    var created: LocalDateTime? = null
-}
+    var created: LocalDateTime?,
+)

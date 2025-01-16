@@ -20,26 +20,25 @@ class ItemMapper(
 ) {
 
     fun toItem(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?): Item {
-        val item = Item()
-
-        item.name = itemDto.name
-        item.description = itemDto.description
-        item.available = itemDto.available
-        item.owner = owner
-        item.request = itemRequest
-
-        return item
+        return Item(
+            id = null,
+            name = itemDto.name!!,
+            description = itemDto.description!!,
+            available = itemDto.available!!,
+            owner = owner,
+            request = itemRequest
+        )
     }
 
     fun updateItem(itemDto: ItemDto, item: Item): Item {
         if (itemDto.name != null) {
-            item.name = itemDto.name
+            item.name = itemDto.name!!
         }
         if (itemDto.description != null) {
-            item.description = itemDto.description
+            item.description = itemDto.description!!
         }
         if (itemDto.available != null) {
-            item.available = itemDto.available
+            item.available = itemDto.available!!
         }
 
         return item

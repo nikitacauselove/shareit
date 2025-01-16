@@ -16,16 +16,12 @@ class ItemRequestMapper(
 ) {
 
     fun toItemRequest(itemRequestDto: ItemRequestDto, requester: User): ItemRequest {
-
-
-        val itemRequest = ItemRequest()
-
-        if (itemRequestDto != null) {
-            itemRequest.description = itemRequestDto.description
-        }
-        itemRequest.requester = requester
-
-        return itemRequest
+        return ItemRequest(
+            id = null,
+            description = itemRequestDto.description!!,
+            requester = requester,
+            created = null
+        )
     }
 
     fun toItemRequestDto(itemRequest: ItemRequest, items: List<Item>): ItemRequestDto {

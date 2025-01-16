@@ -13,26 +13,26 @@ import jakarta.persistence.Table
 @Entity
 @SequenceGenerator(name = "items_id_seq", allocationSize = 1)
 @Table(name = "items")
-class Item {
+class Item (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "items_id_seq")
-    var id: Long? = null
+    var id: Long?,
 
     @Column(name = "name")
-    var name: String? = null
+    var name: String,
 
     @Column(name = "description")
-    var description: String? = null
+    var description: String,
 
     @Column(name = "is_available")
-    var available: Boolean? = null
+    var available: Boolean,
 
     @JoinColumn(name = "owner_id")
     @ManyToOne
-    var owner: User? = null
+    var owner: User,
 
     @JoinColumn(name = "request_id")
     @ManyToOne
-    var request: ItemRequest? = null
-}
+    var request: ItemRequest?
+)

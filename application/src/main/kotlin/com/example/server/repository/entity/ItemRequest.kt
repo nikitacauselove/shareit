@@ -15,20 +15,20 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "requests_id_seq", allocationSize = 1)
 @Table(name = "requests")
-class ItemRequest {
+class ItemRequest (
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "requests_id_seq")
-    var id: Long? = null
+    var id: Long?,
 
     @Column(name = "description")
-    var description: String? = null
+    var description: String,
 
     @JoinColumn(name = "requester_id")
     @ManyToOne
-    var requester: User? = null
+    var requester: User,
 
     @Column(name = "created")
     @CreationTimestamp
-    var created: LocalDateTime? = null
-}
+    var created: LocalDateTime?
+)
