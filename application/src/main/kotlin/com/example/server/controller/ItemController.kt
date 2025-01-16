@@ -1,35 +1,37 @@
-package com.example.gateway.controller
+package com.example.server.controller
 
 import com.example.api.ItemApi
 import com.example.api.dto.ItemDto
 import com.example.api.dto.ItemDtoWithBookings
-import com.example.gateway.client.ItemClient
+import com.example.server.mapper.ItemMapper
+import com.example.server.service.ItemService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = [ItemApi.PATH])
 class ItemController(
-    val itemClient: ItemClient
+    private val itemMapper: ItemMapper,
+    private val itemService: ItemService
 ) : ItemApi {
 
     override fun create(itemDto: ItemDto, userId: Long): ItemDto {
-        return itemClient.create(itemDto, userId)
+        return itemMapper.toItemDto(itemService.create(itemDto, userId))
     }
 
     override fun update(id: Long, itemDto: ItemDto, userId: Long): ItemDto {
-        return itemClient.update(id, itemDto, userId)
+        return itemMapper.toItemDto(itemService.update(id, itemDto, userId))
     }
 
     override fun findById(id: Long, userId: Long): ItemDtoWithBookings {
-        return itemClient.findById(id, userId)
+        return itemService.findByIdWithBooking(id, userId)
     }
 
     override fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBookings> {
-        return itemClient.findAllByOwnerId(userId, from, size)
+        return itemService.findAllByOwnerId(userId, from, size)
     }
 
     override fun search(text: String, from: Int, size: Int): List<ItemDto> {
-        return itemClient.search(text, from, size)
+        return itemMapper.toItemDto(itemService.search(text, from, size))
     }
 }

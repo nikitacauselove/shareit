@@ -19,23 +19,23 @@ interface UserApi {
 
     @PostMapping
     @Operation(description = "Добавление нового пользователя")
-    fun create(@RequestBody @Validated(OnCreate::class) userDto: UserDto?): UserDto?
+    fun create(@RequestBody @Validated(OnCreate::class) userDto: UserDto): UserDto
 
     @PatchMapping("/{id}")
     @Operation(description = "Обновление информации о пользователе")
-    fun update(@PathVariable id: Long?, @RequestBody @Validated(OnUpdate::class) userDto: UserDto?): UserDto?
+    fun update(@PathVariable id: Long, @RequestBody @Validated(OnUpdate::class) userDto: UserDto): UserDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о пользователе")
-    fun findById(@PathVariable id: Long?): UserDto?
+    fun findById(@PathVariable id: Long): UserDto
 
     @GetMapping
     @Operation(description = "Получение списка всех пользователей")
-    fun findAll(): List<UserDto?>?
+    fun findAll(): List<UserDto>
 
     @DeleteMapping("/{id}")
     @Operation(description = "Удаление пользователя")
-    fun deleteById(@PathVariable id: Long?): Map<String?, String?>?
+    fun deleteById(@PathVariable id: Long): Map<String, String>
 
     companion object {
         const val PATH: String = "v1/users"

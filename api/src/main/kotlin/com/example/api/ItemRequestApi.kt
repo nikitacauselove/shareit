@@ -20,26 +20,23 @@ interface ItemRequestApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса")
-    fun create(
-        @RequestBody @Valid itemRequestDto: ItemRequestDto?,
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long?
-    ): ItemRequestDto?
+    fun create(@RequestBody @Valid itemRequestDto: ItemRequestDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemRequestDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о запросе")
-    fun findById(@PathVariable id: Long?, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long?): ItemRequestDto?
+    fun findById(@PathVariable id: Long, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemRequestDto
 
     @GetMapping
     @Operation(description = "Получение списка всех запросов, добавленных пользователем")
-    fun findAllByRequesterId(@RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long?): List<ItemRequestDto?>?
+    fun findAllByRequesterId(@RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): List<ItemRequestDto>
 
     @GetMapping("/all")
     @Operation(description = "Получение списка всех запросов, добавленных другими пользователями")
     fun findAllByRequesterIdNot(
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long?,
-        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int?,
-        @RequestParam(defaultValue = "10") @Positive size: Int?
-    ): List<ItemRequestDto?>?
+        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long,
+        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
+        @RequestParam(defaultValue = "10") @Positive size: Int
+    ): List<ItemRequestDto>
 
     companion object {
         const val PATH: String = "v1/requests"

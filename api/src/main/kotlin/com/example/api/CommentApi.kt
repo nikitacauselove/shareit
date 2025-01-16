@@ -14,11 +14,7 @@ interface CommentApi {
 
     @PostMapping("/{itemId}/comment")
     @Operation(description = "Добавление нового отзыва")
-    fun create(
-        @PathVariable itemId: Long?,
-        @RequestBody @Valid commentDto: CommentDto?,
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long?
-    ): CommentDto?
+    fun create(@PathVariable itemId: Long, @RequestBody @Valid commentDto: CommentDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): CommentDto
 
     companion object {
         const val PATH: String = "v1/items"

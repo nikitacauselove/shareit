@@ -1,30 +1,30 @@
-package com.example.gateway.controller
+package com.example.server.controller
 
 import com.example.api.ItemRequestApi
 import com.example.api.dto.ItemRequestDto
-import com.example.gateway.client.ItemRequestClient
+import com.example.server.service.ItemRequestService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = [ItemRequestApi.PATH])
 class ItemRequestController(
-    val requestClient: ItemRequestClient
+    private val itemRequestService: ItemRequestService
 ) : ItemRequestApi {
 
     override fun create(itemRequestDto: ItemRequestDto, userId: Long): ItemRequestDto {
-        return requestClient.create(itemRequestDto, userId)
+        return itemRequestService.create(itemRequestDto, userId)
     }
 
     override fun findById(id: Long, userId: Long): ItemRequestDto {
-        return requestClient.findById(id, userId)
+        return itemRequestService.findByIdWithItems(id, userId)
     }
 
     override fun findAllByRequesterId(userId: Long): List<ItemRequestDto> {
-        return requestClient.findAllByRequesterId(userId)
+        return itemRequestService.findAllByRequesterId(userId)
     }
 
     override fun findAllByRequesterIdNot(userId: Long, from: Int, size: Int): List<ItemRequestDto> {
-        return requestClient.findAllByRequesterIdNot(userId, from, size)
+        return itemRequestService.findAllByRequesterIdNot(userId, from, size)
     }
 }
