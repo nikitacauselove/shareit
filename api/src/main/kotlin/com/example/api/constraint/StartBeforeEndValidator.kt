@@ -7,10 +7,7 @@ import jakarta.validation.ConstraintValidatorContext
 class StartBeforeEndValidator : ConstraintValidator<StartBeforeEnd?, BookingCreateDto> {
 
     override fun isValid(bookingCreateDto: BookingCreateDto, constraintValidatorContext: ConstraintValidatorContext): Boolean {
-        val start = bookingCreateDto.start
-        val end = bookingCreateDto.end
-
-        return start != null && end != null && start.isBefore(end)
+        return bookingCreateDto.start.isBefore(bookingCreateDto.end)
     }
 
     companion object {

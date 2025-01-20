@@ -30,14 +30,14 @@ class BookingServiceImpl(
     override fun create(bookingCreateDto: BookingCreateDto, userId: Long): Booking {
         val item = itemRepository.findById(bookingCreateDto.itemId)
             .orElseThrow { NotFoundException("Предмет с указанным идентификатором не найден") }
-        val ownerId = item.owner!!.id
+        val ownerId = item.owner.id
         val booker = userRepository.findById(userId)
             .orElseThrow { NotFoundException("Пользователь с указанным идентификатором не найден") }
 
-        if (!item.available!!) {
+        if (!item.available) {
             throw BadRequestException("Предмет с указанным идентификатором не доступен для бронирования")
         }
-        if (ownerId == userId) {
+        if (userId == ownerId) {
             throw NotFoundException("Запрос на бронирование не может быть создан владельцем предмета")
         }
         return bookingRepository.save(bookingMapper.toBooking(bookingCreateDto, item, booker))
@@ -46,22 +46,22 @@ class BookingServiceImpl(
     @Transactional
     override fun approveOrReject(id: Long, userId: Long, approved: Boolean): Booking {
         val booking = findById(id, userId)
-        val ownerId = booking.item!!.owner!!.id
+        val ownerId = booking.item.owner.id
 
         if (FINAL_STATUSES.contains(booking.status)) {
             throw BadRequestException("Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно")
         }
-        if (ownerId != userId) {
+        if (userId != ownerId) {
             throw NotFoundException("Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем вещи")
         }
         booking.status = if (approved) BookingStatus.APPROVED else BookingStatus.REJECTED
-        return bookingRepository.save(booking)
+        return booking
     }
 
     override fun findById(id: Long, userId: Long): Booking {
         val booking = bookingRepository.findById(id)
             .orElseThrow { NotFoundException("Запрос на бронирование с указанным идентификатором не найден") }
-        val bookerAndOwnerIds = java.util.List.of(booking.booker!!.id, booking.item!!.owner!!.id)
+        val bookerAndOwnerIds = listOf(booking.booker.id, booking.item.owner.id)
 
         if (!bookerAndOwnerIds.contains(userId)) {
             throw NotFoundException("Получение информации о запросе на бронирование может быть осуществлено либо автором бронирования, либо владельцем предмета, который пользователь бронирует")
@@ -77,27 +77,11 @@ class BookingServiceImpl(
             throw NotFoundException("Пользователь с указанным идентификатором не найден")
         }
         return when (state) {
-            BookingState.CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(
-                userId,
-                now,
-                now,
-                pageable
-            )
-
+            BookingState.CURRENT -> bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(userId, now, now, pageable)
             BookingState.FUTURE -> bookingRepository.findAllByBookerIdAndStartAfter(userId, now, pageable)
             BookingState.PAST -> bookingRepository.findAllByBookerIdAndEndBefore(userId, now, pageable)
-            BookingState.REJECTED -> bookingRepository.findAllByBookerIdAndStatus(
-                userId,
-                BookingStatus.REJECTED,
-                pageable
-            )
-
-            BookingState.WAITING -> bookingRepository.findAllByBookerIdAndStatus(
-                userId,
-                BookingStatus.WAITING,
-                pageable
-            )
-
+            BookingState.REJECTED -> bookingRepository.findAllByBookerIdAndStatus(userId, BookingStatus.REJECTED, pageable)
+            BookingState.WAITING -> bookingRepository.findAllByBookerIdAndStatus(userId, BookingStatus.WAITING, pageable)
             else -> bookingRepository.findAllByBookerId(userId, pageable)
         }
     }
@@ -110,34 +94,17 @@ class BookingServiceImpl(
             throw NotFoundException("Пользователь с указанным идентификатором не найден")
         }
         return when (state) {
-            BookingState.CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(
-                userId,
-                now,
-                now,
-                pageable
-            )
-
+            BookingState.CURRENT -> bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(userId, now, now, pageable)
             BookingState.FUTURE -> bookingRepository.findAllByOwnerIdAndStartAfter(userId, now, pageable)
             BookingState.PAST -> bookingRepository.findAllByOwnerIdAndEndBefore(userId, now, pageable)
-            BookingState.REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(
-                userId,
-                BookingStatus.REJECTED,
-                pageable
-            )
-
-            BookingState.WAITING -> bookingRepository.findAllByOwnerIdAndStatus(
-                userId,
-                BookingStatus.WAITING,
-                pageable
-            )
-
+            BookingState.REJECTED -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.REJECTED, pageable)
+            BookingState.WAITING -> bookingRepository.findAllByOwnerIdAndStatus(userId, BookingStatus.WAITING, pageable)
             else -> bookingRepository.findAllByItem_Owner_Id(userId, pageable)
         }
     }
 
     companion object {
         private val BY_START_DESCENDING: Sort = Sort.by(Sort.Direction.DESC, "start")
-        private val FINAL_STATUSES: List<BookingStatus?> =
-            java.util.List.of(BookingStatus.APPROVED, BookingStatus.REJECTED)
+        private val FINAL_STATUSES: List<BookingStatus> = listOf(BookingStatus.APPROVED, BookingStatus.REJECTED)
     }
 }

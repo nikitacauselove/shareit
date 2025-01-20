@@ -7,11 +7,10 @@ import com.example.server.mapper.UserMapper
 import com.example.server.repository.UserRepository
 import com.example.server.repository.entity.User
 import com.example.server.service.UserService
-import lombok.RequiredArgsConstructor
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
-@RequiredArgsConstructor
 @Service
 class UserServiceImpl(
     private val userMapper: UserMapper,
@@ -26,6 +25,7 @@ class UserServiceImpl(
         }
     }
 
+    @Transactional
     override fun update(id: Long, userDto: UserDto): User {
         if (userRepository.existsByIdNotAndEmail(id, userDto.email)) {
             throw ConflictException("Пользователь с указанным адресом электронной почты уже существует")

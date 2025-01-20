@@ -34,6 +34,6 @@ class UserController(
 
     override fun deleteById(id: Long): Map<String, String> {
         userService.deleteById(id)
-        return java.util.Map.of("message", "Пользователь с указанным идентификатором был успешно удален.")
+        return mapOf("message" to "Пользователь с указанным идентификатором был успешно удален.")
     }
 }

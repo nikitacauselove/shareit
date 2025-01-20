@@ -1,7 +1,7 @@
 package com.example.api
 
 import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBookings
+import com.example.api.dto.ItemDtoWithBooking
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -30,7 +30,7 @@ interface ItemApi {
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о предмете")
-    fun findById(@PathVariable id: Long, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemDtoWithBookings
+    fun findById(@PathVariable id: Long, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemDtoWithBooking
 
     @GetMapping
     @Operation(description = "Получение владельцем списка всех его предметов")
@@ -38,7 +38,7 @@ interface ItemApi {
         @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long,
         @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
         @RequestParam(defaultValue = "10") @Positive size: Int
-    ): List<ItemDtoWithBookings>
+    ): List<ItemDtoWithBooking>
 
     @GetMapping("/search")
     @Operation(description = "Поиск предметов")

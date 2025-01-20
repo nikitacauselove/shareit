@@ -2,52 +2,23 @@ package com.example.server.mapper
 
 import com.example.api.dto.UserDto
 import com.example.server.repository.entity.User
-import org.springframework.stereotype.Component
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+import org.mapstruct.MappingTarget
+import org.mapstruct.NullValuePropertyMappingStrategy
 
-@Component
-class UserMapper {
+@Mapper(componentModel = "spring")
+interface UserMapper {
 
-    fun toUser(userDto: UserDto): User {
-        return User(
-            id = null,
-            name = userDto.name!!,
-            email = userDto.email!!
-        )
-    }
+    @Mapping(target = "id", ignore = true)
+    fun toUser(userDto: UserDto): User
 
-    fun updateUser(userDto: UserDto, user: User): User {
-        if (userDto.name != null) {
-            user.name = userDto.name!!
-        }
-        if (userDto.email != null) {
-            user.email = userDto.email!!
-        }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    fun updateUser(userDto: UserDto, @MappingTarget user: User): User
 
-        return user
-    }
+    fun toUserDto(user: User): UserDto
 
-    fun toUserDto(user: User): UserDto {
-        var id = 0L
-        var name: String? = null
-        var email: String? = null
-
-        if (user.id != null) {
-            id = user.id!!
-        }
-        name = user.name
-        email = user.email
-
-        val userDto = UserDto(id, name, email)
-
-        return userDto
-    }
-
-    fun toUserDto(users: List<User>): List<UserDto> {
-        val list: MutableList<UserDto> = ArrayList(users.size)
-        for (user in users) {
-            list.add(toUserDto(user))
-        }
-
-        return list
-    }
+    fun toUserDto(userList: List<User>): List<UserDto>
 }

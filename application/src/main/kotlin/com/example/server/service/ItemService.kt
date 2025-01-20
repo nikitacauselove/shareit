@@ -1,7 +1,7 @@
 package com.example.server.service
 
 import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBookings
+import com.example.api.dto.ItemDtoWithBooking
 import com.example.server.repository.entity.Item
 
 /**
@@ -30,13 +30,13 @@ interface ItemService {
      */
     fun findById(id: Long): Item
 
-    fun findByIdWithBooking(id: Long, userId: Long): ItemDtoWithBookings
+    fun findByIdWithBooking(id: Long, userId: Long): ItemDtoWithBooking
 
     /**
      * Получение владельцем списка всех его предметов.
      * @param userId идентификатор пользователя
      */
-    fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBookings>
+    fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBooking>
 
     /**
      * Поиск предметов.

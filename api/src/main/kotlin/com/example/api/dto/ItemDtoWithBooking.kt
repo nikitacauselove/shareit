@@ -3,7 +3,7 @@ package com.example.api.dto
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "Информация о предмете и его бронировании")
-data class ItemDtoWithBookings(
+data class ItemDtoWithBooking(
     @get:Schema(description = "Идентификатор предмета") val id: Long,
     @get:Schema(description = "Название предмета") val name: String,
     @get:Schema(description = "Описание предмета") val description: String,

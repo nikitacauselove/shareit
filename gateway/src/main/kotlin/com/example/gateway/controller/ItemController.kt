@@ -2,7 +2,7 @@ package com.example.gateway.controller
 
 import com.example.api.ItemApi
 import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBookings
+import com.example.api.dto.ItemDtoWithBooking
 import com.example.gateway.client.ItemClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -21,11 +21,11 @@ class ItemController(
         return itemClient.update(id, itemDto, userId)
     }
 
-    override fun findById(id: Long, userId: Long): ItemDtoWithBookings {
+    override fun findById(id: Long, userId: Long): ItemDtoWithBooking {
         return itemClient.findById(id, userId)
     }
 
-    override fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBookings> {
+    override fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBooking> {
         return itemClient.findAllByOwnerId(userId, from, size)
     }
 

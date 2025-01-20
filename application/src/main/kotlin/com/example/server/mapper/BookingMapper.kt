@@ -2,46 +2,20 @@ package com.example.server.mapper
 
 import com.example.api.dto.BookingCreateDto
 import com.example.api.dto.BookingDto
-import com.example.api.dto.enums.BookingStatus
 import com.example.server.repository.entity.Booking
 import com.example.server.repository.entity.Item
 import com.example.server.repository.entity.User
-import org.springframework.stereotype.Component
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
 
-@Component
-class BookingMapper(
-    private val itemMapper: ItemMapper,
-    private val userMapper: UserMapper
-) {
+@Mapper(componentModel = "spring", uses = [ItemMapper::class, UserMapper::class])
+interface BookingMapper {
 
-    fun toBooking(bookingCreateDto: BookingCreateDto, item: Item, booker: User): Booking {
-        return Booking(
-            id = null,
-            start = bookingCreateDto.start,
-            end = bookingCreateDto.end,
-            item = item,
-            booker = booker,
-            status = BookingStatus.WAITING
-        )
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", constant = "WAITING")
+    fun toBooking(bookingCreateDto: BookingCreateDto, item: Item, booker: User): Booking
 
-    fun toBookingDto(booking: Booking): BookingDto {
-        val id = booking.id!!
-        val start = booking.start
-        val end = booking.end
-        val item = itemMapper.toItemDto(booking.item)
-        val booker = userMapper.toUserDto(booking.booker)
-        val status = booking.status
+    fun toBookingDto(booking: Booking): BookingDto
 
-        return BookingDto(id, start, end, item, booker, status)
-    }
-
-    fun toBookingDto(bookings: List<Booking>): List<BookingDto> {
-        val list: MutableList<BookingDto> = ArrayList(bookings.size)
-
-        for (booking in bookings) {
-            list.add(toBookingDto(booking))
-        }
-        return list
-    }
+    fun toBookingDto(bookingList: List<Booking>): List<BookingDto>
 }

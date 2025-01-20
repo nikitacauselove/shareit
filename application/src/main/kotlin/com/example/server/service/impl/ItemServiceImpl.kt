@@ -1,7 +1,7 @@
 package com.example.server.service.impl
 
 import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBookings
+import com.example.api.dto.ItemDtoWithBooking
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
 import com.example.server.repository.BookingRepository
@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.Locale
 
 @Service
 class ItemServiceImpl(
@@ -41,9 +41,9 @@ class ItemServiceImpl(
     @Transactional
     override fun update(id: Long, itemDto: ItemDto, userId: Long): Item {
         val item = findById(id)
-        val ownerId = item.owner!!.id
+        val ownerId = item.owner.id
 
-        if (ownerId != userId) {
+        if (userId != ownerId) {
             throw NotFoundException("Обновлять информацию о предмете может только его владелец")
         }
         return itemRepository.save(itemMapper.updateItem(itemDto, item))
@@ -54,26 +54,24 @@ class ItemServiceImpl(
             .orElseThrow { NotFoundException("Предмет с указанным идентификатором не найден") }
     }
 
-    override fun findByIdWithBooking(id: Long, userId: Long): ItemDtoWithBookings {
+    @Transactional(readOnly = true)
+    override fun findByIdWithBooking(id: Long, userId: Long): ItemDtoWithBooking {
         val item = findById(id)
-        val ownerId = item.owner!!.id
+        val ownerId = item.owner.id
 
-        if (ownerId == userId) {
-            return itemMapper.toItemDtoWithBookings(
-                item,
-                bookingRepository.findAllByItemId(id),
-                commentRepository.findAllByItemId(id)
-            )
+        if (userId != ownerId) {
+            return itemMapper.toItemDtoWithBooking(item, emptyList(), commentRepository.findAllByItemId(id))
         }
-        return itemMapper.toItemDtoWithBookings(item, commentRepository.findAllByItemId(id))
+        return itemMapper.toItemDtoWithBooking(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id))
     }
 
-    override fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBookings> {
+    @Transactional(readOnly = true)
+    override fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBooking> {
         val items = itemRepository.findAllByOwnerId(userId, of(from, size, Sort.by(Sort.Direction.ASC, "id")))
         val bookings = bookingRepository.findAllByItem_Owner_Id(userId, Pageable.unpaged())
         val comments = commentRepository.findAllByOwnerId(userId)
 
-        return itemMapper.toItemDtoWithBookings(items, bookings, comments)
+        return itemMapper.toItemDtoWithBooking(items, bookings, comments)
     }
 
     override fun search(text: String, from: Int, size: Int): List<Item> {
