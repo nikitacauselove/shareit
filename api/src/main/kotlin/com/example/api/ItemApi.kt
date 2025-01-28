@@ -3,6 +3,7 @@ package com.example.api
 import com.example.api.dto.ItemDto
 import com.example.api.dto.ItemDtoWithBooking
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Positive
@@ -26,7 +27,11 @@ interface ItemApi {
 
     @PatchMapping("/{id}")
     @Operation(description = "Обновление информации о предмете")
-    fun update(@PathVariable id: Long, @RequestBody itemDto: ItemDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemDto
+    fun update(
+        @PathVariable id: Long,
+        @RequestBody itemDto: ItemDto,
+        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long
+    ): ItemDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о предмете")
@@ -36,19 +41,19 @@ interface ItemApi {
     @Operation(description = "Получение владельцем списка всех его предметов")
     fun findAllByOwnerId(
         @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long,
-        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
-        @RequestParam(defaultValue = "10") @Positive size: Int
+        @Parameter(description = "Индекс первого элемента") @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
+        @Parameter(description = "Количество элементов для отображения") @RequestParam(defaultValue = "10") @Positive size: Int
     ): List<ItemDtoWithBooking>
 
     @GetMapping("/search")
     @Operation(description = "Поиск предметов")
     fun search(
-        @RequestParam text: String,
-        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
-        @RequestParam(defaultValue = "10") @Positive size: Int
+        @Parameter(description = "Текст для поиска предметов") @RequestParam text: String,
+        @Parameter(description = "Индекс первого элемента") @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
+        @Parameter(description = "Количество элементов для отображения") @RequestParam(defaultValue = "10") @Positive size: Int
     ): List<ItemDto>
 
     companion object {
-        const val PATH: String = "v1/items"
+        const val PATH = "v1/items"
     }
 }

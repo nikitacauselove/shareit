@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "bookings_id_seq", allocationSize = 1)
 @Table(name = "bookings")
-class Booking (
+class Booking(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookings_id_seq")
@@ -37,7 +37,7 @@ class Booking (
     @ManyToOne
     var booker: User,
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     var status: BookingStatus
 )

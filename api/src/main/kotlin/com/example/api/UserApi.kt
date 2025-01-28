@@ -1,7 +1,7 @@
 package com.example.api
 
-import com.example.api.dto.OnCreate
-import com.example.api.dto.OnUpdate
+import com.example.api.group.Create
+import com.example.api.group.Update
 import com.example.api.dto.UserDto
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -19,11 +19,11 @@ interface UserApi {
 
     @PostMapping
     @Operation(description = "Добавление нового пользователя")
-    fun create(@RequestBody @Validated(OnCreate::class) userDto: UserDto): UserDto
+    fun create(@RequestBody @Validated(Create::class) userDto: UserDto): UserDto
 
     @PatchMapping("/{id}")
     @Operation(description = "Обновление информации о пользователе")
-    fun update(@PathVariable id: Long, @RequestBody @Validated(OnUpdate::class) userDto: UserDto): UserDto
+    fun update(@PathVariable id: Long, @RequestBody @Validated(Update::class) userDto: UserDto): UserDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о пользователе")
@@ -38,7 +38,7 @@ interface UserApi {
     fun deleteById(@PathVariable id: Long): Map<String, String>
 
     companion object {
-        const val PATH: String = "v1/users"
-        const val X_SHARER_USER_ID: String = "X-Sharer-User-Id"
+        const val PATH = "v1/users"
+        const val X_SHARER_USER_ID = "X-Sharer-User-Id"
     }
 }

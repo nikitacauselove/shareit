@@ -77,7 +77,7 @@ abstract class ItemMapperDecorator : ItemMapper {
     }
 
     companion object {
-        private val BY_START_ASCENDING: Comparator<Booking> = Comparator.comparing(Booking::start)
-        private val BY_START_DESCENDING: Comparator<Booking> = BY_START_ASCENDING.reversed()
+        private val BY_START_ASCENDING = Comparator.comparing(Booking::start)
+        private val BY_START_DESCENDING = BY_START_ASCENDING.reversed()
     }
 }

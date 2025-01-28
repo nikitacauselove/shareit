@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "comments_id_seq", allocationSize = 1)
 @Table(name = "comments")
-class Comment (
+class Comment(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")

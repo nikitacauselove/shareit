@@ -10,12 +10,14 @@ interface UserService {
 
     /**
      * Добавление нового пользователя.
+     *
      * @param user информация о пользователе
      */
     fun create(user: User): User
 
     /**
      * Обновление информации о пользователе.
+     *
      * @param id идентификатор пользователя
      * @param userDto информация о пользователе
      */
@@ -23,6 +25,7 @@ interface UserService {
 
     /**
      * Получение информации о пользователе.
+     *
      * @param id идентификатор пользователя
      */
     fun findById(id: Long): User
@@ -34,6 +37,7 @@ interface UserService {
 
     /**
      * Удаление пользователя.
+     *
      * @param id идентификатор пользователя
      */
     fun deleteById(id: Long)

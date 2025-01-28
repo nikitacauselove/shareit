@@ -11,6 +11,7 @@ interface BookingService {
 
     /**
      * Добавление нового запроса на бронирование.
+     *
      * @param bookingCreateDto информация о запросе на бронирование
      * @param userId идентификатор пользователя
      */
@@ -18,6 +19,7 @@ interface BookingService {
 
     /**
      * Подтверждение или отклонение запроса на бронирование.
+     *
      * @param id идентификатор запроса на бронирование
      * @param userId идентификатор пользователя
      * @param approved подтверждение или отклонение запроса на бронирование
@@ -26,6 +28,7 @@ interface BookingService {
 
     /**
      * Получение информации о запросе на бронирование.
+     *
      * @param id идентификатор запроса на бронирование
      * @param userId идентификатор пользователя
      */
@@ -33,15 +36,21 @@ interface BookingService {
 
     /**
      * Получение пользователем списка всех его запросов на бронирование.
+     *
      * @param userId идентификатор пользователя
      * @param state критерий поиска запросов на бронирование
+     * @param from индекс первого элемента
+     * @param size количество элементов для отображения
      */
     fun findAllByBookerId(userId: Long, state: BookingState, from: Int, size: Int): List<Booking>
 
     /**
      * Получение списка всех запросов на бронирование для всех предметов пользователя.
+     *
      * @param userId идентификатор пользователя
      * @param state критерий поиска запросов на бронирование
+     * @param from индекс первого элемента
+     * @param size количество элементов для отображения
      */
     fun findAllByOwnerId(userId: Long, state: BookingState, from: Int, size: Int): List<Booking>
 }

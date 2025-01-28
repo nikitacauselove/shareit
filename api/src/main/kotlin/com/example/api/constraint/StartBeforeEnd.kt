@@ -9,7 +9,10 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
 annotation class StartBeforeEnd(
+
     val message: String = StartBeforeEndValidator.MESSAGE,
+
     val groups: Array<KClass<*>> = [],
+
     val payload: Array<KClass<out Payload>> = []
 )

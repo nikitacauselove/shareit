@@ -24,7 +24,10 @@ interface BookingApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса на бронирование")
-    fun create(@RequestBody @Valid bookingCreateDto: BookingCreateDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): BookingDto
+    fun create(
+        @RequestBody @Valid bookingCreateDto: BookingCreateDto,
+        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long
+    ): BookingDto
 
     @PatchMapping("/{id}")
     @Operation(description = "Подтверждение или отклонение запроса на бронирование")
@@ -43,8 +46,8 @@ interface BookingApi {
     fun findAllByBookerId(
         @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long,
         @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") state: BookingState,
-        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
-        @RequestParam(defaultValue = "10") @Positive size: Int
+        @Parameter(description = "Индекс первого элемента") @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
+        @Parameter(description = "Количество элементов для отображения") @RequestParam(defaultValue = "10") @Positive size: Int
     ): List<BookingDto>
 
     @GetMapping("/owner")
@@ -52,11 +55,11 @@ interface BookingApi {
     fun findAllByOwnerId(
         @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long,
         @Parameter(description = "Критерий поиска запросов на бронирование") @RequestParam(defaultValue = "ALL") state: BookingState,
-        @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
-        @RequestParam(defaultValue = "10") @Positive size: Int
+        @Parameter(description = "Индекс первого элемента") @RequestParam(defaultValue = "0") @PositiveOrZero from: Int,
+        @Parameter(description = "Количество элементов для отображения") @RequestParam(defaultValue = "10") @Positive size: Int
     ): List<BookingDto>
 
     companion object {
-        const val PATH: String = "v1/bookings"
+        const val PATH = "v1/bookings"
     }
 }

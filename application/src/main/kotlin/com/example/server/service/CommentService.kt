@@ -10,6 +10,7 @@ interface CommentService {
 
     /**
      * Добавление нового отзыва.
+     *
      * @param itemId идентификатор предмета
      * @param commentDto информация об отзыве
      * @param userId идентификатор пользователя

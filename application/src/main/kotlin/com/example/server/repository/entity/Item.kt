@@ -13,7 +13,7 @@ import jakarta.persistence.Table
 @Entity
 @SequenceGenerator(name = "items_id_seq", allocationSize = 1)
 @Table(name = "items")
-class Item (
+class Item(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "items_id_seq")

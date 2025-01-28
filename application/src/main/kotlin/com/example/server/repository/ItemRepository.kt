@@ -34,7 +34,7 @@ interface ItemRepository : JpaRepository<Item, Long> {
     fun findAllByRequestIdNotNull(): List<Item>
 
     companion object {
-        const val SEARCH: String = """
+        private const val SEARCH = """
             SELECT item
             FROM Item AS item
             WHERE item.available = true

@@ -97,7 +97,7 @@
                                 <annotationProcessorPath>
                                     <groupId>org.mapstruct</groupId>
                                     <artifactId>mapstruct-processor</artifactId>
-                                    <version>${mapstruct.version}</version>
+                                    <version>${mapstruct-processor.version}</version>
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
                         </configuration>

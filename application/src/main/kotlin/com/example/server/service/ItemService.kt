@@ -11,6 +11,7 @@ interface ItemService {
 
     /**
      * Добавление нового предмета.
+     *
      * @param itemDto информация о предмете
      * @param userId идентификатор пользователя
      */
@@ -18,6 +19,7 @@ interface ItemService {
 
     /**
      * Обновление информации о предмете.
+     *
      * @param id идентификатор предмета
      * @param itemDto информация о предмете
      * @param userId идентификатор пользователя
@@ -26,6 +28,7 @@ interface ItemService {
 
     /**
      * Получение информации о предмете.
+     *
      * @param id идентификатор предмета
      */
     fun findById(id: Long): Item
@@ -34,13 +37,19 @@ interface ItemService {
 
     /**
      * Получение владельцем списка всех его предметов.
+     *
      * @param userId идентификатор пользователя
+     * @param from индекс первого элемента
+     * @param size количество элементов для отображения
      */
     fun findAllByOwnerId(userId: Long, from: Int, size: Int): List<ItemDtoWithBooking>
 
     /**
      * Поиск предметов.
-     * @param text текст для поиска
+     *
+     * @param text текст для поиска предметов
+     * @param from индекс первого элемента
+     * @param size количество элементов для отображения
      */
     fun search(text: String, from: Int, size: Int): List<Item>
 }

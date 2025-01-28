@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
 interface UserRepository : JpaRepository<User, Long> {
 
     /**
-     * .
+     * Существует ли пользователь с указанным адресом электронной почты.
      * @param id идентификатор пользователя
      * @param email электронная почта пользователя
      */

@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 @Entity
 @SequenceGenerator(name = "requests_id_seq", allocationSize = 1)
 @Table(name = "requests")
-class ItemRequest (
+class ItemRequest(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "requests_id_seq")

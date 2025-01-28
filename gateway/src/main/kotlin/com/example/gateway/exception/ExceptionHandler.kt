@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice
-class FeignExceptionHandler {
+class ExceptionHandler {
 
     @ExceptionHandler(FeignException::class)
-    fun handleException(exception: FeignException): ResponseEntity<Map<String, Any>> {
-        val body = objectMapper.readValue(exception.contentUTF8(), object : TypeReference<Map<String, Any>>() {})
+    fun handleFeignException(exception: FeignException): ResponseEntity<Map<String, Any>> {
+        val body = OBJECT_MAPPER.readValue(exception.contentUTF8(), object : TypeReference<Map<String, Any>>() {})
 
         return ResponseEntity(body, HttpStatus.valueOf(exception.status()))
     }
 
     companion object {
-        val objectMapper: ObjectMapper = ObjectMapper()
+        val OBJECT_MAPPER = ObjectMapper()
     }
 }

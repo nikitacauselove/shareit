@@ -7,8 +7,8 @@
         <query>
             SELECT comment
             FROM Comment AS comment
-            JOIN FETCH comment.item AS item
-            JOIN FETCH item.owner AS user
+                JOIN FETCH comment.item AS item
+                JOIN FETCH item.owner AS user
             WHERE user.id = :ownerId
         </query>
     </named-query>
