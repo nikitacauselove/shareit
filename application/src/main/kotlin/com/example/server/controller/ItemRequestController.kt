@@ -1,7 +1,7 @@
 package com.example.server.controller
 
 import com.example.api.ItemRequestApi
-import com.example.api.dto.ItemRequestDto
+import com.example.api.model.ItemRequestDto
 import com.example.server.mapper.ItemRequestMapper
 import com.example.server.service.ItemRequestService
 import org.springframework.web.bind.annotation.RequestMapping

@@ -1,8 +1,8 @@
 package com.example.gateway.controller
 
 import com.example.api.ItemApi
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
 import com.example.gateway.client.ItemClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

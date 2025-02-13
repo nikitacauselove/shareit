@@ -13,12 +13,12 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDateTime
 
 @Entity
-@SequenceGenerator(name = "comments_id_seq", allocationSize = 1)
-@Table(name = "comments")
+@SequenceGenerator(name = "comment_id_seq", allocationSize = 1)
+@Table(name = "comment")
 class Comment(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
     var id: Long?,
 
     @Column(name = "text")

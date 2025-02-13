@@ -1,7 +1,7 @@
 package com.example.api
 
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag

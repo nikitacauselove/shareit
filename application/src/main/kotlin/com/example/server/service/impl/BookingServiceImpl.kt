@@ -1,8 +1,10 @@
 package com.example.server.service.impl
 
-import com.example.api.dto.BookingCreateDto
-import com.example.api.dto.enums.BookingState
-import com.example.api.dto.enums.BookingStatus
+import com.example.api.model.BookingCreateDto
+import com.example.api.model.BookingState
+import com.example.api.model.BookingStatus
+import com.example.server.exception.BadRequestException
+import com.example.server.exception.NotFoundException
 import com.example.server.mapper.BookingMapper
 import com.example.server.repository.BookingRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
@@ -13,10 +15,8 @@ import com.example.server.repository.specification.BookingSpecification
 import com.example.server.service.BookingService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.server.ResponseStatusException
 
 @Service
 class BookingServiceImpl(
@@ -30,16 +30,16 @@ class BookingServiceImpl(
     @Transactional
     override fun create(bookingCreateDto: BookingCreateDto, userId: Long): Booking {
         val item = itemRepository.findById(bookingCreateDto.itemId)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Предмет с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(ItemRepository.NOT_FOUND) }
         val ownerId = item.owner.id
         val booker = userRepository.findById(userId)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
 
         if (!item.available) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Предмет с указанным идентификатором недоступен для бронирования")
+            throw BadRequestException("Предмет с указанным идентификатором недоступен для бронирования")
         }
         if (userId == ownerId) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Запрос на бронирование не может быть создан владельцем предмета")
+            throw NotFoundException("Запрос на бронирование не может быть создан владельцем предмета")
         }
         return bookingRepository.save(bookingMapper.toBooking(bookingCreateDto, item, booker))
     }
@@ -50,10 +50,10 @@ class BookingServiceImpl(
         val ownerId = booking.item.owner.id
 
         if (FINAL_STATUSES.contains(booking.status)) {
-            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно")
+            throw BadRequestException("Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно")
         }
         if (userId != ownerId) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем предмета")
+            throw NotFoundException("Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем предмета")
         }
         booking.status = if (approved) BookingStatus.APPROVED else BookingStatus.REJECTED
         return booking
@@ -62,11 +62,11 @@ class BookingServiceImpl(
     @Transactional(readOnly = true)
     override fun findById(id: Long, userId: Long): Booking {
         val booking = bookingRepository.findById(id)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Запрос на бронирование с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(BookingRepository.NOT_FOUND) }
         val bookerAndOwnerIds = listOf(booking.booker.id, booking.item.owner.id)
 
         if (!bookerAndOwnerIds.contains(userId)) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Получение информации о запросе на бронирование может быть осуществлено либо автором бронирования, либо владельцем предмета, который пользователь бронирует")
+            throw NotFoundException("Получение информации о запросе на бронирование может быть осуществлено либо автором бронирования, либо владельцем предмета, который пользователь бронирует")
         }
         return booking
     }
@@ -78,7 +78,7 @@ class BookingServiceImpl(
         val pageable: Pageable = of(from, size, SORT_BY_DESCENDING_START)
 
         if (!userRepository.existsById(userId)) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с указанным идентификатором не найден")
+            throw NotFoundException(UserRepository.NOT_FOUND)
         }
         return bookingRepository.findAll(specification, pageable).content
     }
@@ -90,7 +90,7 @@ class BookingServiceImpl(
         val pageable: Pageable = of(from, size, SORT_BY_DESCENDING_START)
 
         if (!userRepository.existsById(userId)) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с указанным идентификатором не найден")
+            throw NotFoundException(UserRepository.NOT_FOUND)
         }
         return bookingRepository.findAll(specification, pageable).content
     }

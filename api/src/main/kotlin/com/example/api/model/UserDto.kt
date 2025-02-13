@@ -1,4 +1,4 @@
-package com.example.api.dto
+package com.example.api.model
 
 import com.example.api.group.Create
 import com.example.api.group.Update

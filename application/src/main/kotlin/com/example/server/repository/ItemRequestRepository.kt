@@ -14,13 +14,19 @@ interface ItemRequestRepository : JpaRepository<ItemRequest, Long> {
 
     /**
      * Получение списка всех запросов, добавленных пользователем.
+     *
      * @param requesterId идентификатор пользователя
      */
     fun findAllByRequesterId(requesterId: Long, sort: Sort): List<ItemRequest>
 
     /**
      * Получение списка всех запросов, добавленных другими пользователем.
+     *
      * @param requesterId идентификатор пользователя
      */
     fun findAllByRequesterIdNot(requesterId: Long, pageable: Pageable): List<ItemRequest>
+
+    companion object {
+        const val NOT_FOUND = "Запрос на добавление предмета с указанным идентификатором не найден"
+    }
 }

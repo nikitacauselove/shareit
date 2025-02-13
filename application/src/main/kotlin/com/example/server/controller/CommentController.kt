@@ -1,7 +1,7 @@
 package com.example.server.controller
 
 import com.example.api.CommentApi
-import com.example.api.dto.CommentDto
+import com.example.api.model.CommentDto
 import com.example.server.mapper.CommentMapper
 import com.example.server.service.CommentService
 import org.springframework.web.bind.annotation.RequestMapping

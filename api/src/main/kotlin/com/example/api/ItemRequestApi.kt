@@ -1,6 +1,6 @@
 package com.example.api
 
-import com.example.api.dto.ItemRequestDto
+import com.example.api.model.ItemRequestDto
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag

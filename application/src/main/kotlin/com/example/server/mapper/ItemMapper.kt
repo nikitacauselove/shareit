@@ -1,7 +1,7 @@
 package com.example.server.mapper
 
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
 import com.example.server.mapper.decorator.ItemMapperDecorator
 import com.example.server.repository.entity.Booking
 import com.example.server.repository.entity.Comment

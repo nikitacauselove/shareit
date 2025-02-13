@@ -2,7 +2,7 @@ package com.example.api
 
 import com.example.api.group.Create
 import com.example.api.group.Update
-import com.example.api.dto.UserDto
+import com.example.api.model.UserDto
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.validation.annotation.Validated

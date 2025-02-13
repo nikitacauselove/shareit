@@ -1,7 +1,7 @@
 package com.example.server.service
 
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
 import com.example.server.repository.entity.Item
 
 /**

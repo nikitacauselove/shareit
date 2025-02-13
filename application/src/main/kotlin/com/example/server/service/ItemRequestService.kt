@@ -1,6 +1,6 @@
 package com.example.server.service
 
-import com.example.api.dto.ItemRequestDto
+import com.example.api.model.ItemRequestDto
 import com.example.server.repository.entity.ItemRequest
 
 /**

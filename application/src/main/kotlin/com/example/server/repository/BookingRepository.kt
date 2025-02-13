@@ -18,4 +18,8 @@ interface BookingRepository : JpaRepository<Booking, Long>, JpaSpecificationExec
     fun findAllByItemId(itemId: Long): List<Booking>
 
     fun existsByBookerIdAndItemIdAndEndBefore(bookerId: Long, itemId: Long, end: LocalDateTime): Boolean
+
+    companion object {
+        const val NOT_FOUND = "Запрос на бронирование с указанным идентификатором не найден"
+    }
 }

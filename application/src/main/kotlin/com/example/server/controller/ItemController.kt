@@ -1,8 +1,8 @@
 package com.example.server.controller
 
 import com.example.api.ItemApi
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
 import com.example.server.mapper.ItemMapper
 import com.example.server.service.ItemService
 import org.springframework.web.bind.annotation.RequestMapping

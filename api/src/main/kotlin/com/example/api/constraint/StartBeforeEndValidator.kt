@@ -1,6 +1,6 @@
 package com.example.api.constraint
 
-import com.example.api.dto.BookingCreateDto
+import com.example.api.model.BookingCreateDto
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 

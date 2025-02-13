@@ -1,6 +1,6 @@
 package com.example.server.mapper
 
-import com.example.api.dto.CommentDto
+import com.example.api.model.CommentDto
 import com.example.server.repository.entity.Comment
 import com.example.server.repository.entity.Item
 import com.example.server.repository.entity.User

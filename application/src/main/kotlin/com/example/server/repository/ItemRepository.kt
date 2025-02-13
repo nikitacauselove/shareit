@@ -14,12 +14,14 @@ interface ItemRepository : JpaRepository<Item, Long> {
 
     /**
      * Получение владельцем списка всех его предметов.
+     *
      * @param ownerId идентификатор пользователя
      */
     fun findAllByOwnerId(ownerId: Long, pageable: Pageable): List<Item>
 
     /**
      * Поиск предметов.
+     *
      * @param text текст для поиска
      */
     @Query(SEARCH)
@@ -27,6 +29,7 @@ interface ItemRepository : JpaRepository<Item, Long> {
 
     /**
      * Получение владельцем списка всех его предметов.
+     *
      * @param requestId идентификатор пользователя
      */
     fun findAllByRequestId(requestId: Long): List<Item>
@@ -34,6 +37,8 @@ interface ItemRepository : JpaRepository<Item, Long> {
     fun findAllByRequestIdNotNull(): List<Item>
 
     companion object {
+        const val NOT_FOUND = "Предмет с указанным идентификатором не найден"
+
         private const val SEARCH = """
             SELECT item
             FROM Item AS item

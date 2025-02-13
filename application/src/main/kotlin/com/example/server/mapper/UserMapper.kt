@@ -1,6 +1,6 @@
 package com.example.server.mapper
 
-import com.example.api.dto.UserDto
+import com.example.api.model.UserDto
 import com.example.server.repository.entity.User
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping

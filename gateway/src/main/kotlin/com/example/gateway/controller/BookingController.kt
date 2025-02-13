@@ -1,9 +1,9 @@
 package com.example.gateway.controller
 
 import com.example.api.BookingApi
-import com.example.api.dto.BookingCreateDto
-import com.example.api.dto.BookingDto
-import com.example.api.dto.enums.BookingState
+import com.example.api.model.BookingCreateDto
+import com.example.api.model.BookingDto
+import com.example.api.model.BookingState
 import com.example.gateway.client.BookingClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

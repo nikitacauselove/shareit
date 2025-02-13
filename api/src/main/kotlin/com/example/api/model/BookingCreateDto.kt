@@ -1,4 +1,4 @@
-package com.example.api.dto
+package com.example.api.model
 
 import com.example.api.constraint.StartBeforeEnd
 import io.swagger.v3.oas.annotations.media.Schema

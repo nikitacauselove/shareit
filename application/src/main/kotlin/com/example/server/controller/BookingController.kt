@@ -1,9 +1,9 @@
 package com.example.server.controller
 
 import com.example.api.BookingApi
-import com.example.api.dto.BookingCreateDto
-import com.example.api.dto.BookingDto
-import com.example.api.dto.enums.BookingState
+import com.example.api.model.BookingCreateDto
+import com.example.api.model.BookingDto
+import com.example.api.model.BookingState
 import com.example.server.mapper.BookingMapper
 import com.example.server.service.BookingService
 import org.springframework.web.bind.annotation.RequestMapping

@@ -1,4 +1,4 @@
-package com.example.api.dto
+package com.example.api.model
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotNull

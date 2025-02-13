@@ -1,8 +1,8 @@
 package com.example.api
 
-import com.example.api.dto.BookingCreateDto
-import com.example.api.dto.BookingDto
-import com.example.api.dto.enums.BookingState
+import com.example.api.model.BookingCreateDto
+import com.example.api.model.BookingDto
+import com.example.api.model.BookingState
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag

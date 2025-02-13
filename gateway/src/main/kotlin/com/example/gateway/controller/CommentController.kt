@@ -1,7 +1,7 @@
 package com.example.gateway.controller
 
 import com.example.api.CommentApi
-import com.example.api.dto.CommentDto
+import com.example.api.model.CommentDto
 import com.example.gateway.client.CommentClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

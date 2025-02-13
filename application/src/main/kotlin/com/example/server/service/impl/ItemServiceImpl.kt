@@ -1,7 +1,8 @@
 package com.example.server.service.impl
 
-import com.example.api.dto.ItemDto
-import com.example.api.dto.ItemDtoWithBooking
+import com.example.api.model.ItemDto
+import com.example.api.model.ItemDtoWithBooking
+import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
 import com.example.server.repository.BookingRepository
 import com.example.server.repository.CommentRepository
@@ -13,10 +14,8 @@ import com.example.server.repository.entity.Item
 import com.example.server.service.ItemService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.server.ResponseStatusException
 
 @Service
 class ItemServiceImpl(
@@ -31,9 +30,9 @@ class ItemServiceImpl(
     @Transactional
     override fun create(itemDto: ItemDto, userId: Long): Item {
         val owner = userRepository.findById(userId)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
         val itemRequest = if (itemDto.requestId == null) null else itemRequestRepository.findById(itemDto.requestId!!)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Запрос на добавление предмета с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(ItemRequestRepository.NOT_FOUND) }
 
         return itemRepository.save(itemMapper.toItem(itemDto, owner, itemRequest))
     }
@@ -44,14 +43,14 @@ class ItemServiceImpl(
         val ownerId = item.owner.id
 
         if (userId != ownerId) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Обновлять информацию о предмете может только его владелец")
+            throw NotFoundException("Обновлять информацию о предмете может только его владелец")
         }
         return itemMapper.updateItem(itemDto, item)
     }
 
     override fun findById(id: Long): Item {
         return itemRepository.findById(id)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND, "Предмет с указанным идентификатором не найден") }
+            .orElseThrow { NotFoundException(ItemRepository.NOT_FOUND) }
     }
 
     @Transactional(readOnly = true)

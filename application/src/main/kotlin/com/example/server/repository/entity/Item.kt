@@ -11,12 +11,12 @@ import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 
 @Entity
-@SequenceGenerator(name = "items_id_seq", allocationSize = 1)
-@Table(name = "items")
+@SequenceGenerator(name = "item_id_seq", allocationSize = 1)
+@Table(name = "item")
 class Item(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "items_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_id_seq")
     var id: Long?,
 
     @Column(name = "name")

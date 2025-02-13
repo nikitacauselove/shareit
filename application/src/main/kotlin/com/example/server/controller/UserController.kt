@@ -1,7 +1,7 @@
 package com.example.server.controller
 
 import com.example.api.UserApi
-import com.example.api.dto.UserDto
+import com.example.api.model.UserDto
 import com.example.server.mapper.UserMapper
 import com.example.server.service.UserService
 import org.springframework.web.bind.annotation.RequestMapping

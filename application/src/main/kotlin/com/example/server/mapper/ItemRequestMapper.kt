@@ -1,6 +1,6 @@
 package com.example.server.mapper
 
-import com.example.api.dto.ItemRequestDto
+import com.example.api.model.ItemRequestDto
 import com.example.server.mapper.decorator.ItemRequestMapperDecorator
 import com.example.server.repository.entity.Item
 import com.example.server.repository.entity.ItemRequest

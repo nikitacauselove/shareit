@@ -1,8 +1,8 @@
 package com.example.server.mapper.decorator
 
-import com.example.api.dto.BookingShortDto
-import com.example.api.dto.ItemDtoWithBooking
-import com.example.api.dto.enums.BookingStatus
+import com.example.api.model.BookingShortDto
+import com.example.api.model.ItemDtoWithBooking
+import com.example.api.model.BookingStatus
 import com.example.server.mapper.CommentMapper
 import com.example.server.mapper.ItemMapper
 import com.example.server.repository.entity.Booking

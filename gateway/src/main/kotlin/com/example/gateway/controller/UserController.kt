@@ -1,7 +1,7 @@
 package com.example.gateway.controller
 
 import com.example.api.UserApi
-import com.example.api.dto.UserDto
+import com.example.api.model.UserDto
 import com.example.gateway.client.UserClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
