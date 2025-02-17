@@ -20,7 +20,7 @@ abstract class ItemMapperDecorator : ItemMapper {
     @Autowired
     private lateinit var delegate: ItemMapper
 
-    override fun toItemDtoWithBooking(item: Item, bookingList: List<Booking>, commentList: List<Comment>): ItemDtoWithBooking {
+    override fun toDtoWithBooking(item: Item, bookingList: List<Booking>, commentList: List<Comment>): ItemDtoWithBooking {
         return ItemDtoWithBooking(
             id = item.id!!,
             name = item.name,
@@ -28,11 +28,11 @@ abstract class ItemMapperDecorator : ItemMapper {
             available = item.available,
             lastBooking = findLastBooking(bookingList),
             nextBooking = findNextBooking(bookingList),
-            comments = commentMapper.toCommentDto(commentList)
+            comments = commentMapper.toDto(commentList)
         )
     }
 
-    override fun toItemDtoWithBooking(items: List<Item>, bookingList: List<Booking>, commentList: List<Comment>): List<ItemDtoWithBooking> {
+    override fun toDtoWithBooking(items: List<Item>, bookingList: List<Booking>, commentList: List<Comment>): List<ItemDtoWithBooking> {
         return items.stream()
             .map { item: Item ->
                 val bookings = bookingList.stream()
@@ -42,7 +42,7 @@ abstract class ItemMapperDecorator : ItemMapper {
                     .filter { comment: Comment -> comment.item.id == item.id }
                     .collect(Collectors.toList())
 
-                this.toItemDtoWithBooking(item, bookings, comments)
+                this.toDtoWithBooking(item, bookings, comments)
             }
             .collect(Collectors.toList())
     }

@@ -14,13 +14,12 @@ import org.mapstruct.Mapping
 @Mapper(componentModel = "spring", uses = [ItemMapper::class])
 interface ItemRequestMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "created", ignore = true)
-    fun toItemRequest(itemRequestDto: ItemRequestDto, requester: User): ItemRequest
+    @Mapping(target = "id", source = "itemRequestDto.id")
+    fun toEntity(itemRequestDto: ItemRequestDto, requester: User): ItemRequest
 
-    @Mapping(target = "requesterId", ignore = true)
+    @Mapping(target = "requesterId", source = "itemRequest.id")
     @Mapping(target = "items", ignore = true)
-    fun toItemRequestDto(itemRequest: ItemRequest, @Context itemList: List<Item>): ItemRequestDto
+    fun toDto(itemRequest: ItemRequest, @Context itemList: List<Item>): ItemRequestDto
 
-    fun toItemRequestDto(itemRequestList: List<ItemRequest>, @Context itemList: List<Item>): List<ItemRequestDto>
+    fun toDto(itemRequestList: List<ItemRequest>, @Context itemList: List<Item>): List<ItemRequestDto>
 }

@@ -15,21 +15,21 @@ class UserController(
 ) : UserApi {
 
     override fun create(userDto: UserDto): UserDto {
-        val user = userMapper.toUser(userDto)
+        val user = userMapper.toEntity(userDto)
 
-        return userMapper.toUserDto(userService.create(user))
+        return userMapper.toDto(userService.create(user))
     }
 
     override fun update(id: Long, userDto: UserDto): UserDto {
-        return userMapper.toUserDto(userService.update(id, userDto))
+        return userMapper.toDto(userService.update(id, userDto))
     }
 
     override fun findById(id: Long): UserDto {
-        return userMapper.toUserDto(userService.findById(id))
+        return userMapper.toDto(userService.findById(id))
     }
 
     override fun findAll(): List<UserDto> {
-        return userMapper.toUserDto(userService.findAll())
+        return userMapper.toDto(userService.findAll())
     }
 
     override fun deleteById(id: Long) {

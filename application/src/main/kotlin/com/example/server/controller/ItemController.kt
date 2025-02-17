@@ -16,11 +16,11 @@ class ItemController(
 ) : ItemApi {
 
     override fun create(itemDto: ItemDto, userId: Long): ItemDto {
-        return itemMapper.toItemDto(itemService.create(itemDto, userId))
+        return itemMapper.toDto(itemService.create(itemDto, userId))
     }
 
     override fun update(id: Long, itemDto: ItemDto, userId: Long): ItemDto {
-        return itemMapper.toItemDto(itemService.update(id, itemDto, userId))
+        return itemMapper.toDto(itemService.update(id, itemDto, userId))
     }
 
     override fun findById(id: Long, userId: Long): ItemDtoWithBooking {
@@ -32,6 +32,6 @@ class ItemController(
     }
 
     override fun search(text: String, from: Int, size: Int): List<ItemDto> {
-        return itemMapper.toItemDto(itemService.search(text, from, size))
+        return itemMapper.toDto(itemService.search(text, from, size))
     }
 }

@@ -11,14 +11,14 @@ import org.mapstruct.NullValuePropertyMappingStrategy
 interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
-    fun toUser(userDto: UserDto): User
+    fun toEntity(userDto: UserDto): User
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    fun updateUser(userDto: UserDto, @MappingTarget user: User): User
+    fun updateEntity(userDto: UserDto, @MappingTarget user: User): User
 
-    fun toUserDto(user: User): UserDto
+    fun toDto(user: User): UserDto
 
-    fun toUserDto(userList: List<User>): List<UserDto>
+    fun toDto(userList: List<User>): List<UserDto>
 }

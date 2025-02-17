@@ -40,7 +40,7 @@ class BookingServiceImpl(
         if (userId == item.owner.id) {
             throw NotFoundException("Запрос на бронирование не может быть создан владельцем предмета")
         }
-        return bookingRepository.save(bookingMapper.toBooking(bookingCreateDto, item, booker))
+        return bookingRepository.save(bookingMapper.toEntity(bookingCreateDto, item, booker))
     }
 
     @Transactional

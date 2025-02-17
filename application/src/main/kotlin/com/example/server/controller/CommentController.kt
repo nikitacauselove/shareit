@@ -15,6 +15,6 @@ class CommentController(
 ) : CommentApi {
 
     override fun create(itemId: Long, commentDto: CommentDto, userId: Long): CommentDto {
-        return commentMapper.toCommentDto(commentService.create(itemId, commentDto, userId))
+        return commentMapper.toDto(commentService.create(itemId, commentDto, userId))
     }
 }

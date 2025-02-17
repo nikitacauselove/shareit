@@ -13,9 +13,9 @@ interface BookingMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "status", constant = "WAITING")
-    fun toBooking(bookingCreateDto: BookingCreateDto, item: Item, booker: User): Booking
+    fun toEntity(bookingCreateDto: BookingCreateDto, item: Item, booker: User): Booking
 
-    fun toBookingDto(booking: Booking): BookingDto
+    fun toDto(booking: Booking): BookingDto
 
-    fun toBookingDto(bookingList: List<Booking>): List<BookingDto>
+    fun toDto(bookingList: List<Booking>): List<BookingDto>
 }

@@ -30,7 +30,7 @@ class UserServiceImpl(
         if (userRepository.existsByIdNotAndEmail(id, userDto.email)) {
             throw ConflictException(UserRepository.CONFLICT)
         }
-        return userMapper.updateUser(userDto, findById(id))
+        return userMapper.updateEntity(userDto, findById(id))
     }
 
     override fun findById(id: Long): User {

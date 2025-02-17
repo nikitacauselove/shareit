@@ -26,7 +26,7 @@ class ItemRequestServiceImpl(
         val requester = userRepository.findById(userId)
             .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
 
-        return itemRequestRepository.save(itemRequestMapper.toItemRequest(itemRequestDto, requester))
+        return itemRequestRepository.save(itemRequestMapper.toEntity(itemRequestDto, requester))
     }
 
     override fun findById(id: Long): ItemRequest {
@@ -39,7 +39,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toItemRequestDto(findById(id), itemRepository.findAllByRequestId(id))
+        return itemRequestMapper.toDto(findById(id), itemRepository.findAllByRequestId(id))
     }
 
     @Transactional(readOnly = true)
@@ -47,7 +47,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toItemRequestDto(itemRequestRepository.findAllByRequesterId(userId, SORT_BY_DESCENDING_CREATED), itemRepository.findAllByRequestIdNotNull())
+        return itemRequestMapper.toDto(itemRequestRepository.findAllByRequesterId(userId, SORT_BY_DESCENDING_CREATED), itemRepository.findAllByRequestIdNotNull())
     }
 
     @Transactional(readOnly = true)
@@ -55,7 +55,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toItemRequestDto(itemRequestRepository.findAllByRequesterIdNot(userId, of(from, size, SORT_BY_DESCENDING_CREATED)), itemRepository.findAllByRequestIdNotNull())
+        return itemRequestMapper.toDto(itemRequestRepository.findAllByRequesterIdNot(userId, of(from, size, SORT_BY_DESCENDING_CREATED)), itemRepository.findAllByRequestIdNotNull())
     }
 
     companion object {

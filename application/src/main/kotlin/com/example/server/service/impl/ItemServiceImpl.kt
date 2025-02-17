@@ -34,7 +34,7 @@ class ItemServiceImpl(
         val itemRequest = if (itemDto.requestId == null) null else itemRequestRepository.findById(itemDto.requestId!!)
             .orElseThrow { NotFoundException(ItemRequestRepository.NOT_FOUND) }
 
-        return itemRepository.save(itemMapper.toItem(itemDto, owner, itemRequest))
+        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest))
     }
 
     @Transactional
@@ -44,7 +44,7 @@ class ItemServiceImpl(
         if (userId != item.owner.id) {
             throw NotFoundException("Обновлять информацию о предмете может только его владелец")
         }
-        return itemMapper.updateItem(itemDto, item)
+        return itemMapper.updateEntity(itemDto, item)
     }
 
     override fun findById(id: Long): Item {
@@ -57,9 +57,9 @@ class ItemServiceImpl(
         val item = findById(id)
 
         if (userId != item.owner.id) {
-            return itemMapper.toItemDtoWithBooking(item, emptyList(), commentRepository.findAllByItemId(id))
+            return itemMapper.toDtoWithBooking(item, emptyList(), commentRepository.findAllByItemId(id))
         }
-        return itemMapper.toItemDtoWithBooking(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id))
+        return itemMapper.toDtoWithBooking(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id))
     }
 
     @Transactional(readOnly = true)
@@ -69,7 +69,7 @@ class ItemServiceImpl(
         val bookings = bookingRepository.findAllByItem_Owner_Id(userId, Pageable.unpaged())
         val comments = commentRepository.findAllByOwnerId(userId)
 
-        return itemMapper.toItemDtoWithBooking(items, bookings, comments)
+        return itemMapper.toDtoWithBooking(items, bookings, comments)
     }
 
     override fun search(text: String, from: Int, size: Int): List<Item> {

@@ -16,22 +16,18 @@ abstract class ItemRequestMapperDecorator : ItemRequestMapper {
     @Autowired
     private lateinit var itemMapper: ItemMapper
 
-    override fun toItemRequestDto(itemRequest: ItemRequest, itemList: List<Item>): ItemRequestDto {
-        return ItemRequestDto(
-            id = itemRequest.id,
-            description = itemRequest.description,
-            requesterId = itemRequest.requester.id,
-            created = itemRequest.created,
-            items = itemMapper.toItemDto(itemList)
-        )
+    override fun toDto(itemRequest: ItemRequest, itemList: List<Item>): ItemRequestDto {
+        val itemRequestDto = delegate.toDto(itemRequest, itemList)
+
+        return itemRequestDto.copy(items = itemMapper.toDto(itemList))
     }
 
-    override fun toItemRequestDto(itemRequestList: List<ItemRequest>, itemList: List<Item>): List<ItemRequestDto> {
+    override fun toDto(itemRequestList: List<ItemRequest>, itemList: List<Item>): List<ItemRequestDto> {
         val requestIdToItemList = itemList.stream()
             .collect(Collectors.groupingBy { item -> item.request!!.id })
 
         return itemRequestList.stream()
-            .map { itemRequest -> toItemRequestDto(itemRequest, requestIdToItemList.getOrDefault(itemRequest.id, emptyList())) }
+            .map { itemRequest -> toDto(itemRequest, requestIdToItemList.getOrDefault(itemRequest.id, emptyList())) }
             .toList()
     }
 }

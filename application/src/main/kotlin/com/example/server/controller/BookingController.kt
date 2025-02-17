@@ -17,22 +17,22 @@ class BookingController(
 ) : BookingApi {
 
     override fun create(bookingCreateDto: BookingCreateDto, userId: Long): BookingDto {
-        return bookingMapper.toBookingDto(bookingService.create(bookingCreateDto, userId))
+        return bookingMapper.toDto(bookingService.create(bookingCreateDto, userId))
     }
 
     override fun approveOrReject(id: Long, userId: Long, approved: Boolean): BookingDto {
-        return bookingMapper.toBookingDto(bookingService.approveOrReject(id, userId, approved))
+        return bookingMapper.toDto(bookingService.approveOrReject(id, userId, approved))
     }
 
     override fun findById(id: Long, userId: Long): BookingDto {
-        return bookingMapper.toBookingDto(bookingService.findById(id, userId))
+        return bookingMapper.toDto(bookingService.findById(id, userId))
     }
 
     override fun findAllByBookerId(userId: Long, state: BookingState, from: Int, size: Int): List<BookingDto> {
-        return bookingMapper.toBookingDto(bookingService.findAllByBookerId(userId, state, from, size))
+        return bookingMapper.toDto(bookingService.findAllByBookerId(userId, state, from, size))
     }
 
     override fun findAllByOwnerId(userId: Long, state: BookingState, from: Int, size: Int): List<BookingDto> {
-        return bookingMapper.toBookingDto(bookingService.findAllByOwnerId(userId, state, from, size))
+        return bookingMapper.toDto(bookingService.findAllByOwnerId(userId, state, from, size))
     }
 }

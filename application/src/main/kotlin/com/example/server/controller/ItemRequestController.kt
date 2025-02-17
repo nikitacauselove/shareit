@@ -15,7 +15,7 @@ class ItemRequestController(
 ) : ItemRequestApi {
 
     override fun create(itemRequestDto: ItemRequestDto, userId: Long): ItemRequestDto {
-        return itemRequestMapper.toItemRequestDto(itemRequestService.create(itemRequestDto, userId), emptyList())
+        return itemRequestMapper.toDto(itemRequestService.create(itemRequestDto, userId), emptyList())
     }
 
     override fun findById(id: Long, userId: Long): ItemRequestDto {

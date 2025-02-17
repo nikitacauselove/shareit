@@ -13,10 +13,10 @@ interface CommentMapper {
     @Mapping(target = "id", source = "commentDto.id")
     @Mapping(target = "text", source = "commentDto.text")
     @Mapping(target = "created", ignore = true)
-    fun toComment(commentDto: CommentDto, item: Item, author: User): Comment
+    fun toEntity(commentDto: CommentDto, item: Item, author: User): Comment
 
     @Mapping(target = "authorName", source = "comment.author.name")
-    fun toCommentDto(comment: Comment): CommentDto
+    fun toDto(comment: Comment): CommentDto
 
-    fun toCommentDto(commentList: List<Comment>): List<CommentDto>
+    fun toDto(commentList: List<Comment>): List<CommentDto>
 }
