@@ -1,7 +1,7 @@
 package com.example.server.service
 
 import com.example.api.model.ItemRequestDto
-import com.example.server.repository.entity.ItemRequest
+import com.example.server.entity.ItemRequest
 
 /**
  * Сервис для взаимодействия с запросами на добавление предмета.

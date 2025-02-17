@@ -10,7 +10,7 @@ import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.ItemRequestRepository
 import com.example.server.repository.UserRepository
-import com.example.server.repository.entity.Item
+import com.example.server.entity.Item
 import com.example.server.service.ItemService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -40,9 +40,8 @@ class ItemServiceImpl(
     @Transactional
     override fun update(id: Long, itemDto: ItemDto, userId: Long): Item {
         val item = findById(id)
-        val ownerId = item.owner.id
 
-        if (userId != ownerId) {
+        if (userId != item.owner.id) {
             throw NotFoundException("Обновлять информацию о предмете может только его владелец")
         }
         return itemMapper.updateItem(itemDto, item)
@@ -56,9 +55,8 @@ class ItemServiceImpl(
     @Transactional(readOnly = true)
     override fun findByIdWithBooking(id: Long, userId: Long): ItemDtoWithBooking {
         val item = findById(id)
-        val ownerId = item.owner.id
 
-        if (userId != ownerId) {
+        if (userId != item.owner.id) {
             return itemMapper.toItemDtoWithBooking(item, emptyList(), commentRepository.findAllByItemId(id))
         }
         return itemMapper.toItemDtoWithBooking(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id))

@@ -2,7 +2,7 @@ package com.example.server.service
 
 import com.example.api.model.ItemDto
 import com.example.api.model.ItemDtoWithBooking
-import com.example.server.repository.entity.Item
+import com.example.server.entity.Item
 
 /**
  * Сервис для взаимодействия с предметами.

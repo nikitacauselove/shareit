@@ -1,15 +1,13 @@
 package com.example.server.repository
 
-import com.example.server.repository.entity.ItemRequest
+import com.example.server.entity.ItemRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
 
 /**
  * Репозиторий для взаимодействия с запросами на добавление предмета.
  */
-@Repository
 interface ItemRequestRepository : JpaRepository<ItemRequest, Long> {
 
     /**

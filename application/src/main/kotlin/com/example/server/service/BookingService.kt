@@ -2,7 +2,7 @@ package com.example.server.service
 
 import com.example.api.model.BookingCreateDto
 import com.example.api.model.BookingState
-import com.example.server.repository.entity.Booking
+import com.example.server.entity.Booking
 
 /**
  * Сервис для взаимодействия с запросами на бронирование.

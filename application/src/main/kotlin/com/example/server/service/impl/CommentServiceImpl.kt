@@ -8,7 +8,7 @@ import com.example.server.repository.BookingRepository
 import com.example.server.repository.CommentRepository
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.UserRepository
-import com.example.server.repository.entity.Comment
+import com.example.server.entity.Comment
 import com.example.server.service.CommentService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -1,7 +1,7 @@
 package com.example.server.service
 
 import com.example.api.model.CommentDto
-import com.example.server.repository.entity.Comment
+import com.example.server.entity.Comment
 
 /**
  * Сервис для взаимодействия с отзывами.

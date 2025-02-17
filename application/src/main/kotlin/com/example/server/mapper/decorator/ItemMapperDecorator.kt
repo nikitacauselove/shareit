@@ -2,20 +2,23 @@ package com.example.server.mapper.decorator
 
 import com.example.api.model.BookingShortDto
 import com.example.api.model.ItemDtoWithBooking
-import com.example.api.model.BookingStatus
 import com.example.server.mapper.CommentMapper
 import com.example.server.mapper.ItemMapper
-import com.example.server.repository.entity.Booking
-import com.example.server.repository.entity.Comment
-import com.example.server.repository.entity.Item
+import com.example.server.entity.Booking
+import com.example.server.entity.BookingStatus
+import com.example.server.entity.Comment
+import com.example.server.entity.Item
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDateTime
 import java.util.stream.Collectors
 
 abstract class ItemMapperDecorator : ItemMapper {
 
-    private var commentMapper: CommentMapper? = null
-    private var delegate: ItemMapper? = null
+    @Autowired
+    private lateinit var commentMapper: CommentMapper
+
+    @Autowired
+    private lateinit var delegate: ItemMapper
 
     override fun toItemDtoWithBooking(item: Item, bookingList: List<Booking>, commentList: List<Comment>): ItemDtoWithBooking {
         return ItemDtoWithBooking(
@@ -25,7 +28,7 @@ abstract class ItemMapperDecorator : ItemMapper {
             available = item.available,
             lastBooking = findLastBooking(bookingList),
             nextBooking = findNextBooking(bookingList),
-            comments = commentMapper!!.toCommentDto(commentList)
+            comments = commentMapper.toCommentDto(commentList)
         )
     }
 
@@ -64,16 +67,6 @@ abstract class ItemMapperDecorator : ItemMapper {
             .findFirst()
             .map { booking: Booking -> BookingShortDto(booking.id!!, booking.start, booking.end, booking.booker.id!!) }
             .orElse(null)
-    }
-
-    @Autowired
-    fun setCommentMapper(commentMapper: CommentMapper) {
-        this.commentMapper = commentMapper
-    }
-
-    @Autowired
-    fun setDelegate(itemMapper: ItemMapper) {
-        this.delegate = itemMapper
     }
 
     companion object {

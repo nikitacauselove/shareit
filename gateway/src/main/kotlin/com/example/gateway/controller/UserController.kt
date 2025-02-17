@@ -28,7 +28,7 @@ class UserController(
         return userClient.findAll()
     }
 
-    override fun deleteById(id: Long): Map<String, String> {
-        return userClient.deleteById(id)
+    override fun deleteById(id: Long) {
+        userClient.deleteById(id)
     }
 }

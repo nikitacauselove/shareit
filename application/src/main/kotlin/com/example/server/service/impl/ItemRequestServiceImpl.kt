@@ -7,7 +7,7 @@ import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.ItemRequestRepository
 import com.example.server.repository.UserRepository
-import com.example.server.repository.entity.ItemRequest
+import com.example.server.entity.ItemRequest
 import com.example.server.service.ItemRequestService
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service

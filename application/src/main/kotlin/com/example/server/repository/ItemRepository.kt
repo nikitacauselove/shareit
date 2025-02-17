@@ -1,15 +1,13 @@
 package com.example.server.repository
 
-import com.example.server.repository.entity.Item
+import com.example.server.entity.Item
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.Repository
 
 /**
  * Репозиторий для взаимодействия с предметами.
  */
-@Repository
 interface ItemRepository : JpaRepository<Item, Long> {
 
     /**

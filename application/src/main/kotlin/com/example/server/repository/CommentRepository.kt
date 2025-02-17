@@ -1,14 +1,12 @@
 package com.example.server.repository
 
-import com.example.server.repository.entity.Comment
+import com.example.server.entity.Comment
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.Repository
 
 /**
  * Репозиторий для взаимодействия с отзывами.
  */
-@Repository
 interface CommentRepository : JpaRepository<Comment, Long> {
 
     /**

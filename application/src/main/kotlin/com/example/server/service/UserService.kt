@@ -1,7 +1,7 @@
 package com.example.server.service
 
 import com.example.api.model.UserDto
-import com.example.server.repository.entity.User
+import com.example.server.entity.User
 
 /**
  * Сервис для взаимодействия с пользователями.

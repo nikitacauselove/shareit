@@ -2,7 +2,6 @@ package com.example.server.service.impl
 
 import com.example.api.model.BookingCreateDto
 import com.example.api.model.BookingState
-import com.example.api.model.BookingStatus
 import com.example.server.exception.BadRequestException
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.BookingMapper
@@ -10,7 +9,8 @@ import com.example.server.repository.BookingRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.UserRepository
-import com.example.server.repository.entity.Booking
+import com.example.server.entity.Booking
+import com.example.server.entity.BookingStatus
 import com.example.server.repository.specification.BookingSpecification
 import com.example.server.service.BookingService
 import org.springframework.data.domain.Pageable
@@ -31,14 +31,13 @@ class BookingServiceImpl(
     override fun create(bookingCreateDto: BookingCreateDto, userId: Long): Booking {
         val item = itemRepository.findById(bookingCreateDto.itemId)
             .orElseThrow { NotFoundException(ItemRepository.NOT_FOUND) }
-        val ownerId = item.owner.id
         val booker = userRepository.findById(userId)
             .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
 
         if (!item.available) {
             throw BadRequestException("Предмет с указанным идентификатором недоступен для бронирования")
         }
-        if (userId == ownerId) {
+        if (userId == item.owner.id) {
             throw NotFoundException("Запрос на бронирование не может быть создан владельцем предмета")
         }
         return bookingRepository.save(bookingMapper.toBooking(bookingCreateDto, item, booker))
@@ -47,12 +46,11 @@ class BookingServiceImpl(
     @Transactional
     override fun approveOrReject(id: Long, userId: Long, approved: Boolean): Booking {
         val booking = findById(id, userId)
-        val ownerId = booking.item.owner.id
 
         if (FINAL_STATUSES.contains(booking.status)) {
             throw BadRequestException("Подтверждение или отклонение запроса на бронирование не может быть выполнено повторно")
         }
-        if (userId != ownerId) {
+        if (userId != booking.item.owner.id) {
             throw NotFoundException("Подтверждение или отклонение запроса на бронирование может быть выполнено только владельцем предмета")
         }
         booking.status = if (approved) BookingStatus.APPROVED else BookingStatus.REJECTED

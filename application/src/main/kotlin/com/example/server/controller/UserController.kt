@@ -32,8 +32,7 @@ class UserController(
         return userMapper.toUserDto(userService.findAll())
     }
 
-    override fun deleteById(id: Long): Map<String, String> {
+    override fun deleteById(id: Long) {
         userService.deleteById(id)
-        return mapOf("message" to "Пользователь с указанным идентификатором был успешно удален.")
     }
 }

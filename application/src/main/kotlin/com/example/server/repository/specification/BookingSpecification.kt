@@ -1,10 +1,10 @@
 package com.example.server.repository.specification
 
 import com.example.api.model.BookingState
-import com.example.api.model.BookingStatus
-import com.example.server.repository.entity.Booking
-import com.example.server.repository.entity.Item
-import com.example.server.repository.entity.User
+import com.example.server.entity.Booking
+import com.example.server.entity.BookingStatus
+import com.example.server.entity.Item
+import com.example.server.entity.User
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -30,8 +30,7 @@ class BookingSpecification {
                 BookingState.ALL -> criteriaBuilder.conjunction()
                 BookingState.CURRENT -> criteriaBuilder.and(
                     criteriaBuilder.lessThan(root.get("start"), LocalDateTime.now()),
-                    criteriaBuilder.greaterThan(root.get("end"), LocalDateTime.now())
-                )
+                    criteriaBuilder.greaterThan(root.get("end"), LocalDateTime.now()))
                 BookingState.FUTURE -> criteriaBuilder.greaterThan(root.get("start"), LocalDateTime.now())
                 BookingState.PAST -> criteriaBuilder.lessThan(root.get("end"), LocalDateTime.now())
                 BookingState.REJECTED -> criteriaBuilder.equal(root.get<BookingStatus>("status"), BookingStatus.REJECTED)

@@ -35,7 +35,7 @@ interface UserApi {
 
     @DeleteMapping("/{id}")
     @Operation(description = "Удаление пользователя")
-    fun deleteById(@PathVariable id: Long): Map<String, String>
+    fun deleteById(@PathVariable id: Long)
 
     companion object {
         const val PATH = "v1/users"
