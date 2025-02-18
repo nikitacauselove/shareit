@@ -21,15 +21,9 @@ abstract class ItemMapperDecorator : ItemMapper {
     private lateinit var delegate: ItemMapper
 
     override fun toDtoWithBooking(item: Item, bookingList: List<Booking>, commentList: List<Comment>): ItemDtoWithBooking {
-        return ItemDtoWithBooking(
-            id = item.id!!,
-            name = item.name,
-            description = item.description,
-            available = item.available,
-            lastBooking = findLastBooking(bookingList),
-            nextBooking = findNextBooking(bookingList),
-            comments = commentMapper.toDto(commentList)
-        )
+        val itemDtoWithBooking = delegate.toDtoWithBooking(item, bookingList, commentList)
+
+        return itemDtoWithBooking.copy(lastBooking = findLastBooking(bookingList), nextBooking = findNextBooking(bookingList), comments = commentMapper.toDto(commentList))
     }
 
     override fun toDtoWithBooking(items: List<Item>, bookingList: List<Booking>, commentList: List<Comment>): List<ItemDtoWithBooking> {

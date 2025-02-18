@@ -19,21 +19,21 @@ import org.mapstruct.NullValuePropertyMappingStrategy
 @Mapper(componentModel = "spring", uses = [CommentMapper::class])
 interface ItemMapper {
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "itemDto.id")
     @Mapping(target = "name", source = "itemDto.name")
     @Mapping(target = "description", source = "itemDto.description")
     @Mapping(target = "request", source = "itemRequest")
     fun toEntity(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?): Item
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "name", source = "itemDto.name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE )
+    @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "description", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "available", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "request", ignore = true)
     fun updateEntity(itemDto: ItemDto, @MappingTarget item: Item): Item
 
-    @Mapping(target = "requestId", source = "item.request.id", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "requestId", source = "item.request.id")
     fun toDto(item: Item): ItemDto
 
     fun toDto(itemList: List<Item>): List<ItemDto>

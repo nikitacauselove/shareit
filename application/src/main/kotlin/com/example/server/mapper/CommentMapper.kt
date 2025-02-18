@@ -11,7 +11,6 @@ import org.mapstruct.Mapping
 interface CommentMapper {
 
     @Mapping(target = "id", source = "commentDto.id")
-    @Mapping(target = "text", source = "commentDto.text")
     @Mapping(target = "created", ignore = true)
     fun toEntity(commentDto: CommentDto, item: Item, author: User): Comment
 
