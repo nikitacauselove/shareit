@@ -21,10 +21,7 @@ interface ItemRequestApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса на добавление предмета")
-    fun create(
-        @RequestBody @Valid itemRequestDto: ItemRequestDto,
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long
-    ): ItemRequestDto
+    fun create(@RequestBody @Valid itemRequestDto: ItemRequestDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemRequestDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о запросе на добавление предмета")
