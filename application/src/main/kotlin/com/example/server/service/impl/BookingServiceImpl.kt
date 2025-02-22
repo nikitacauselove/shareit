@@ -2,6 +2,8 @@ package com.example.server.service.impl
 
 import com.example.api.model.BookingCreateDto
 import com.example.api.model.BookingState
+import com.example.server.entity.Booking
+import com.example.server.entity.BookingStatus
 import com.example.server.exception.BadRequestException
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.BookingMapper
@@ -9,8 +11,6 @@ import com.example.server.repository.BookingRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.UserRepository
-import com.example.server.entity.Booking
-import com.example.server.entity.BookingStatus
 import com.example.server.repository.specification.BookingSpecification
 import com.example.server.service.BookingService
 import org.springframework.data.domain.Pageable

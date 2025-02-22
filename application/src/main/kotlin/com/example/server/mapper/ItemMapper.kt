@@ -2,12 +2,12 @@ package com.example.server.mapper
 
 import com.example.api.model.ItemDto
 import com.example.api.model.ItemDtoWithBooking
-import com.example.server.mapper.decorator.ItemMapperDecorator
 import com.example.server.entity.Booking
 import com.example.server.entity.Comment
 import com.example.server.entity.Item
 import com.example.server.entity.ItemRequest
 import com.example.server.entity.User
+import com.example.server.mapper.decorator.ItemMapperDecorator
 import org.mapstruct.Context
 import org.mapstruct.DecoratedWith
 import org.mapstruct.Mapper

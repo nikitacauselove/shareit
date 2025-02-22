@@ -1,11 +1,11 @@
 package com.example.server.service.impl
 
 import com.example.api.model.UserDto
+import com.example.server.entity.User
 import com.example.server.exception.ConflictException
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.UserMapper
 import com.example.server.repository.UserRepository
-import com.example.server.entity.User
 import com.example.server.service.UserService
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service

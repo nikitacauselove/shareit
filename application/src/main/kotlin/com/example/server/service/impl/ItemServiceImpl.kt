@@ -2,6 +2,7 @@ package com.example.server.service.impl
 
 import com.example.api.model.ItemDto
 import com.example.api.model.ItemDtoWithBooking
+import com.example.server.entity.Item
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
 import com.example.server.repository.BookingRepository
@@ -10,7 +11,6 @@ import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.ItemRequestRepository
 import com.example.server.repository.UserRepository
-import com.example.server.entity.Item
 import com.example.server.service.ItemService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

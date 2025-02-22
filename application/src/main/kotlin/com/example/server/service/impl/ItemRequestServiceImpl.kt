@@ -1,13 +1,12 @@
 package com.example.server.service.impl
 
 import com.example.api.model.ItemRequestDto
+import com.example.server.entity.ItemRequest
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemRequestMapper
 import com.example.server.repository.FromSizePageRequest.Companion.of
-import com.example.server.repository.ItemRepository
 import com.example.server.repository.ItemRequestRepository
 import com.example.server.repository.UserRepository
-import com.example.server.entity.ItemRequest
 import com.example.server.service.ItemRequestService
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ItemRequestServiceImpl(
-    private val itemRepository: ItemRepository,
     private val itemRequestMapper: ItemRequestMapper,
     private val itemRequestRepository: ItemRequestRepository,
     private val userRepository: UserRepository

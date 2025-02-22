@@ -1,6 +1,7 @@
 package com.example.server.service.impl
 
 import com.example.api.model.CommentDto
+import com.example.server.entity.Comment
 import com.example.server.exception.BadRequestException
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.CommentMapper
@@ -8,7 +9,6 @@ import com.example.server.repository.BookingRepository
 import com.example.server.repository.CommentRepository
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.UserRepository
-import com.example.server.entity.Comment
 import com.example.server.service.CommentService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

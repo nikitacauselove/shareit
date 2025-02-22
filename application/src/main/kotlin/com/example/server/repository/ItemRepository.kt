@@ -25,15 +25,6 @@ interface ItemRepository : JpaRepository<Item, Long> {
     @Query(SEARCH)
     fun search(text: String, pageable: Pageable): List<Item>
 
-    /**
-     * Получение владельцем списка всех его предметов.
-     *
-     * @param requestId идентификатор пользователя
-     */
-    fun findAllByRequestId(requestId: Long): List<Item>
-
-    fun findAllByRequestIdNotNull(): List<Item>
-
     companion object {
         const val NOT_FOUND = "Предмет с указанным идентификатором не найден"
 
