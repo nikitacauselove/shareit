@@ -24,7 +24,7 @@ class ItemRequestServiceImpl(
         val requester = userRepository.findById(userId)
             .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
 
-        return itemRequestRepository.save(itemRequestMapper.toEntity(itemRequestDto, requester, mutableSetOf()))
+        return itemRequestRepository.save(itemRequestMapper.toEntity(itemRequestDto, requester, mutableListOf()))
     }
 
     override fun findById(id: Long): ItemRequest {

@@ -11,8 +11,8 @@ import org.mapstruct.Mapping
 interface ItemRequestMapper {
 
     @Mapping(target = "id", source = "itemRequestDto.id")
-    @Mapping(target = "items", source = "itemSet")
-    fun toEntity(itemRequestDto: ItemRequestDto, requester: User, itemSet: MutableSet<Item>): ItemRequest
+    @Mapping(target = "items", source = "itemList")
+    fun toEntity(itemRequestDto: ItemRequestDto, requester: User, itemList: MutableList<Item>): ItemRequest
 
     @Mapping(target = "requesterId", source = "itemRequest.id")
     fun toDto(itemRequest: ItemRequest): ItemRequestDto

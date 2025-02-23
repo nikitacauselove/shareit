@@ -34,5 +34,5 @@ class ItemRequest(
     var created: LocalDateTime?,
 
     @OneToMany(mappedBy = "request")
-    var items: MutableSet<Item>
+    var items: MutableList<Item>
 )
