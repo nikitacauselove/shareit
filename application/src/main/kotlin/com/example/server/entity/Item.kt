@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
 
@@ -34,5 +35,8 @@ class Item(
 
     @JoinColumn(name = "request_id")
     @ManyToOne
-    var request: ItemRequest?
+    var request: ItemRequest?,
+
+    @OneToMany(mappedBy = "item")
+    var bookings: MutableList<Booking>
 )

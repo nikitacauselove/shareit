@@ -23,7 +23,8 @@ interface ItemMapper {
     @Mapping(target = "name", source = "itemDto.name")
     @Mapping(target = "description", source = "itemDto.description")
     @Mapping(target = "request", source = "itemRequest")
-    fun toEntity(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?): Item
+    @Mapping(target = "bookings", source = "bookingList")
+    fun toEntity(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?, bookingList: MutableList<Booking>): Item
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -31,6 +32,7 @@ interface ItemMapper {
     @Mapping(target = "available", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "request", ignore = true)
+    @Mapping(target = "bookings", ignore = true)
     fun updateEntity(itemDto: ItemDto, @MappingTarget item: Item): Item
 
     @Mapping(target = "requestId", source = "item.request.id")

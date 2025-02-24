@@ -34,7 +34,7 @@ class ItemServiceImpl(
         val itemRequest = if (itemDto.requestId == null) null else itemRequestRepository.findById(itemDto.requestId!!)
             .orElseThrow { NotFoundException(ItemRequestRepository.NOT_FOUND) }
 
-        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest))
+        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest, mutableListOf()))
     }
 
     @Transactional
