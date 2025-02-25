@@ -6,7 +6,6 @@ import com.example.server.entity.Item
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
 import com.example.server.repository.BookingRepository
-import com.example.server.repository.CommentRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
 import com.example.server.repository.ItemRequestRepository
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ItemServiceImpl(
     private val bookingRepository: BookingRepository,
-    private val commentRepository: CommentRepository,
     private val itemMapper: ItemMapper,
     private val itemRepository: ItemRepository,
     private val itemRequestRepository: ItemRequestRepository,
@@ -34,7 +32,7 @@ class ItemServiceImpl(
         val itemRequest = if (itemDto.requestId == null) null else itemRequestRepository.findById(itemDto.requestId!!)
             .orElseThrow { NotFoundException(ItemRequestRepository.NOT_FOUND) }
 
-        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest, mutableListOf()))
+        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest, mutableListOf(), mutableListOf()))
     }
 
     @Transactional
@@ -57,9 +55,9 @@ class ItemServiceImpl(
         val item = findById(id)
 
         if (userId != item.owner.id) {
-            return itemMapper.toDtoWithBooking(item, emptyList(), commentRepository.findAllByItemId(id))
+            return itemMapper.toDtoWithBooking(item, emptyList())
         }
-        return itemMapper.toDtoWithBooking(item, bookingRepository.findAllByItemId(id), commentRepository.findAllByItemId(id))
+        return itemMapper.toDtoWithBooking(item, bookingRepository.findAllByItemId(id))
     }
 
     @Transactional(readOnly = true)
@@ -67,9 +65,8 @@ class ItemServiceImpl(
         val pageable = of(from, size, SORT_BY_DESCENDING_ID)
         val items = itemRepository.findAllByOwnerId(userId, pageable)
         val bookings = bookingRepository.findAllByItem_Owner_Id(userId, Pageable.unpaged())
-        val comments = commentRepository.findAllByOwnerId(userId)
 
-        return itemMapper.toDtoWithBooking(items, bookings, comments)
+        return itemMapper.toDtoWithBooking(items, bookings)
     }
 
     override fun search(text: String, from: Int, size: Int): List<Item> {

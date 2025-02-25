@@ -24,7 +24,8 @@ interface ItemMapper {
     @Mapping(target = "description", source = "itemDto.description")
     @Mapping(target = "request", source = "itemRequest")
     @Mapping(target = "bookings", source = "bookingList")
-    fun toEntity(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?, bookingList: MutableList<Booking>): Item
+    @Mapping(target = "comments", source = "commentList")
+    fun toEntity(itemDto: ItemDto, owner: User, itemRequest: ItemRequest?, bookingList: MutableList<Booking>, commentList: MutableList<Comment>): Item
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -33,6 +34,7 @@ interface ItemMapper {
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "request", ignore = true)
     @Mapping(target = "bookings", ignore = true)
+    @Mapping(target = "comments", ignore = true)
     fun updateEntity(itemDto: ItemDto, @MappingTarget item: Item): Item
 
     @Mapping(target = "requestId", source = "item.request.id")
@@ -43,7 +45,7 @@ interface ItemMapper {
     @Mapping(target = "lastBooking", ignore = true)
     @Mapping(target = "nextBooking", ignore = true)
     @Mapping(target = "comments", ignore = true)
-    fun toDtoWithBooking(item: Item, @Context bookingList: List<Booking>, @Context commentList: List<Comment>): ItemDtoWithBooking
+    fun toDtoWithBooking(item: Item, @Context bookingList: List<Booking>): ItemDtoWithBooking
 
-    fun toDtoWithBooking(items: List<Item>, @Context bookingList: List<Booking>, @Context commentList: List<Comment>): List<ItemDtoWithBooking>
+    fun toDtoWithBooking(items: List<Item>, @Context bookingList: List<Booking>): List<ItemDtoWithBooking>
 }

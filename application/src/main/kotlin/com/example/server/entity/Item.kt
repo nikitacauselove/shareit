@@ -38,5 +38,8 @@ class Item(
     var request: ItemRequest?,
 
     @OneToMany(mappedBy = "item")
-    var bookings: MutableList<Booking>
+    var bookings: MutableList<Booking>,
+
+    @OneToMany(mappedBy = "item")
+    var comments: MutableList<Comment>
 )
