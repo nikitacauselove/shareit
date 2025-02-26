@@ -26,6 +26,7 @@
         <kotlin.version>2.1.0</kotlin.version>
 
         <feign-okhttp.version>13.5</feign-okhttp.version>
+        <hibernate-jpamodelgen.version>6.6.9.Final</hibernate-jpamodelgen.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <mapstruct-processor.version>1.6.3</mapstruct-processor.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.8.1</springdoc-openapi-starter-webmvc-ui.version>
@@ -44,6 +45,12 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-okhttp</artifactId>
                 <version>${feign-okhttp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-jpamodelgen.version}</version>
             </dependency>
 
             <dependency>
