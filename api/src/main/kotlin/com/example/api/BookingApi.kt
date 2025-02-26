@@ -24,10 +24,7 @@ interface BookingApi {
 
     @PostMapping
     @Operation(description = "Добавление нового запроса на бронирование")
-    fun create(
-        @RequestBody @Valid bookingCreateDto: BookingCreateDto,
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long
-    ): BookingDto
+    fun create(@RequestBody @Valid bookingCreateDto: BookingCreateDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): BookingDto
 
     @PatchMapping("/{id}")
     @Operation(description = "Подтверждение или отклонение запроса на бронирование")

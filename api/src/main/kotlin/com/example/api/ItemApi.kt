@@ -27,11 +27,7 @@ interface ItemApi {
 
     @PatchMapping("/{id}")
     @Operation(description = "Обновление информации о предмете")
-    fun update(
-        @PathVariable id: Long,
-        @RequestBody itemDto: ItemDto,
-        @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long
-    ): ItemDto
+    fun update(@PathVariable id: Long, @RequestBody itemDto: ItemDto, @RequestHeader(UserApi.X_SHARER_USER_ID) userId: Long): ItemDto
 
     @GetMapping("/{id}")
     @Operation(description = "Получение информации о предмете")
