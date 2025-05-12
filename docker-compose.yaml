@@ -1,33 +1,34 @@
 services:
-  gateway:
-    build: gateway/
-    container_name: shareit_gateway
-    ports:
-      - "8080:8080"
-    depends_on: [ server ]
+  application:
+    build: application/
+    container_name: application
+    depends_on:
+      - database
+      - liquibase
     environment:
-      SHAREIT_SERVER_URL: http://server:9090
-
-  server:
-    build: server/
-    container_name: shareit_server
+      - HOST=database
     ports:
       - "9090:9090"
-    depends_on: [ db ]
+  database:
+    container_name: database
     environment:
-      - DB_NAME=shareit
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - DB_HOST=db
-      - DB_PORT=5432
-
-  db:
-    image: postgres:13.7-alpine
-    container_name: shareit_db
+      - POSTGRES_PASSWORD=postgres
+    image: postgres
     ports:
-      - "6541:5432"
-
+      - "5432:5432"
+  gateway:
+    build: gateway/
+    container_name: gateway
+    depends_on:
+      - application
+    ports:
+      - "8080:8080"
     environment:
-      - POSTGRES_DB=shareit
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - HOST=application
+  liquibase:
+    build: liquibase/
+    container_name: liquibase
+    depends_on:
+      - database
+    environment:
+      - HOST=database
