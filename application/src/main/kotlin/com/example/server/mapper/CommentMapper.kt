@@ -19,3 +19,13 @@ interface CommentMapper {
 
     fun toDto(commentList: List<Comment>): List<CommentDto>
 }
+
+fun CommentDto.toEntity(item: Item, author: User): Comment = Comment(
+    id = this.id, text = this.text, item = item, author = author, created = null
+)
+
+fun Comment.toDto(): CommentDto = CommentDto(
+    id = this.id, text = this.text, authorName = this.author.name, created = this.created
+)
+
+fun List<Comment>.commentDtoList(): List<CommentDto> = this.map { it.toDto() }
