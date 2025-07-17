@@ -4,7 +4,7 @@ import com.example.api.model.CommentDto
 import com.example.server.entity.Comment
 import com.example.server.exception.BadRequestException
 import com.example.server.exception.NotFoundException
-import com.example.server.mapper.CommentMapper
+import com.example.server.mapper.toEntity
 import com.example.server.repository.BookingRepository
 import com.example.server.repository.CommentRepository
 import com.example.server.repository.ItemRepository
@@ -17,7 +17,6 @@ import java.time.LocalDateTime
 @Service
 class CommentServiceImpl(
     private val bookingRepository: BookingRepository,
-    private val commentMapper: CommentMapper,
     private val commentRepository: CommentRepository,
     private val itemRepository: ItemRepository,
     private val userRepository: UserRepository
@@ -33,6 +32,6 @@ class CommentServiceImpl(
         if (!bookingRepository.existsByBookerIdAndItemIdAndEndBefore(userId, itemId, LocalDateTime.now())) {
             throw BadRequestException("Пользователи могут оставлять отзывы на предмет только после того, как взяли его в аренду")
         }
-        return commentRepository.save(commentMapper.toEntity(commentDto, item, author))
+        return commentRepository.save(commentDto.toEntity(item, author))
     }
 }

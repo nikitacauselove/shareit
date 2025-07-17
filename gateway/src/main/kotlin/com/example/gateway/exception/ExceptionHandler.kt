@@ -19,6 +19,6 @@ class ExceptionHandler {
     }
 
     companion object {
-        val OBJECT_MAPPER = ObjectMapper()
+        private val OBJECT_MAPPER = ObjectMapper()
     }
 }

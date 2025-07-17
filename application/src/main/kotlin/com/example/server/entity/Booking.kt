@@ -39,4 +39,10 @@ class Booking(
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     var status: BookingStatus
-)
+) {
+
+    companion object {
+        val BY_START_ASCENDING = Comparator.comparing(Booking::start)
+        val BY_START_DESCENDING = BY_START_ASCENDING.reversed()
+    }
+}
