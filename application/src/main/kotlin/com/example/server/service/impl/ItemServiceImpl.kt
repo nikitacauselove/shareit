@@ -5,6 +5,8 @@ import com.example.api.model.ItemDtoWithBooking
 import com.example.server.entity.Item
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
+import com.example.server.mapper.toEntity
+import com.example.server.mapper.updateEntity
 import com.example.server.repository.BookingRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
@@ -32,7 +34,7 @@ class ItemServiceImpl(
         val itemRequest = if (itemDto.requestId == null) null else itemRequestRepository.findById(itemDto.requestId!!)
             .orElseThrow { NotFoundException(ItemRequestRepository.NOT_FOUND) }
 
-        return itemRepository.save(itemMapper.toEntity(itemDto, owner, itemRequest, mutableListOf(), mutableListOf()))
+        return itemRepository.save(itemDto.toEntity(owner, itemRequest, mutableListOf(), mutableListOf()))
     }
 
     @Transactional
@@ -42,7 +44,7 @@ class ItemServiceImpl(
         if (userId != item.owner.id) {
             throw NotFoundException("Обновлять информацию о предмете может только его владелец")
         }
-        return itemMapper.updateEntity(itemDto, item)
+        return item.updateEntity(itemDto)
     }
 
     override fun findById(id: Long): Item {

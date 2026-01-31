@@ -49,3 +49,22 @@ interface ItemMapper {
 
     fun toDtoWithBooking(items: List<Item>, @Context bookingList: List<Booking>): List<ItemDtoWithBooking>
 }
+
+fun ItemDto.toEntity(owner: User, itemRequest: ItemRequest?, bookingList: MutableList<Booking>, commentList: MutableList<Comment>): Item {
+    return Item(id = this.id, name = this.name!!, description = this.description!!, available = this.available ?: false, owner = owner, request = itemRequest, bookings = bookingList, comments = commentList)
+}
+
+fun Item.updateEntity(itemDto: ItemDto): Item {
+    this.name = itemDto.name ?: this.name
+    this.description = itemDto.description ?: this.description
+    this.available = itemDto.available ?: this.available
+    return this
+}
+
+fun Item.toDto(): ItemDto {
+    return ItemDto(id = this.id, name = this.name, description = this.description, available = this.available, requestId = this.request?.id)
+}
+
+fun List<Item>.toDto(): List<ItemDto> {
+    return map { it.toDto() }
+}

@@ -3,7 +3,7 @@ package com.example.server.controller
 import com.example.api.ItemApi
 import com.example.api.model.ItemDto
 import com.example.api.model.ItemDtoWithBooking
-import com.example.server.mapper.ItemMapper
+import com.example.server.mapper.toDto
 import com.example.server.service.ItemService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = [ItemApi.PATH])
 class ItemController(
-    private val itemMapper: ItemMapper,
     private val itemService: ItemService
 ) : ItemApi {
 
     override fun create(itemDto: ItemDto, userId: Long): ItemDto {
-        return itemMapper.toDto(itemService.create(itemDto, userId))
+        return itemService.create(itemDto, userId).toDto()
     }
 
     override fun update(id: Long, itemDto: ItemDto, userId: Long): ItemDto {
-        return itemMapper.toDto(itemService.update(id, itemDto, userId))
+        return itemService.update(id, itemDto, userId).toDto()
     }
 
     override fun findById(id: Long, userId: Long): ItemDtoWithBooking {
@@ -32,6 +31,6 @@ class ItemController(
     }
 
     override fun search(text: String, from: Int, size: Int): List<ItemDto> {
-        return itemMapper.toDto(itemService.search(text, from, size))
+        return itemService.search(text, from, size).toDto()
     }
 }
