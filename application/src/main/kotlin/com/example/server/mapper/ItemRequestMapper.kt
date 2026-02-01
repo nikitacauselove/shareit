@@ -4,18 +4,15 @@ import com.example.api.model.ItemRequestDto
 import com.example.server.entity.Item
 import com.example.server.entity.ItemRequest
 import com.example.server.entity.User
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
 
-@Mapper(componentModel = "spring", uses = [ItemMapper::class])
-interface ItemRequestMapper {
+fun ItemRequestDto.toEntity(requester: User, itemList: MutableList<Item>): ItemRequest {
+    return ItemRequest(id = this.id, description = this.description!!, requester = requester, created = this.created, items = itemList)
+}
 
-    @Mapping(target = "id", source = "itemRequestDto.id")
-    @Mapping(target = "items", source = "itemList")
-    fun toEntity(itemRequestDto: ItemRequestDto, requester: User, itemList: MutableList<Item>): ItemRequest
+fun ItemRequest.toDto(): ItemRequestDto {
+    return ItemRequestDto(id = this.id, description = this.description, requesterId = this.requester.id, created = this.created, items = this.items.toDto())
+}
 
-    @Mapping(target = "requesterId", source = "itemRequest.id")
-    fun toDto(itemRequest: ItemRequest): ItemRequestDto
-
-    fun toDto(itemRequestList: List<ItemRequest>): List<ItemRequestDto>
+fun List<ItemRequest>.toDto(): List<ItemRequestDto> {
+    return map { it.toDto() }
 }

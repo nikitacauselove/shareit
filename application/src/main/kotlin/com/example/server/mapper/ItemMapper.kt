@@ -68,3 +68,15 @@ fun Item.toDto(): ItemDto {
 fun List<Item>.toDto(): List<ItemDto> {
     return map { it.toDto() }
 }
+
+fun Item.toDtoWithBooking(bookingList: List<Booking>): ItemDtoWithBooking {
+    return ItemDtoWithBooking(id = this.id!!, name = this.name, description = this.description, available = this.available, lastBooking = bookingList.findLast(), nextBooking = bookingList.findNext(), comments = this.comments.toDto())
+}
+
+fun List<Item>.toDtoWithBooking(bookingList: List<Booking>): List<ItemDtoWithBooking> {
+    return map { item ->
+        val bookings = bookingList.filter { it.item.id == item.id }
+
+        item.toDtoWithBooking(bookings)
+    }
+}

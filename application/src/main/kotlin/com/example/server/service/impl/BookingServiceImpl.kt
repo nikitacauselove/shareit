@@ -2,11 +2,11 @@ package com.example.server.service.impl
 
 import com.example.api.model.BookingCreateDto
 import com.example.api.model.BookingState
+import com.example.api.model.BookingStatus
 import com.example.server.entity.Booking
-import com.example.server.entity.BookingStatus
 import com.example.server.exception.BadRequestException
 import com.example.server.exception.NotFoundException
-import com.example.server.mapper.BookingMapper
+import com.example.server.mapper.toEntity
 import com.example.server.repository.BookingRepository
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRepository
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BookingServiceImpl(
-    private val bookingMapper: BookingMapper,
     private val bookingSpecification: BookingSpecification,
     private val bookingRepository: BookingRepository,
     private val itemRepository: ItemRepository,
@@ -40,7 +39,7 @@ class BookingServiceImpl(
         if (userId == item.owner.id) {
             throw NotFoundException("Запрос на бронирование не может быть создан владельцем предмета")
         }
-        return bookingRepository.save(bookingMapper.toEntity(bookingCreateDto, item, booker))
+        return bookingRepository.save(bookingCreateDto.toEntity(item, booker))
     }
 
     @Transactional

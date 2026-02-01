@@ -3,7 +3,8 @@ package com.example.server.service.impl
 import com.example.api.model.ItemRequestDto
 import com.example.server.entity.ItemRequest
 import com.example.server.exception.NotFoundException
-import com.example.server.mapper.ItemRequestMapper
+import com.example.server.mapper.toDto
+import com.example.server.mapper.toEntity
 import com.example.server.repository.FromSizePageRequest.Companion.of
 import com.example.server.repository.ItemRequestRepository
 import com.example.server.repository.UserRepository
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ItemRequestServiceImpl(
-    private val itemRequestMapper: ItemRequestMapper,
     private val itemRequestRepository: ItemRequestRepository,
     private val userRepository: UserRepository
 ) : ItemRequestService {
@@ -24,7 +24,7 @@ class ItemRequestServiceImpl(
         val requester = userRepository.findById(userId)
             .orElseThrow { NotFoundException(UserRepository.NOT_FOUND) }
 
-        return itemRequestRepository.save(itemRequestMapper.toEntity(itemRequestDto, requester, mutableListOf()))
+        return itemRequestRepository.save(itemRequestDto.toEntity(requester, mutableListOf()))
     }
 
     override fun findById(id: Long): ItemRequest {
@@ -37,7 +37,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toDto(findById(id))
+        return findById(id).toDto()
     }
 
     @Transactional(readOnly = true)
@@ -45,7 +45,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toDto(itemRequestRepository.findAllByRequesterId(userId, SORT_BY_DESCENDING_CREATED))
+        return itemRequestRepository.findAllByRequesterId(userId, SORT_BY_DESCENDING_CREATED).toDto()
     }
 
     @Transactional(readOnly = true)
@@ -53,7 +53,7 @@ class ItemRequestServiceImpl(
         if (!userRepository.existsById(userId)) {
             throw NotFoundException(UserRepository.NOT_FOUND)
         }
-        return itemRequestMapper.toDto(itemRequestRepository.findAllByRequesterIdNot(userId, of(from, size, SORT_BY_DESCENDING_CREATED)))
+        return itemRequestRepository.findAllByRequesterIdNot(userId, of(from, size, SORT_BY_DESCENDING_CREATED)).toDto()
     }
 
     companion object {

@@ -1,8 +1,8 @@
 package com.example.server.repository.specification
 
 import com.example.api.model.BookingState
+import com.example.api.model.BookingStatus
 import com.example.server.entity.Booking
-import com.example.server.entity.BookingStatus
 import com.example.server.entity.Item
 import com.example.server.entity.User
 import org.springframework.data.jpa.domain.Specification

@@ -3,24 +3,22 @@ package com.example.server.mapper
 import com.example.api.model.BookingCreateDto
 import com.example.api.model.BookingDto
 import com.example.api.model.BookingShortDto
+import com.example.api.model.BookingStatus
 import com.example.server.entity.Booking
-import com.example.server.entity.BookingStatus
 import com.example.server.entity.Item
 import com.example.server.entity.User
-import org.mapstruct.Mapper
-import org.mapstruct.Mapping
 import java.time.LocalDateTime
 
-@Mapper(componentModel = "spring", uses = [ItemMapper::class, UserMapper::class])
-interface BookingMapper {
+fun BookingCreateDto.toEntity(item: Item, booker: User): Booking {
+    return Booking(id = null, start = this.start, end = this.end, item = item, booker = booker, status = BookingStatus.WAITING)
+}
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", constant = "WAITING")
-    fun toEntity(bookingCreateDto: BookingCreateDto, item: Item, booker: User): Booking
+fun Booking.toDto(): BookingDto {
+    return BookingDto(id = this.id!!, start = this.start, end = this.end, item = this.item.toDto(), booker = this.booker.toDto(), status = this.status)
+}
 
-    fun toDto(booking: Booking): BookingDto
-
-    fun toDto(bookingList: List<Booking>): List<BookingDto>
+fun List<Booking>.toDto(): List<BookingDto> {
+    return map { it.toDto() }
 }
 
 fun List<Booking>.findLast(): BookingShortDto? {

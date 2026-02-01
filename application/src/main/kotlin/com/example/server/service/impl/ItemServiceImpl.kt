@@ -5,6 +5,7 @@ import com.example.api.model.ItemDtoWithBooking
 import com.example.server.entity.Item
 import com.example.server.exception.NotFoundException
 import com.example.server.mapper.ItemMapper
+import com.example.server.mapper.toDtoWithBooking
 import com.example.server.mapper.toEntity
 import com.example.server.mapper.updateEntity
 import com.example.server.repository.BookingRepository
@@ -57,9 +58,9 @@ class ItemServiceImpl(
         val item = findById(id)
 
         if (userId != item.owner.id) {
-            return itemMapper.toDtoWithBooking(item, emptyList())
+            return item.toDtoWithBooking(emptyList())
         }
-        return itemMapper.toDtoWithBooking(item, bookingRepository.findAllByItemId(id))
+        return item.toDtoWithBooking(bookingRepository.findAllByItemId(id))
     }
 
     @Transactional(readOnly = true)
@@ -68,7 +69,7 @@ class ItemServiceImpl(
         val items = itemRepository.findAllByOwnerId(userId, pageable)
         val bookings = bookingRepository.findAllByItem_Owner_Id(userId, Pageable.unpaged())
 
-        return itemMapper.toDtoWithBooking(items, bookings)
+        return items.toDtoWithBooking(bookings)
     }
 
     override fun search(text: String, from: Int, size: Int): List<Item> {
