@@ -4,7 +4,6 @@ import com.example.api.model.ItemDto
 import com.example.api.model.ItemDtoWithBooking
 import com.example.server.entity.Item
 import com.example.server.exception.NotFoundException
-import com.example.server.mapper.ItemMapper
 import com.example.server.mapper.toDtoWithBooking
 import com.example.server.mapper.toEntity
 import com.example.server.mapper.updateEntity
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ItemServiceImpl(
     private val bookingRepository: BookingRepository,
-    private val itemMapper: ItemMapper,
     private val itemRepository: ItemRepository,
     private val itemRequestRepository: ItemRequestRepository,
     private val userRepository: UserRepository
